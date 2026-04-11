@@ -1777,7 +1777,7 @@ function calcWeighted(corpus, sc, parody) {
 // (data layer above)
 
 async function loadSongList() {
-  const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1WTzvqx_AyKa_AMwGQzgGQQO9pkjx2vzC7z_GaawuI4E/gviz/tq?tqx=out:csv&sheet=Song+List';
+  const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRJR2EIaPq99IUs89_RqyjurtAejaVjawa36l0wkNjZR0J1BEZi9TwE51lKZuoftil4vtbQu1RkVOgg/pub?gid=1811867683&single=true&output=csv';
   try {
     const res = await fetch(SHEET_URL);
     if(!res.ok) throw new Error('Sheet fetch failed');
@@ -2048,7 +2048,7 @@ async function submitSong() {
   };
 
   sessionResponses.push(response);
-  await saveResponse(response);
+  try { await saveResponse(response); } catch(e) { console.error("saveResponse failed:", e); }
 
   currentIdx++;
   try {
