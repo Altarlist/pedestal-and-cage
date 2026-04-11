@@ -1495,8 +1495,6 @@ function submitLyric() {
 }
 
 // ═══════════════════════════════════════════════════════
-
-// ═══════════════════════════════════════════════════════
 // QUALIFIER STAGE 2 LOGIC
 // ═══════════════════════════════════════════════════════
 
@@ -1621,105 +1619,57 @@ function submitQualSong(){
 
 
 // ═══════════════════════════════════════════════════════
-// SONG DATABASE — seed corpus (47 songs, lyrics abbreviated for prototype)
-// Add full lyrics per song as corpus grows
+// SONG DATABASE — fallback if Google Sheet unreachable
 // ═══════════════════════════════════════════════════════
 
 const SONG_DB = [
-  { id:'s001', title:'Mysterious Ways', artist:'U2', year:'1991', genre:'Rock',
-    lyrics:[{label:'Verse',text:"Johnny take a walk with your sister the moon\nLet her pale light in to fill up your room\nYou've been living underground\nEating from a can\nYou've been running away\nFrom what you don't understand"},{label:'Chorus',text:"She moves in mysterious ways\nShe moves in mysterious ways"}]},
-  { id:'s002', title:'God Gave Me You', artist:'Blake Shelton', year:'2011', genre:'Country',
-    lyrics:[{label:'Verse',text:"I've been a walking heartache\nI've made a mess of me\nThe person that I've been lately\nAin't who I wanna be"},{label:'Chorus',text:"But God gave me you for the ups and downs\nGod gave me you for the days of doubt\nFor when I think I've lost my way\nThere are no words here left to say, it's true\nGod gave me you"}]},
-  { id:'s003', title:"Savin' Me", artist:'Nickelback', year:'2005', genre:'Rock',
-    lyrics:[{label:'Verse',text:"Prison gates won't open up for me\nOn these hands and knees I'm crawlin'\nOh, I reach for you"},{label:'Chorus',text:"Well I'm terrified of these four walls\nThese iron bars can't hold my soul in\nAll I need is you\nCome please I'm callin'\nAnd oh I scream for you\nHurry I'm fallin', I'm fallin'"}]},
-  { id:'s004', title:'Is This Love', artist:'Whitesnake', year:'1987', genre:'Rock',
-    lyrics:[{label:'Verse',text:"I should have known better than to let you go alone\nIt's times like these I can't make it on my own\nWasted days and sleepless nights\nAnd I can't wait to see you again"},{label:'Chorus',text:"Is this love that I'm feeling\nIs this the love that I've been searching for\nIs this love or am I dreaming\nThis must be love 'cause it's really got a hold on me"}]},
-  { id:'s005', title:'I Want to Know What Love Is', artist:'Foreigner', year:'1984', genre:'Rock',
-    lyrics:[{label:'Verse',text:"I gotta take a little time\nA little time to think things over\nI better read between the lines\nIn case I need it when I'm older\nNow this mountain I must climb\nFeels like a world upon my shoulders\nThrough the clouds I see love shine\nIt keeps me warm as life grows colder"},{label:'Chorus',text:"I wanna know what love is\nI want you to show me\nI wanna feel what love is\nI know you can show me"}]},
-  { id:'s006', title:'Waiting for a Girl Like You', artist:'Foreigner', year:'1981', genre:'Rock',
-    lyrics:[{label:'Verse',text:"So long, I've been looking too hard, I've been waiting too long\nSometimes I don't know what I will find\nI only know it's a matter of time\nWhen you love someone, when you love someone"},{label:'Chorus',text:"It feels so right, so warm and true\nI need to know if you feel it too\nMaybe I'm wrong, won't you tell me if I'm coming on too strong\nThis heart of mine has been hurt before\nThis time I wanna be sure"}]},
-  { id:'s007', title:'Angel', artist:'Aerosmith', year:'1987', genre:'Rock',
-    lyrics:[{label:'Verse',text:"I'm alone\nYeah, I don't know if I can face the night\nI'm in tears and the cryin' that I do is for you\nI want your love — let's break the walls between us\nDon't make it tough — I'll put away my pride"},{label:'Chorus',text:"Angel of my heart\nAngel of my heart, angel\nI need you tonight\nI need you tonight\nCome to me, come to me\nCome to my rescue, take me in your arms"}]},
-  { id:'s008', title:'Layla', artist:'Derek and the Dominos', year:'1970', genre:'Rock',
-    lyrics:[{label:'Verse 1',text:"What'll you do when you get lonely\nAnd nobody's waiting by your side?\nYou've been running and hiding much too long\nYou know it's just your foolish pride"},{label:'Chorus',text:"Layla, you got me on my knees\nLayla, I'm begging, darling please\nLayla, darling won't you ease my worried mind"}]},
-  { id:'s009', title:'Earth Angel', artist:'The Penguins', year:'1954', genre:'Pop',
-    lyrics:[{label:'Verse',text:"Earth angel, earth angel\nWill you be mine?\nMy darling dear\nLove you all the time\nI'm just a fool\nA fool in love with you"},{label:'Verse 2',text:"Earth angel, earth angel\nThe one I adore\nLove you forever and evermore\nA fool in love with you"}]},
-  { id:'s010', title:'In Your Eyes', artist:'Peter Gabriel', year:'1986', genre:'Pop',
-    lyrics:[{label:'Verse',text:"Love I get so lost, sometimes\nDays pass and this emptiness fills my heart\nWhen I want to run away\nI drive off in my car\nBut whichever way I go\nI come back to the place you are"},{label:'Chorus',text:"In your eyes\nThe light, the heat\nIn your eyes\nI am complete\nIn your eyes\nI see the doorway to a thousand churches\nIn your eyes\nThe resolution of all the fruitless searches"}]},
-  { id:'s011', title:'She', artist:'Elvis Costello', year:'1999', genre:'Pop',
-    lyrics:[{label:'Verse 1',text:"She may be the face I can't forget\nA trace of pleasure or regret\nMay be my treasure or the price I have to pay\nShe may be the song that summer sings\nMay be the chill that autumn brings\nMay be a hundred different things\nWithin the measure of a day"},{label:'Verse 2',text:"She may be the beauty or the beast\nMay be the famine or the feast\nMay turn each day into a heaven or a hell\nShe may be the mirror of my dream\nA smile reflected in a stream\nShe may not be what she may seem\nInside her shell"}]},
-  { id:'s012', title:'Every Breath You Take', artist:'The Police', year:'1983', genre:'Rock',
-    lyrics:[{label:'Verse',text:"Every breath you take\nEvery move you make\nEvery bond you break\nEvery step you take\nI'll be watching you"},{label:'Chorus',text:"Oh can't you see\nYou belong to me\nHow my poor heart aches\nWith every step you take"}]},
-  { id:'s013', title:"She's Everything", artist:'Brad Paisley', year:'2006', genre:'Country',
-    lyrics:[{label:'Verse',text:"She's a yellow pair of running shoes\nA holey pair of jeans\nShe looks great in cheap sunglasses\nShe looks great in anything\nShe's I want a piece of chocolate\nTake me to a movie\nShe's I can't find a thing to wear\nNow and then she's moody"},{label:'Chorus',text:"She's a Saturn with a sunroof\nWith her brown hair a-blowing\nShe's a soft place to land\nAnd a good feeling knowing\nShe's a warm conversation\nThat I wouldn't miss for nothing\nShe's a fighter when she's mad\nAnd she's a lover when she's loving\nAnd she's everything"}]},
-  { id:'s014', title:'You Make It Easy', artist:'Jason Aldean', year:'2017', genre:'Country',
-    lyrics:[{label:'Verse',text:"Woke up this morning with a smile on my face\nA new day is dawning it's a beautiful day\nA fresh cup of coffee, your hair in my hands\nI don't know how you do it but you help me understand"},{label:'Chorus',text:"You make it easy\nBabe, you make it easy to love\nYou make it easy to be\nThe best that I can be\nYou make it easy, so easy to love"}]},
-  { id:'s015', title:'I Live My Life for You', artist:'Firehouse', year:'1995', genre:'Rock',
-    lyrics:[{label:'Verse',text:"I don't mind the rain\nWhen you're by my side\nI can face the darkest skies\nAs long as I got you\nYou give me strength to make it through\nWhen times are hard, you pull me through"},{label:'Chorus',text:"I live my life for you\nI'd do anything\nThat you want me to\nI live my life for you\nYou're the reason I go on\nAnd on and on"}]},
-  { id:'s016', title:'Iris', artist:'Goo Goo Dolls', year:'1998', genre:'Rock',
-    lyrics:[{label:'Verse',text:"And I'd give up forever to touch you\n'Cause I know that you feel me somehow\nYou're the closest to heaven that I'll ever be\nAnd I don't want to go home right now"},{label:'Chorus',text:"And I don't want the world to see me\n'Cause I don't think that they'd understand\nWhen everything's made to be broken\nI just want you to know who I am"}]},
-  { id:'s017', title:'Truly Madly Deeply', artist:'Savage Garden', year:'1997', genre:'Pop',
-    lyrics:[{label:'Verse',text:"I'll be your dream, I'll be your wish, I'll be your fantasy\nI'll be your hope, I'll be your love, be everything that you need\nI love you more with every breath, truly madly deeply do"},{label:'Chorus',text:"I want to stand with you on a mountain\nI want to bathe with you in the sea\nI want to lay like this forever\nUntil the sky falls down on me"}]},
-  { id:'s018', title:'(Everything I Do) I Do It for You', artist:'Bryan Adams', year:'1991', genre:'Rock',
-    lyrics:[{label:'Verse',text:"Look into my eyes, you will see\nWhat you mean to me\nSearch your heart, search your soul\nAnd when you find me there you'll search no more"},{label:'Chorus',text:"Don't tell me it's not worth trying for\nYou can't tell me it's not worth dying for\nYou know it's true\nEverything I do, I do it for you"}]},
-  { id:'s019', title:'Angels', artist:'Robbie Williams', year:'1997', genre:'Pop',
-    lyrics:[{label:'Verse',text:"I sit and wait\nDoes an angel contemplate my fate\nAnd do they know\nThe places where we go\nWhen we're grey and old\n'Cause I've been told\nThat salvation lets their wings unfold"},{label:'Chorus',text:"And through it all she offers me protection\nA lot of love and affection\nWhether I'm right or wrong\nAnd down the waterfall\nWherever it may take me\nI know that life won't break me\nWhen I come to call\nShe won't forsake me\nI'm loving angels instead"}]},
-  { id:'s020', title:'Close to You', artist:'Carpenters', year:'1970', genre:'Pop',
-    lyrics:[{label:'Verse',text:"Why do birds suddenly appear\nEvery time you are near?\nJust like me, they long to be\nClose to you\nWhy do stars fall down from the sky\nEvery time you walk by?\nJust like me, they long to be\nClose to you"},{label:'Bridge',text:"On the day that you were born the angels got together\nAnd decided to create a dream come true\nSo they sprinkled moon dust in your hair of gold\nAnd starlight in your eyes of blue"}]},
-  { id:'s021', title:'Urgent', artist:'Foreigner', year:'1981', genre:'Rock',
-    lyrics:[{label:'Verse',text:"You're not shy, you get around\nYou wanna fly, don't want your feet on the ground\nYou stay up, you won't come down\nYou wanna live, you wanna move to the sound"},{label:'Chorus',text:"Got fire in your veins\nBurnin' hot but you don't feel the pain\nYour desire is insane\nYou can't stop until you do it again\nSometimes I wonder as I look in your eyes\nMaybe she's only partly human inside\nOoo yeah, urgent, urgent, emergency\nOoo urgent, urgent, urgent"}]},
-  { id:'s022', title:'Faithfully', artist:'Journey', year:'1983', genre:'Rock',
-    lyrics:[{label:'Verse',text:"Highway run into the midnight sun\nWheels go round and round, you're on my mind\nRestless hearts sleep alone tonight\nSendin' all my love along the wire"},{label:'Chorus',text:"They say that the road ain't no place to start a family\nRight down the line it's been you and me\nAnd lovin' a music man ain't always what it's supposed to be\nOoh girl, you stand by me\nI'm forever yours, faithfully"}]},
-  { id:'s023', title:'Open Arms', artist:'Journey', year:'1981', genre:'Rock',
-    lyrics:[{label:'Verse',text:"Lying beside you, here in the dark\nFeeling your heart beat with mine\nSoftly you whisper, you're so sincere\nHow could our love be so blind"},{label:'Chorus',text:"Now I come to you with open arms\nNothing to hide, believe what I say\nSo here I am with open arms\nHoping you'll see what your love means to me\nOpen arms"}]},
-  { id:'s024', title:'Wicked Game', artist:'Chris Isaak', year:'1989', genre:'Pop',
-    lyrics:[{label:'Verse',text:"The world was on fire and no one could save me but you\nIt's strange what desire will make foolish people do\nI never dreamed that I'd meet somebody like you\nI never dreamed that I'd lose somebody like you"},{label:'Chorus',text:"No I don't wanna fall in love\nThis girl is only gonna break my heart\nNo I don't wanna fall in love\nWith you"}]},
-  { id:'s025', title:'How Deep Is Your Love', artist:'Bee Gees', year:'1977', genre:'Pop',
-    lyrics:[{label:'Verse',text:"I know your eyes in the morning sun\nI feel you touch me in the pouring rain\nAnd the moment that you wander far from me\nI wanna feel you in my arms again"},{label:'Chorus',text:"And you come to me on a summer breeze\nKeep me warm in your love, then you softly leave\nAnd it's me you need to show\nHow deep is your love"}]},
-  { id:'s026', title:'When a Man Loves a Woman', artist:'Percy Sledge', year:'1966', genre:'Pop',
-    lyrics:[{label:'Verse',text:"When a man loves a woman\nCan't keep his mind on nothin' else\nHe'd trade the world\nFor the good thing he's found\nIf she is bad, he can't see it\nShe can do no wrong\nTurn his back on his best friend if he put her down"},{label:'Verse 2',text:"When a man loves a woman\nSpend his very last dime\nTryin' to hold on to what he needs\nHe'd give up all his comforts\nAnd sleep out in the rain\nIf she said that's the way it ought to be"}]},
-  { id:'s027', title:'All Out of Love', artist:'Air Supply', year:'1980', genre:'Pop',
-    lyrics:[{label:'Verse',text:"I'm lying alone with my head on the phone\nThinking of you till it hurts\nI know you hurt too but what else can we do\nTormented and torn apart"},{label:'Chorus',text:"I'm all out of love, I'm so lost without you\nI know you were right, believing for so long\nI'm all out of love, what am I without you\nI can't be too late to say that I was so wrong"}]},
-  { id:'s028', title:'Heaven', artist:'Bryan Adams', year:'1985', genre:'Rock',
-    lyrics:[{label:'Verse',text:"Oh, thinking about all our younger years\nThere was only you and me\nWe were young and wild and free\nNow nothing can take you away from me\nWe've been down that road before\nBut that's over now\nYou keep me coming back for more"},{label:'Chorus',text:"Baby you're all that I want\nWhen you're lying here in my arms\nI'm finding it hard to believe\nWe're in heaven\nAnd love is all that I need\nAnd I found it there in your heart\nIt isn't too hard to see\nWe're in heaven"}]},
-  { id:'s029', title:'Broken Wings', artist:'Mr. Mister', year:'1985', genre:'Rock',
-    lyrics:[{label:'Verse',text:"Baby don't understand\nWhy we can't just hold on\nTo each other's hands\nThis time might be the last I fear\nUnless I make it all too clear\nI need you so"},{label:'Chorus',text:"Take these broken wings\nAnd learn to fly again\nLearn to live so free\nWhen we hear the voices sing\nThe book of love will open up\nAnd let us in"}]},
-  { id:'s030', title:'Take Me to Church', artist:'Hozier', year:'2013', genre:'Pop',
-    lyrics:[{label:'Verse',text:"My lover's got humor\nShe's the giggle at a funeral\nKnows everybody's disapproval\nI should've worshipped her sooner"},{label:'Chorus',text:"Take me to church\nI'll worship like a dog at the shrine of your lies\nI'll tell you my sins and you can sharpen your knife\nOffer me that deathless death\nGood God, let me give you my life"}]},
-  { id:'s031', title:"You're the Inspiration", artist:'Chicago', year:'1984', genre:'Rock',
-    lyrics:[{label:'Verse',text:"You know our love was meant to be\nThe kind of love that lasts forever\nAnd I want you here with me\nFrom tonight until the end of time\nYou should know, everywhere I go\nAlways on my mind, in my heart, in my soul baby"},{label:'Chorus',text:"You're the meaning in my life\nYou're the inspiration\nYou bring feeling to my life\nYou're the inspiration\nWanna have you near me\nI wanna have you hear me saying\nNo one needs you more than I need you"}]},
-  { id:'s032', title:'Rosanna', artist:'Toto', year:'1982', genre:'Rock',
-    lyrics:[{label:'Verse',text:"All I wanna do when I wake up in the morning is see your eyes\nRosanna, Rosanna\nI never thought that a girl like you could ever care for me, Rosanna\nNot quite a year since you went away\nRosanna, yeah\nNow she's gone and I have to say\nMeet me by the back stair"},{label:'Chorus',text:"Meet me by the back stair\nAnd all I wanna say is\nI didn't know you were looking for more than I could ever be\nNot quite a year since you went away, Rosanna"}]},
-  { id:'s033', title:'What a Fool Believes', artist:'Doobie Brothers', year:'1979', genre:'Rock',
-    lyrics:[{label:'Verse',text:"He came from somewhere back in her long ago\nThe sentimental fool don't see\nTryin' hard to recreate\nWhat had yet to be created once in her life"},{label:'Chorus',text:"But what a fool believes he sees\nNo wise man has the power to reason away\nWhat seems to be\nIs always better than nothing\nAnd nothing at all keeps sending him"}]},
-  { id:'s034', title:'Angel of the Morning', artist:'Juice Newton', year:'1981', genre:'Country',
-    lyrics:[{label:'Verse',text:"There'll be no strings to bind your hands\nNot if my love can't bind your heart\nThere's no need to take a stand\nFor it was I who chose to start"},{label:'Chorus',text:"Just call me angel of the morning, angel\nJust touch my cheek before you leave me, baby\nJust call me angel of the morning, angel\nThen slowly turn away from me"}]},
-  { id:'s035', title:'Faith', artist:'George Michael', year:'1987', genre:'Pop',
-    lyrics:[{label:'Verse',text:"Well I guess it would be nice\nIf I could touch your body\nI know not everybody\nHas got a body like you"},{label:'Chorus',text:"But I gotta think twice\nBefore I give my heart away\nAnd I know all the games you play\nBecause I play them too\nOh but I\nNeed some time off from that emotion\nTime to pick my heart up off the floor\nAnd when that love comes down\nWithout devotion\nWell it takes a strong man baby\nBut I'm showing you the door"}]},
-  { id:'s036', title:'Caught Up in You', artist:'.38 Special', year:'1982', genre:'Rock',
-    lyrics:[{label:'Verse',text:"I never knew there'd come a day\nWhen I'd be saying to you\nDon't let this good love slip away\nNow that we know that it's true"},{label:'Chorus',text:"I'm so caught up in you, little girl\nIn everything you do\nAnd I never did suspect a thing\nUntil I was deep in it, girl\nNow I can't get enough\nWanna spend the rest of my life with you"}]},
-  { id:'s037', title:'45 Years', artist:'Stan Rogers', year:'1983', genre:'Country / Folk',
-    lyrics:[{label:'Verse 1',text:"Where the earth shows its bones of wind-broken stone\nAnd the sea and the sky are one\nI'm caught out of time, my blood sings with wine\nAnd I'm running naked in the sun\nThere's God in the trees, I'm weak in the knees\nAnd the sky is a painful blue\nI'd like to look around, but Honey, all I see is you"},{label:'Chorus',text:"And I just want to hold you closer than I've ever held anyone before\nYou say you've been twice a wife and you're through with life\nAh, but Honey, what the hell's it for?\nAfter twenty-three years you'd think I could find\nA way to let you know somehow\nThat I want to see your smiling face forty-five years from now"}]},
-  { id:'s038', title:'Right Down the Line', artist:'Gerry Rafferty', year:'1978', genre:'Rock',
-    lyrics:[{label:'Verse',text:"You know I need your love\nYou've got that hold over me\nAs long as I've got your love\nYou know that I'll never leave\nWhen I wanted you to share my life\nI had no doubt in my mind\nAnd it's been you, woman\nRight down the line"},{label:'Chorus',text:"I know how much I lean on you\nOnly you can see\nThe changes that I've been through\nHave left a mark on me\nYou've been as constant as a northern star\nThe brightest light that shines\nIt's been you, woman\nRight down the line"}]},
-  { id:'s039', title:'Thank God', artist:'Kane Brown', year:'2019', genre:'Country',
-    lyrics:[{label:'Verse',text:"I was headed to Vegas\nShe was heading to Tennessee\nShe almost took a job in Denver\nMe, I almost didn't get on that flight to New Orleans\nWhat if I'd have gone another way\nWhat if we never had that rainy day in LAX\nI'd have missed my whole life"},{label:'Chorus',text:"Thank God for the nights I can't remember\nThank God for the love I found forever\nThank God for the times I thought this road don't have an end\nI'm alive, I'm in love, and it all worked out\nIt was you I was looking for all along\nThank God"}]},
-  { id:'s040', title:'When You Love a Woman', artist:'Journey', year:'1996', genre:'Rock',
-    lyrics:[{label:'Verse',text:"When you love a woman\nYou see your world inside her eyes\nWhen you love a woman\nYou know she's standing by your side\nA joy that lasts forever\nThere in your heart it will remain"},{label:'Chorus',text:"When you love a woman\nTell her that she's really wanted\nWhen you love a woman\nTell her that she's the one\nShe needs somebody to tell her\nThat it's gonna last forever\nWhen you love a woman"}]},
-  { id:'s041', title:'Sister Christian', artist:'Night Ranger', year:'1984', genre:'Rock',
-    lyrics:[{label:'Verse',text:"Sister Christian oh the time has come\nAnd you know that you're the only one to say okay\nWhere you going what you looking for\nYou know those boys don't want to play no more with you\nIt's true"},{label:'Chorus',text:"You're motoring\nWhat's your price for flight\nIn finding mister right\nYou'll be alright tonight"}]},
-  { id:'s042', title:'Higher Love', artist:'Steve Winwood', year:'1986', genre:'Pop',
-    lyrics:[{label:'Verse',text:"Think about it, there must be higher love\nDown in the heart or hidden in the stars above\nWithout it, life is wasted time\nLook inside your heart, I'll look inside mine"},{label:'Chorus',text:"Things look so bad everywhere\nIn this whole world, what is fair?\nWe walk blind and we try to see\nFalling behind in what could be\nBring me a higher love"}]},
-  { id:'s043', title:'Got Me Under Pressure', artist:'ZZ Top', year:'1983', genre:'Rock',
-    lyrics:[{label:'Verse 1',text:"She likes wearin' lipstick, she likes French cuisine\nBut she won't let me use my passion unless it's in a limousine\nShe got me under pressure"},{label:'Verse 2',text:"She likes the art museum, she don't like Pavlov's dog\nShe's fun at the mind museum, she likes it in a London fog\nShe don't like other women, she likes whips and chains\nShe likes cocaine and flippin' out with great Danes\nShe's about all I can handle, it's too much for my brain"},{label:'Outro',text:"I'm gonna give her a message\nHere's what I'm gonna say: 'It's all over'\nShe might get out a nightstick\nAnd hurt me real real bad\nBy the roadside in a ditch"}]},
-  { id:'s044', title:'Legs', artist:'ZZ Top', year:'1983', genre:'Rock',
-    lyrics:[{label:'Verse 1',text:"She's got legs, she knows how to use them\nShe never begs, she knows how to choose them\nShe's holding leg wondering how to feel them\nWould you get behind them if you could only find them?"},{label:'Chorus',text:"She's my baby, she's my baby\nYeah, it's alright"},{label:'Verse 2',text:"She's got hair down to her fanny\nShe's kinda jet set, try undo her panties\nEverytime she's dancing she knows what to do\nEverybody wants to see if she can use it\nShe's so fine, she's all mine\nGirl, you got it right"},{label:'Verse 3',text:"She's got legs, she knows how to use them\nShe never begs, she knows how to choose them\nShe's got a dime all of the time\nStays out at night moving through time\nOh, I want her, shit, I got to have her\nThe girl is alright, she's alright"}]},
-  { id:'s045', title:'Hallelujah', artist:'Leonard Cohen', year:'1984', genre:'Folk / Pop',
-    lyrics:[{label:'Verse 1',text:"I've heard there was a secret chord\nThat David played and it pleased the Lord\nBut you don't really care for music, do ya?\nIt goes like this, the fourth, the fifth\nThe minor fall, the major lift\nThe baffled king composing Hallelujah"},{label:'Verse 2',text:"Your faith was strong but you needed proof\nYou saw her bathing on the roof\nHer beauty and the moonlight overthrew her\nShe tied you to a kitchen chair\nShe broke your throne and cut your hair\nAnd from your lips she drew the Hallelujah"},{label:'Verse 3',text:"I did my best, it wasn't much\nI couldn't feel, so I tried to touch\nI've told the truth, I didn't come to fool ya\nAnd even though it all went wrong\nI'll stand before the Lord of Song\nWith nothing on my tongue but Hallelujah"}]},
-  { id:'s046', title:'Just the Way', artist:'Parmalee', year:'2012', genre:'Country',
-    lyrics:[{label:'Verse',text:"I love the way you look right now\nSunday morning, half asleep\nWith your mascara smeared beneath your eyes\nMakes me wanna be the man you need"},{label:'Chorus',text:"I love you just the way you are\nThis morning in your t-shirt and blue jeans\nBaby you don't need a thing\nYou're beautiful to me\nI love you just the way"}]},
-  { id:'s047', title:'Heaven', artist:'Kane Brown', year:'2018', genre:'Country',
-    lyrics:[{label:'Verse',text:"You and me and a six-string and starry skies\nI wasn't lost, I just never knew\nExactly what I was looking for\nBut I was looking for you"},{label:'Chorus',text:"If heaven's got a waiting room\nI hope it's got a jukebox too\nPlaying nothing but our song\nOver and over and over\nAnd if heaven lets us in\nI hope it's got a dance floor\nJust imagine me and you\nDancing in the stars forever\nLet's go to heaven"}]},
+  { id:'s001', title:'Mysterious Ways', artist:'U2', year:'1991', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s002', title:'God Gave Me You', artist:'Blake Shelton', year:'2011', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s003', title:"Savin' Me", artist:'Nickelback', year:'2005', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s004', title:'Is This Love', artist:'Whitesnake', year:'1987', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s005', title:'I Want to Know What Love Is', artist:'Foreigner', year:'1984', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s006', title:'Waiting for a Girl Like You', artist:'Foreigner', year:'1981', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s007', title:'Angel', artist:'Aerosmith', year:'1987', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s008', title:'Layla', artist:'Derek and the Dominos', year:'1970', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s009', title:'Earth Angel', artist:'The Penguins', year:'1954', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s010', title:'In Your Eyes', artist:'Peter Gabriel', year:'1986', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s011', title:'She', artist:'Elvis Costello', year:'1999', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s012', title:'Every Breath You Take', artist:'The Police', year:'1983', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s013', title:"She's Everything", artist:'Brad Paisley', year:'2006', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s014', title:'You Make It Easy', artist:'Jason Aldean', year:'2017', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s015', title:'I Live My Life for You', artist:'Firehouse', year:'1995', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s016', title:'Iris', artist:'Goo Goo Dolls', year:'1998', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s017', title:'Truly Madly Deeply', artist:'Savage Garden', year:'1997', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s018', title:'(Everything I Do) I Do It for You', artist:'Bryan Adams', year:'1991', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s019', title:'Angels', artist:'Robbie Williams', year:'1997', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s020', title:'Close to You', artist:'Carpenters', year:'1970', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s021', title:'Urgent', artist:'Foreigner', year:'1981', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s022', title:'Faithfully', artist:'Journey', year:'1983', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s023', title:'Open Arms', artist:'Journey', year:'1981', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s024', title:'Wicked Game', artist:'Chris Isaak', year:'1989', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s025', title:'How Deep Is Your Love', artist:'Bee Gees', year:'1977', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s026', title:'When a Man Loves a Woman', artist:'Percy Sledge', year:'1966', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s027', title:'All Out of Love', artist:'Air Supply', year:'1980', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s028', title:'Heaven', artist:'Bryan Adams', year:'1985', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s029', title:'Broken Wings', artist:'Mr. Mister', year:'1985', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s030', title:'Take Me to Church', artist:'Hozier', year:'2013', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s031', title:"You're the Inspiration", artist:'Chicago', year:'1984', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s032', title:'Rosanna', artist:'Toto', year:'1982', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s033', title:'What a Fool Believes', artist:'Doobie Brothers', year:'1979', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s034', title:'Angel of the Morning', artist:'Juice Newton', year:'1981', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s035', title:'Faith', artist:'George Michael', year:'1987', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s036', title:'Caught Up in You', artist:'.38 Special', year:'1982', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s037', title:'45 Years', artist:'Stan Rogers', year:'1983', genre:'Country / Folk', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s038', title:'Right Down the Line', artist:'Gerry Rafferty', year:'1978', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s039', title:'Thank God', artist:'Kane Brown', year:'2019', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s040', title:'When You Love a Woman', artist:'Journey', year:'1996', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s041', title:'Sister Christian', artist:'Night Ranger', year:'1984', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s042', title:'Higher Love', artist:'Steve Winwood', year:'1986', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s043', title:'Got Me Under Pressure', artist:'ZZ Top', year:'1983', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s044', title:'Legs', artist:'ZZ Top', year:'1983', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s045', title:'Hallelujah', artist:'Leonard Cohen', year:'1984', genre:'Folk / Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s046', title:'Just the Way', artist:'Parmalee', year:'2012', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s047', title:'Heaven', artist:'Kane Brown', year:'2018', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
 ];
 
 // ═══════════════════════════════════════════════════════
@@ -1815,18 +1765,7 @@ function calcWeighted(corpus, sc, parody) {
 }
 
 // ═══════════════════════════════════════════════════════
-// ═══════════════════════════════════════════════════════
 // DATA LAYER
-// ═══════════════════════════════════════════════════════
-//
-// SONG LIST:  reads from Google Sheets (public CSV).
-//             Add a row to the Song List tab → app picks it up automatically.
-//
-// SUBMISSIONS: saves to window.storage (local to this browser/device).
-//              Admin exports CSV; you paste into Raw Data sheet.
-//
-// FUTURE: replace saveResponse / loadAllResponses / clearAllData
-//         with fetch() calls to a real API. loadSongList stays as-is.
 // ═══════════════════════════════════════════════════════
 
 async function saveResponse(response) {
@@ -1850,12 +1789,6 @@ async function loadAllResponses() {
 }
 
 async function loadSongList() {
-  // Fetches song list from Google Sheets (public CSV export).
-  // To add a song: add a row to the Song List tab in the Google Sheet.
-  // The app picks it up automatically on next load.
-  //
-  // FUTURE API migration: replace fetch URL with your API endpoint.
-  // Song objects must have: id, title, artist, year, genre, lyrics[]
   const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1WTzvqx_AyKa_AMwGQzgGQQO9pkjx2vzC7z_GaawuI4E/gviz/tq?tqx=out:csv&sheet=Song+List';
   try {
     const res = await fetch(SHEET_URL);
@@ -1863,7 +1796,6 @@ async function loadSongList() {
     const csv = await res.text();
     const songs = parseSheetCSV(csv);
     if(songs.length > 0) return songs;
-    // Fall back to bundled SONG_DB if sheet is empty or unreachable
     console.warn('[DataLayer] Sheet returned no songs, falling back to SONG_DB');
     return SONG_DB;
   } catch(e) {
@@ -1875,11 +1807,11 @@ async function loadSongList() {
 function parseSheetCSV(csv) {
   // Expected columns: id, title, artist, year, genre, notes, status, lyrics
   // Col index:         0   1      2       3     4      5      6       7
-  const lines = csv.trim().split('\n');
-  if(lines.length < 2) return [];
+  const rows = parseCSVToRows(csv.trim());
+  if(rows.length < 2) return [];
   const songs = [];
-  for(let i = 1; i < lines.length; i++) {
-    const cols = parseCSVLine(lines[i]);
+  for(let i = 1; i < rows.length; i++) {
+    const cols = rows[i];
     if(!cols[0] || !cols[1]) continue;
     const status = (cols[6]||'').trim().toLowerCase();
     if(status === 'excluded' || status === 'hold') continue;
@@ -1901,36 +1833,38 @@ function parseSheetCSV(csv) {
   return songs;
 }
 
-function parseCSVLine(line) {
-  // Handles quoted fields with commas inside them
-  const result = [];
-  let current = '';
+function parseCSVToRows(csv) {
+  // Parses entire CSV respecting quoted fields that may contain commas or newlines
+  const rows = [];
+  let current = [];
+  let field = '';
   let inQuotes = false;
-  for(let i = 0; i < line.length; i++) {
-    const ch = line[i];
+  for(let i = 0; i < csv.length; i++) {
+    const ch = csv[i];
     if(ch === '"') {
-      if(inQuotes && line[i+1] === '"') { current += '"'; i++; }
+      if(inQuotes && csv[i+1] === '"') { field += '"'; i++; }
       else inQuotes = !inQuotes;
     } else if(ch === ',' && !inQuotes) {
-      result.push(current);
-      current = '';
+      current.push(field); field = '';
+    } else if((ch === '\n' || (ch === '\r' && csv[i+1] === '\n')) && !inQuotes) {
+      if(ch === '\r') i++;
+      current.push(field); field = '';
+      rows.push(current); current = [];
     } else {
-      current += ch;
+      field += ch;
     }
   }
-  result.push(current);
-  return result;
+  // Push final field/row
+  if(field || current.length) { current.push(field); rows.push(current); }
+  return rows;
 }
 
 async function clearAllData() {
-  // CURRENT: clears window.storage.
-  // FUTURE: DELETE /submissions or similar admin endpoint.
   await window.storage.delete('all_responses', true);
   await window.storage.delete('last_export_time', true);
 }
 
 async function getLastExportTime() {
-  // FUTURE: fetch from API — GET /admin/last-export
   try {
     const result = await window.storage.get('last_export_time', true);
     return result ? result.value : null;
@@ -1938,7 +1872,6 @@ async function getLastExportTime() {
 }
 
 async function setLastExportTime(isoString) {
-  // FUTURE: POST /admin/last-export { timestamp: isoString }
   try {
     await window.storage.set('last_export_time', isoString, true);
   } catch(e) { console.error('[DataLayer] setLastExportTime failed:', e); }
@@ -1970,7 +1903,6 @@ async function submitDemo() {
 // SCORING
 // ═══════════════════════════════════════════════════════
 async function beginScoring() {
-  // Show loading state while fetching song list from sheet
   const btn = document.querySelector('#screen-session .btn-primary');
   if(btn) { btn.disabled = true; btn.textContent = 'Loading songs…'; }
   const songs = await loadSongList();
@@ -2257,7 +2189,6 @@ async function loadAdminPanel() {
   });
   document.getElementById('admin-recent-list').innerHTML = recentHtml || '<div style="color:var(--muted);font-size:11px;padding:12px 0;">No submissions yet.</div>';
 
-  // Last export timestamp
   const lastExport = await getLastExportTime();
   const exportEl = document.getElementById('admin-last-export');
   if(lastExport) {
@@ -2267,11 +2198,9 @@ async function loadAdminPanel() {
     exportEl.textContent = 'Never';
   }
 
-  // Song database section
   _adminSongs = await loadSongList();
   document.getElementById('admin-song-count').textContent = _adminSongs.length;
 
-  // Populate genre filter
   const genres = [...new Set(_adminSongs.map(s=>s.genre))].sort();
   const genreSelect = document.getElementById('admin-song-genre');
   genreSelect.innerHTML = '<option value="">All genres</option>' +
@@ -2285,7 +2214,6 @@ function filterSongList() {
   const genre = document.getElementById('admin-song-genre').value;
   const sort = document.getElementById('admin-song-sort').value;
 
-  // Build score map: songId -> { count, corpora }
   const scoreMap = {};
   _adminResponses.forEach(r=>{
     if(!scoreMap[r.songId]) scoreMap[r.songId] = {count:0, corpora:{}};
@@ -2319,7 +2247,7 @@ function filterSongList() {
 
     html += `<div style="padding:10px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
       <div style="flex:1;min-width:0;">
-        <div style="font-size:12px;color:var(--ink);margin-bottom:2px;">“${s.title}” <span style="color:var(--muted);">— ${s.artist}</span></div>
+        <div style="font-size:12px;color:var(--ink);margin-bottom:2px;">"${s.title}" <span style="color:var(--muted);">— ${s.artist}</span></div>
         <div style="font-size:10px;color:var(--muted);">${s.year} · ${s.genre}${corporaStr}</div>
       </div>
       <div style="text-align:right;flex-shrink:0;">
