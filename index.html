@@ -1621,7 +1621,7 @@ function loadSong(idx) {
   document.getElementById('notes-section').classList.remove('visible');
   document.getElementById('submit-section').classList.remove('visible');
   document.getElementById('lens-container').innerHTML = '';
-  document.getElementById('s2-progress').style.width = ((idx / QUALIFIER_SONGS.length) * 100) + '%';
+  const _s2p = document.getElementById('s2-progress'); if(_s2p) _s2p.style.width = ((idx / QUALIFIER_SONGS.length) * 100) + '%';
 
   const lyricsBody = document.getElementById('lyrics-body');
   const lyricsIcon = document.getElementById('lyrics-icon');
@@ -1753,7 +1753,7 @@ function submitQualSong() {
 
   currentSong++;
   if (currentSong >= QUALIFIER_SONGS.length) {
-    document.getElementById('s2-progress').style.width = '100%';
+    const _s2p = document.getElementById('s2-progress'); if(_s2p) _s2p.style.width = '100%';
     showScreen('screen-pass');
   } else {
     loadSong(currentSong);
@@ -1783,7 +1783,7 @@ function loadQualSong(idx) {
   document.getElementById('song-year').textContent = s.year;
   document.getElementById('song-genre').textContent = s.genre;
   document.getElementById('notes-input').value = '';
-  document.getElementById('s2-progress').style.width = ((idx / QUALIFIER_SONGS.length) * 100) + '%';
+  const _s2p = document.getElementById('s2-progress'); if(_s2p) _s2p.style.width = ((idx / QUALIFIER_SONGS.length) * 100) + '%';
   document.querySelectorAll('.corpus-btn').forEach(b => b.classList.remove('selected'));
   document.getElementById('rubric-section').classList.remove('visible');
   document.getElementById('notes-section').classList.remove('visible');
@@ -1903,7 +1903,7 @@ function submitQualSong() {
 
   s2QualSong++;
   if (s2QualSong >= QUALIFIER_SONGS.length) {
-    document.getElementById('s2-progress').style.width = '100%';
+    const _s2p = document.getElementById('s2-progress'); if(_s2p) _s2p.style.width = '100%';
     showScreen('screen-pass');
   } else {
     loadQualSong(s2QualSong);
