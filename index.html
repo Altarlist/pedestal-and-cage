@@ -1873,27 +1873,21 @@ async function loadSongList() {
 }
 
 function parseSheetCSV(csv) {
-  // Parses the Google Sheets CSV export into song objects.
-  // Expected columns: id, title, artist, year, genre, status, lyrics_verse, lyrics_chorus, lyrics_bridge
+  // Expected columns: id, title, artist, year, genre, notes, status, lyrics
+  // Col index:         0   1      2       3     4      5      6       7
   const lines = csv.trim().split('\n');
   if(lines.length < 2) return [];
-  // Skip header row (row 0)
   const songs = [];
   for(let i = 1; i < lines.length; i++) {
     const cols = parseCSVLine(lines[i]);
-    if(!cols[0] || !cols[1]) continue; // skip empty rows
-    const status = (cols[5]||'').trim().toLowerCase();
-    if(status === 'excluded' || status === 'hold') continue; // skip non-active
-    
-    // Build lyrics array from sheet columns
-    const lyrics = [];
-    const verseText = (cols[6]||'').trim().replace(/\\n/g,'\n');
-    const chorusText = (cols[7]||'').trim().replace(/\\n/g,'\n');
-    const bridgeText = (cols[8]||'').trim().replace(/\\n/g,'\n');
-    if(verseText) lyrics.push({label:'Verse', text:verseText});
-    if(chorusText) lyrics.push({label:'Chorus', text:chorusText});
-    if(bridgeText) lyrics.push({label:'Bridge', text:bridgeText});
-    if(!lyrics.length) lyrics.push({label:'Lyrics', text:'Lyrics not yet added.'});
+    if(!cols[0] || !cols[1]) continue;
+    const status = (cols[6]||'').trim().toLowerCase();
+    if(status === 'excluded' || status === 'hold') continue;
+
+    const lyricsRaw = (cols[7]||'').trim().replace(/\\n/g,'\n');
+    const lyrics = lyricsRaw
+      ? [{label:'Lyrics', text:lyricsRaw}]
+      : [{label:'Lyrics', text:'Lyrics not yet added.'}];
 
     songs.push({
       id: (cols[0]||'').trim(),
