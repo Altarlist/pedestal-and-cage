@@ -1151,6 +1151,146 @@ textarea:focus { border-color: var(--gold); }
 <script>
 
 // ═══════════════════════════════════════════════════════
+// SUPABASE DATA LAYER
+// ═══════════════════════════════════════════════════════
+const SUPABASE_URL = 'https://wazupjwfwdhkgcsytrlq.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_ZoWN0tLKdeUGS_mZoVQbLA_z6FtSrdJ';
+
+function sbFetch(path, options = {}) {
+  const url = SUPABASE_URL + path;
+  const headers = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': 'Bearer ' + SUPABASE_KEY,
+    'Content-Type': 'application/json',
+    ...( options.headers || {} )
+  };
+  return fetch(url, { ...options, headers });
+}
+
+async function saveResponse(r) {
+  const payload = {
+    session_id:      r.sessionId,
+    timestamp:       r.timestamp,
+    elapsed_seconds: r.elapsedSeconds || null,
+    gender:          r.demographics?.gender || null,
+    age:             r.demographics?.age || null,
+    race:            r.demographics?.race || null,
+    country:         r.demographics?.country || null,
+    education:       r.demographics?.education || null,
+    music:           r.demographics?.music || null,
+    politics:        r.demographics?.politics || null,
+    song_id:         r.songId,
+    song_title:      r.songTitle,
+    artist:          r.artist,
+    year:            r.year,
+    genre:           r.genre,
+    assigned_corpus: r.assignedCorpus,
+    weighted_total:  r.weightedTotal ?? null,
+    parody_score:    r.parodyScore ?? null,
+    notes:           r.notes || null,
+    wound:           r.scores?.wound ?? null,
+    transaction:     r.scores?.transaction ?? null,
+    vocabulary:      r.scores?.vocabulary ?? null,
+    specificity:     r.scores?.specificity ?? null,
+    absence:         r.scores?.absence ?? null,
+    causality:       r.scores?.causality ?? null,
+    perspective:     r.scores?.perspective ?? null,
+    subject:         r.scores?.subject ?? null,
+    conditionality:  r.scores?.conditionality ?? null,
+    consent:         r.scores?.consent ?? null,
+    possession:      r.scores?.possession ?? null,
+    interiority:     r.scores?.interiority ?? null,
+    directionality:  r.scores?.directionality ?? null,
+    reciprocity:     r.scores?.reciprocity ?? null,
+    flaw:            r.scores?.flaw ?? null,
+    origin:          r.scores?.origin ?? null,
+    male:            r.scores?.male ?? null,
+    self:            r.scores?.self ?? null,
+    freedom:         r.scores?.freedom ?? null,
+  };
+  const res = await sbFetch('/rest/v1/submissions', {
+    method: 'POST',
+    headers: { 'Prefer': 'return=minimal' },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error('saveResponse failed: ' + text);
+  }
+}
+
+async function loadAllResponses() {
+  const res = await sbFetch('/rest/v1/submissions?select=*&order=created_at.asc&limit=10000');
+  if (!res.ok) throw new Error('loadAllResponses failed: ' + res.status);
+  const rows = await res.json();
+  // Map DB column names back to the shape the rest of the app expects
+  return rows.map(r => ({
+    sessionId:      r.session_id,
+    timestamp:      r.timestamp,
+    elapsedSeconds: r.elapsed_seconds,
+    demographics: {
+      gender:    r.gender,
+      age:       r.age,
+      race:      r.race,
+      country:   r.country,
+      education: r.education,
+      music:     r.music,
+      politics:  r.politics,
+    },
+    songId:         r.song_id,
+    songTitle:      r.song_title,
+    artist:         r.artist,
+    year:           r.year,
+    genre:          r.genre,
+    assignedCorpus: r.assigned_corpus,
+    weightedTotal:  r.weighted_total,
+    parodyScore:    r.parody_score,
+    notes:          r.notes,
+    scores: {
+      wound:        r.wound,
+      transaction:  r.transaction,
+      vocabulary:   r.vocabulary,
+      specificity:  r.specificity,
+      absence:      r.absence,
+      causality:    r.causality,
+      perspective:  r.perspective,
+      subject:      r.subject,
+      conditionality: r.conditionality,
+      consent:      r.consent,
+      possession:   r.possession,
+      interiority:  r.interiority,
+      directionality: r.directionality,
+      reciprocity:  r.reciprocity,
+      flaw:         r.flaw,
+      origin:       r.origin,
+      male:         r.male,
+      self:         r.self,
+      freedom:      r.freedom,
+    }
+  }));
+}
+
+async function clearAllData() {
+  // Deletes all rows from submissions. Supabase requires a filter; neq id 0 matches all int rows.
+  const res = await sbFetch('/rest/v1/submissions?id=neq.0', {
+    method: 'DELETE',
+    headers: { 'Prefer': 'return=minimal' }
+  });
+  if (!res.ok) throw new Error('clearAllData failed: ' + res.status);
+}
+
+async function getLastExportTime() {
+  try {
+    const val = localStorage.getItem('ptc_last_export');
+    return val || null;
+  } catch(e) { return null; }
+}
+
+async function setLastExportTime(iso) {
+  try { localStorage.setItem('ptc_last_export', iso); } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════════════
 // QUALIFIER DATA
 // ═══════════════════════════════════════════════════════
 
@@ -1368,18 +1508,14 @@ async function saveUserState() {
 }
 async function saveQualStat(outcome) {
   try {
-    const SUPABASE_URL = 'https://wazupjwfwdhkgcsytrlq.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_ZoWN0tLKdeUGS_mZoVQbLA_z6FtSrdJ';
-    const res = await fetch(SUPABASE_URL+'/rest/v1/qualifier_stats?id=eq.1&select=attempts,passed,fail1,fail2', {
-      headers: {'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}
-    });
+    const res = await sbFetch('/rest/v1/qualifier_stats?id=eq.1&select=attempts,passed,fail1,fail2');
     const rows = await res.json();
     if(!rows.length) return;
     const qs = rows[0];
     qs.attempts = (qs.attempts||0)+1; qs[outcome] = (qs[outcome]||0)+1;
-    await fetch(SUPABASE_URL+'/rest/v1/qualifier_stats?id=eq.1', {
+    await sbFetch('/rest/v1/qualifier_stats?id=eq.1', {
       method:'PATCH',
-      headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+      headers:{'Prefer':'return=minimal'},
       body: JSON.stringify({attempts:qs.attempts,passed:qs.passed,fail1:qs.fail1,fail2:qs.fail2})
     });
     if(outcome==='passed') try{localStorage.setItem('ptc_qual_passed','1');}catch(e){}
@@ -1420,7 +1556,7 @@ async function startFreshSession() {
   document.getElementById('session-display').textContent=userState.sessionId;
   showScreen('screen-session');
 }
-function qualifierPassed(){saveQualStat('passed');userState.qualPassed=true;saveUserState();showScreen('screen-demo');}
+function qualifierPassed(){inQualifier=false;saveQualStat('passed');userState.qualPassed=true;saveUserState();showScreen('screen-demo');}
 
 // ═══════════════════════════════════════════════════════
 // QUALIFIER STAGE 1 LOGIC
