@@ -1360,29 +1360,39 @@ let qualFailCount = 0;
 let userState = { qualPassed: false, demoDone: false, sessionId: '', demographics: {} };
 
 async function loadUserState() {
-  try { const r = await window.storage.get('user_state',false); if(r) userState=JSON.parse(r.value); } catch(e) {}
+  try { const stored = localStorage.getItem('ptc_user_state'); if(stored) userState=JSON.parse(stored); } catch(e) {}
 }
 async function saveUserState() {
-  try { await window.storage.set('user_state',JSON.stringify(userState),false); } catch(e) {}
+  try { localStorage.setItem('ptc_user_state', JSON.stringify(userState)); } catch(e) {}
 }
 async function saveQualStat(outcome) {
   try {
-    let qs={attempts:0,passed:0,fail1:0,fail2:0};
-    const r=await window.storage.get('qualifier_stats',true);
-    if(r) qs=JSON.parse(r.value);
-    qs.attempts++; qs[outcome]++;
-    await window.storage.set('qualifier_stats',JSON.stringify(qs),true);
-  } catch(e) {}
+    const SUPABASE_URL = 'https://wazupjwfwdhkgcsytrlq.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_ZoWN0tLKdeUGS_mZoVQbLA_z6FtSrdJ';
+    const res = await fetch(SUPABASE_URL+'/rest/v1/qualifier_stats?id=eq.1&select=attempts,passed,fail1,fail2', {
+      headers: {'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}
+    });
+    const rows = await res.json();
+    if(!rows.length) return;
+    const qs = rows[0];
+    qs.attempts = (qs.attempts||0)+1; qs[outcome] = (qs[outcome]||0)+1;
+    await fetch(SUPABASE_URL+'/rest/v1/qualifier_stats?id=eq.1', {
+      method:'PATCH',
+      headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body: JSON.stringify({attempts:qs.attempts,passed:qs.passed,fail1:qs.fail1,fail2:qs.fail2})
+    });
+    if(outcome==='passed') try{localStorage.setItem('ptc_qual_passed','1');}catch(e){}
+  } catch(e) { console.error('[DataLayer] saveQualStat failed:', e); }
 }
 async function checkReturningUser() {
   await loadUserState();
   if(!userState.qualPassed){startStage1();return;}
   if(!userState.demoDone){showScreen('screen-demo');return;}
   try {
-    const idxR=await window.storage.get('song_idx',false);
-    const queueR=await window.storage.get('song_queue',false);
-    if(idxR&&queueR){
-      const idx=parseInt(idxR.value);
+    const queueStr=localStorage.getItem('ptc_song_queue');
+    const idxStr=localStorage.getItem('ptc_song_idx');
+    if(queueStr&&idxStr){
+      const idx=parseInt(idxStr);
       if(idx>0){
         document.getElementById('resume-status').textContent='You have scored '+idx+' song'+(idx!==1?'s':'')+' in your current session.';
         showScreen('screen-resume');return;
@@ -1394,17 +1404,17 @@ async function checkReturningUser() {
 }
 async function resumeSession() {
   try {
-    const qR=await window.storage.get('song_queue',false);
-    const iR=await window.storage.get('song_idx',false);
-    const rR=await window.storage.get('session_responses',false);
-    songQueue=JSON.parse(qR.value); currentIdx=parseInt(iR.value);
-    sessionResponses=rR?JSON.parse(rR.value):[];
+    const queueStr=localStorage.getItem('ptc_song_queue');
+    const idxStr=localStorage.getItem('ptc_song_idx');
+    const respStr=localStorage.getItem('ptc_session_responses');
+    songQueue=JSON.parse(queueStr); currentIdx=parseInt(idxStr);
+    sessionResponses=respStr?JSON.parse(respStr):[];
     demographics=userState.demographics; sessionId=userState.sessionId;
     inQualifier=false; loadSong(currentIdx); showScreen('screen-song');
   } catch(e){startFreshSession();}
 }
 async function startFreshSession() {
-  try{await window.storage.delete('song_queue',false);await window.storage.delete('song_idx',false);await window.storage.delete('session_responses',false);}catch(e){}
+  try{localStorage.removeItem('ptc_song_queue');localStorage.removeItem('ptc_song_idx');localStorage.removeItem('ptc_session_responses');}catch(e){}
   userState.sessionId=generateId(); await saveUserState();
   document.getElementById('session-display').textContent=userState.sessionId;
   showScreen('screen-session');
@@ -1764,29 +1774,7 @@ function calcWeighted(corpus, sc, parody) {
   return Math.round(total*100)/100;
 }
 
-// ═══════════════════════════════════════════════════════
-// DATA LAYER
-// ═══════════════════════════════════════════════════════
-
-async function saveResponse(response) {
-  try {
-    const existing = await loadAllResponses();
-    existing.push(response);
-    await window.storage.set('all_responses', JSON.stringify(existing), true);
-  } catch(e) {
-    console.error('[DataLayer] saveResponse failed:', e);
-  }
-}
-
-async function loadAllResponses() {
-  try {
-    const result = await window.storage.get('all_responses', true);
-    return result ? JSON.parse(result.value) : [];
-  } catch(e) {
-    console.error('[DataLayer] loadAllResponses failed:', e);
-    return [];
-  }
-}
+// (data layer above)
 
 async function loadSongList() {
   const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1WTzvqx_AyKa_AMwGQzgGQQO9pkjx2vzC7z_GaawuI4E/gviz/tq?tqx=out:csv&sheet=Song+List';
@@ -1859,23 +1847,7 @@ function parseCSVToRows(csv) {
   return rows;
 }
 
-async function clearAllData() {
-  await window.storage.delete('all_responses', true);
-  await window.storage.delete('last_export_time', true);
-}
-
-async function getLastExportTime() {
-  try {
-    const result = await window.storage.get('last_export_time', true);
-    return result ? result.value : null;
-  } catch(e) { return null; }
-}
-
-async function setLastExportTime(isoString) {
-  try {
-    await window.storage.set('last_export_time', isoString, true);
-  } catch(e) { console.error('[DataLayer] setLastExportTime failed:', e); }
-}
+// clearAllData, getLastExportTime, setLastExportTime defined in Supabase data layer above
 
 // ═══════════════════════════════════════════════════════
 // DEMOGRAPHICS
@@ -1911,9 +1883,9 @@ async function beginScoring() {
   currentIdx = 0;
   sessionResponses = [];
   try {
-    await window.storage.set('song_queue', JSON.stringify(songQueue), false);
-    await window.storage.set('song_idx', '0', false);
-    await window.storage.set('session_responses', JSON.stringify([]), false);
+    localStorage.setItem('ptc_song_queue', JSON.stringify(songQueue));
+    localStorage.setItem('ptc_song_idx', '0');
+    localStorage.setItem('ptc_session_responses', JSON.stringify([]));
   } catch(e) {}
   loadSong(currentIdx);
   showScreen('screen-song');
@@ -2080,8 +2052,8 @@ async function submitSong() {
 
   currentIdx++;
   try {
-    await window.storage.set('song_idx', String(currentIdx), false);
-    await window.storage.set('session_responses', JSON.stringify(sessionResponses), false);
+    localStorage.setItem('ptc_song_idx', String(currentIdx));
+    localStorage.setItem('ptc_session_responses', JSON.stringify(sessionResponses));
   } catch(e) {}
   if(currentIdx === 20) {
     showScreen('screen-gate');
@@ -2149,19 +2121,18 @@ let _adminResponses = [];
 
 async function loadAdminPanel() {
   try {
-    const qStats = await window.storage.get('qualifier_stats', true);
-    if(qStats) {
-      const qs = JSON.parse(qStats.value);
-      document.getElementById('admin-qual-attempts').textContent = qs.attempts||0;
-      document.getElementById('admin-qual-passed').textContent = qs.passed||0;
-      document.getElementById('admin-qual-fail1').textContent = qs.fail1||0;
-      document.getElementById('admin-qual-fail2').textContent = qs.fail2||0;
-    } else {
-      ['admin-qual-attempts','admin-qual-passed','admin-qual-fail1','admin-qual-fail2'].forEach(id=>{
-        document.getElementById(id).textContent='0';
-      });
-    }
-  } catch(e) {}
+    const res = await sbFetch('/rest/v1/qualifier_stats?id=eq.1&select=attempts,passed,fail1,fail2');
+    const rows = await res.json();
+    const qs = rows[0] || {attempts:0,passed:0,fail1:0,fail2:0};
+    document.getElementById('admin-qual-attempts').textContent = qs.attempts||0;
+    document.getElementById('admin-qual-passed').textContent = qs.passed||0;
+    document.getElementById('admin-qual-fail1').textContent = qs.fail1||0;
+    document.getElementById('admin-qual-fail2').textContent = qs.fail2||0;
+  } catch(e) {
+    ['admin-qual-attempts','admin-qual-passed','admin-qual-fail1','admin-qual-fail2'].forEach(id=>{
+      document.getElementById(id).textContent='0';
+    });
+  }
   const all = await loadAllResponses();
   _adminResponses = all;
   const sessions = new Set(all.map(r=>r.sessionId)).size;
