@@ -747,20 +747,6 @@ textarea:focus { border-color: var(--gold); }
 <!-- INTRO -->
 <div id="screen-intro" class="screen active">
   <div class="intro-eyebrow">A Lyric Study</div>
-  <h1 class="intro-title">The Pedestal<br>&amp; <em>The Cage</em></h1>
-  <div class="intro-sub">Reviewer Scoring Instrument</div>
-  <div class="intro-rule"></div>
-  <p class="intro-body">
-    This is a two-stage screening.<br><br>
-    <strong>Stage One:</strong> Three lyrics. Nine questions. Read carefully and say what you see.<br><br>
-    <strong>Stage Two:</strong> Four songs. Assign each to a corpus and score it. The rubric will be visible throughout.
-  </p>
-  <p class="intro-note">There are no trick questions. Take your time with each lyric.</p>
-  <button class="btn-primary" onclick="checkReturningUser()">Begin →</button>
-  <div style="margin-top:20px;">
-    <button class="btn-ghost" style="max-width:200px;font-size:10px;" onclick="showScreen('screen-admin-login')">Admin</button>
-  </div>
-</div>
 
 <!-- RESUME SCREEN -->
 <div id="screen-resume" class="screen" style="background:var(--ink);color:var(--paper);justify-content:center;align-items:center;padding:48px 28px;text-align:center;">
@@ -845,78 +831,20 @@ textarea:focus { border-color: var(--gold); }
   <button class="btn-primary" onclick="startScoring()">Begin Scoring</button>
 </div>
 
-<!-- S2 Song Screen -->
-<div id="screen-song" class="screen">
-  <div class="progress-bar-wrap">
-    <div class="progress-bar-fill" id="s2-progress" style="width:0%"></div>
-  </div>
-
-  <div class="song-header">
-    <div class="song-counter" id="song-counter">Song 1 of 4</div>
-    <div class="song-title" id="song-title"></div>
-    <div class="song-artist" id="song-artist"></div>
-    <div class="song-meta">
-      <div class="meta-pill" id="song-year"></div>
-      <div class="meta-pill" id="song-genre"></div>
-    </div>
-  </div>
-
-  <div class="lyrics-section">
-    <div class="lyrics-toggle" onclick="toggleLyrics()">
-      <span class="lyrics-toggle-label">View Lyrics</span>
-      <span class="lyrics-toggle-icon" id="lyrics-icon">▾</span>
-    </div>
-    <div class="lyrics-body" id="lyrics-body"></div>
-  </div>
-
-  <div class="corpus-section">
-    <div class="section-label">Assign Corpus</div>
-    <div class="corpus-grid">
-      <button class="corpus-btn" onclick="inQualifier ? selectCorpusQual('A') : selectCorpus('A')" id="corpus-A">
-        <span class="corpus-letter">A</span>
-        <span class="corpus-name">She<br>Saves</span>
-      </button>
-      <button class="corpus-btn" onclick="inQualifier ? selectCorpusQual('B') : selectCorpus('B')" id="corpus-B">
-        <span class="corpus-letter">B</span>
-        <span class="corpus-name">She Leaves /<br>She Is a Wound</span>
-      </button>
-      <button class="corpus-btn" onclick="inQualifier ? selectCorpusQual('C') : selectCorpus('C')" id="corpus-C">
-        <span class="corpus-letter">C</span>
-        <span class="corpus-name">She Is a<br>Commodity</span>
-      </button>
-      <button class="corpus-btn" onclick="inQualifier ? selectCorpusQual('D') : selectCorpus('D')" id="corpus-D">
-        <span class="corpus-letter">D</span>
-        <span class="corpus-name">She Is Known<br>and Whole</span>
-      </button>
-      <button class="corpus-btn" onclick="inQualifier ? selectCorpusQual('E') : selectCorpus('E')" id="corpus-E">
-        <span class="corpus-letter">E</span>
-        <span class="corpus-name">She Is<br>a Force</span>
-      </button>
-      <button class="corpus-btn" onclick="inQualifier ? selectCorpusQual('NONE') : selectCorpus('NONE')" id="corpus-NONE">
-        <span class="corpus-letter" style="font-size:16px;margin-top:4px;">—</span>
-        <span class="corpus-name">No valid<br>corpus</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="rubric-section" id="rubric-section">
-    <div class="rubric-title" id="rubric-title">Score the Lenses</div>
-    <div id="lens-container"></div>
-  </div>
-
-  <div class="notes-section" id="notes-section">
-    <label class="notes-label">Notes (optional)</label>
-    <textarea id="notes-input" placeholder="observations, edge cases, reasoning…"></textarea>
-  </div>
-
-  <div class="submit-section" id="submit-section">
-    <button class="btn-submit" id="submit-btn" onclick="submitSong()">Submit &amp; Continue →</button>
-  </div>
-</div>
 
 <!-- ═══════════════════════════════════════════════════════
      OUTCOMES
 ═══════════════════════════════════════════════════════ -->
+
+<!-- Pass (Stage 2 complete) -->
+<div id="screen-pass" class="screen">
+  <div class="pass-symbol">✓</div>
+  <h2 class="pass-title">You're in.</h2>
+  <div class="pass-rule"></div>
+  <p class="pass-body">Screening complete. The study begins now.</p>
+  <p class="pass-sub">Before you begin scoring, we need a few details about you. This takes under a minute and is asked once only.</p>
+  <button class="btn-primary" onclick="qualifierPassed()" style="margin-top:8px;">Continue →</button>
+</div>
 
 <!-- Fail (either stage) -->
 <div id="screen-fail" class="screen">
@@ -930,40 +858,7 @@ textarea:focus { border-color: var(--gold); }
   </p>
 </div>
 
-<!-- Pass (Stage 2 complete) -->
-<div id="screen-pass" class="screen">
-  <div class="pass-symbol">✓</div>
-  <h2 class="pass-title">Screening Complete</h2>
-  <div class="pass-rule"></div>
-  <p class="pass-body">You're in.</p>
-  <p class="pass-sub">Your corpus assignments and scores have been recorded. You'll receive the full song corpus and reviewer materials shortly.</p>
-  <button class="btn-primary" style="background:transparent;border:1.5px solid var(--gold);color:var(--gold);max-width:260px;" onclick="downloadResults()">Download My Responses</button>
-</div>
 
-<!-- Pass (Stage 2 complete) -->
-<div id="screen-pass" class="screen">
-  <div class="pass-symbol">✓</div>
-  <h2 class="pass-title">You're in.</h2>
-  <div class="pass-rule"></div>
-  <p class="pass-body">Screening complete. The study begins now.</p>
-  <p class="pass-sub">Before you begin scoring, we need a few details about you. This takes under a minute and is asked once only.</p>
-  <button class="btn-primary" onclick="qualifierPassed()" style="margin-top:8px;">Continue →</button>
-</div>
-
-  <h1 class="intro-title">The Pedestal<br>&amp; <em>The Cage</em></h1>
-  <div class="intro-sub">Reviewer Scoring Instrument</div>
-  <div class="intro-rule"></div>
-  <p class="intro-body">
-    You'll be assigned songs at random and asked to read their lyrics carefully.<br><br>
-    For each song: assign it to a <strong>corpus</strong>, then score it across a set of <strong>weighted lenses</strong>. The rubric will be visible throughout.<br><br>
-    Score at least <strong>20 songs</strong> to complete your session. You may continue as long as you like.
-  </p>
-  <p class="intro-note">There is no clock. Take your time with each lyric.</p>
-  <button class="btn-primary" onclick="showScreen('screen-demo')">Begin →</button>
-  <div style="margin-top:20px;">
-    <button class="btn-ghost" style="max-width:200px;font-size:10px;" onclick="showScreen('screen-admin-login')">Admin</button>
-  </div>
-</div>
 
 <!-- DEMOGRAPHICS -->
 <div id="screen-demo" class="screen">
