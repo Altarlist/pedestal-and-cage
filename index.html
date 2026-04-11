@@ -747,6 +747,20 @@ textarea:focus { border-color: var(--gold); }
 <!-- INTRO -->
 <div id="screen-intro" class="screen active">
   <div class="intro-eyebrow">A Lyric Study</div>
+  <h1 class="intro-title">The Pedestal<br>&amp; <em>The Cage</em></h1>
+  <div class="intro-sub">Reviewer Scoring Instrument</div>
+  <div class="intro-rule"></div>
+  <p class="intro-body">
+    This is a two-stage screening.<br><br>
+    <strong>Stage One:</strong> Three lyrics. Nine questions. Read carefully and say what you see.<br><br>
+    <strong>Stage Two:</strong> Four songs. Assign each to a corpus and score it across the weighted lenses.
+  </p>
+  <p class="intro-note">There are no trick questions. Take your time with each lyric.</p>
+  <button class="btn-primary" onclick="checkReturningUser()">Begin →</button>
+  <div style="margin-top:20px;">
+    <button class="btn-ghost" style="max-width:200px;font-size:10px;" onclick="showScreen('screen-admin-login')">Admin</button>
+  </div>
+</div>
 
 <!-- RESUME SCREEN -->
 <div id="screen-resume" class="screen" style="background:var(--ink);color:var(--paper);justify-content:center;align-items:center;padding:48px 28px;text-align:center;">
@@ -759,24 +773,6 @@ textarea:focus { border-color: var(--gold); }
     <button class="btn-primary" onclick="resumeSession()">Continue Scoring →</button>
     <button class="btn-ghost" onclick="startFreshSession()">Start New Session</button>
   </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════
-     STAGE 1 — LYRIC COMPREHENSION
-═══════════════════════════════════════════════════════ -->
-
-  <h1 class="intro-title">Reading<br><em>the Lyric</em></h1>
-  <div class="intro-subtitle">Stage One — Comprehension Screen</div>
-  <div class="intro-rule"></div>
-  <p class="intro-body">
-    You'll read <strong>three short lyrics</strong> — no titles, no artists, no context.<br><br>
-    For each one, answer three questions about what is actually on the page.
-  </p>
-  <p class="intro-note">
-    There are no trick questions. No required vocabulary.<br>
-    Read carefully and say what you see.
-  </p>
-  <button class="btn-primary" onclick="startStage1()">Begin</button>
 </div>
 
 <!-- S1 Lyric Screen -->
@@ -814,10 +810,6 @@ textarea:focus { border-color: var(--gold); }
   <button class="btn-primary" onclick="startStage2()">Continue to Stage Two →</button>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════
-     STAGE 2 — CORPUS SCORING
-═══════════════════════════════════════════════════════ -->
-
 <!-- S2 Intro -->
 <div id="screen-s2-intro" class="screen">
   <div class="s2-ornament">Stage Two — Corpus Scoring</div>
@@ -831,12 +823,7 @@ textarea:focus { border-color: var(--gold); }
   <button class="btn-primary" onclick="startScoring()">Begin Scoring</button>
 </div>
 
-
-<!-- ═══════════════════════════════════════════════════════
-     OUTCOMES
-═══════════════════════════════════════════════════════ -->
-
-<!-- Pass (Stage 2 complete) -->
+<!-- Pass -->
 <div id="screen-pass" class="screen">
   <div class="pass-symbol">✓</div>
   <h2 class="pass-title">You're in.</h2>
@@ -846,7 +833,7 @@ textarea:focus { border-color: var(--gold); }
   <button class="btn-primary" onclick="qualifierPassed()" style="margin-top:8px;">Continue →</button>
 </div>
 
-<!-- Fail (either stage) -->
+<!-- Fail -->
 <div id="screen-fail" class="screen">
   <div class="fail-symbol">—</div>
   <h2 class="fail-title">Screening Incomplete</h2>
@@ -857,8 +844,6 @@ textarea:focus { border-color: var(--gold); }
     Thank you for your time. Please reach out to the study coordinator if you believe this is an error.
   </p>
 </div>
-
-
 
 <!-- DEMOGRAPHICS -->
 <div id="screen-demo" class="screen">
@@ -994,32 +979,32 @@ textarea:focus { border-color: var(--gold); }
   <div class="corpus-section">
     <div class="section-label">Assign Corpus</div>
     <div class="corpus-grid">
-      <button class="corpus-btn" onclick="inQualifier ? selectCorpusQual('A') : selectCorpus('A')" id="corpus-A">
+      <button class="corpus-btn" onclick="inQualifier?selectCorpusQual('A'):selectCorpus('A')" id="corpus-A">
         <span class="corpus-letter">A</span>
         <span class="corpus-name">She Saves</span>
         <span class="corpus-def">She is the instrument of his salvation, healing, or transformation.</span>
       </button>
-      <button class="corpus-btn" onclick="inQualifier ? selectCorpusQual('B') : selectCorpus('B')" id="corpus-B">
+      <button class="corpus-btn" onclick="inQualifier?selectCorpusQual('B'):selectCorpus('B')" id="corpus-B">
         <span class="corpus-letter">B</span>
         <span class="corpus-name">She Leaves / She Is a Wound</span>
         <span class="corpus-def">Her absence or departure defines the emotional landscape.</span>
       </button>
-      <button class="corpus-btn" onclick="inQualifier ? selectCorpusQual('C') : selectCorpus('C')" id="corpus-C">
+      <button class="corpus-btn" onclick="inQualifier?selectCorpusQual('C'):selectCorpus('C')" id="corpus-C">
         <span class="corpus-letter">C</span>
         <span class="corpus-name">She Is a Commodity</span>
         <span class="corpus-def">She is observed, cataloged, or possessed. Her value is conditional.</span>
       </button>
-      <button class="corpus-btn" onclick="inQualifier ? selectCorpusQual('D') : selectCorpus('D')" id="corpus-D">
+      <button class="corpus-btn" onclick="inQualifier?selectCorpusQual('D'):selectCorpus('D')" id="corpus-D">
         <span class="corpus-letter">D</span>
         <span class="corpus-name">She Is Known and Whole</span>
         <span class="corpus-def">She has an inner life, her own direction, and is seen as a full person.</span>
       </button>
-      <button class="corpus-btn" onclick="inQualifier ? selectCorpusQual('E') : selectCorpus('E')" id="corpus-E">
+      <button class="corpus-btn" onclick="inQualifier?selectCorpusQual('E'):selectCorpus('E')" id="corpus-E">
         <span class="corpus-letter">E</span>
         <span class="corpus-name">She Is a Force</span>
         <span class="corpus-def">Her energy is self-generated. She requires no male audience to function.</span>
       </button>
-      <button class="corpus-btn" onclick="inQualifier ? selectCorpusQual('NONE') : selectCorpus('NONE')" id="corpus-NONE">
+      <button class="corpus-btn" onclick="inQualifier?selectCorpusQual('NONE'):selectCorpus('NONE')" id="corpus-NONE">
         <span class="corpus-letter" style="font-size:16px;margin-top:4px;">—</span>
         <span class="corpus-name">No Valid Corpus</span>
         <span class="corpus-def">The song does not center a female subject.</span>
@@ -1039,7 +1024,7 @@ textarea:focus { border-color: var(--gold); }
   </div>
 
   <div class="submit-section" id="submit-section">
-    <button class="btn-submit" id="submit-btn" onclick="inQualifier ? submitQualSong() : submitSong()" disabled>Submit &amp; Continue →</button>
+    <button class="btn-submit" id="submit-btn" onclick="inQualifier?submitQualSong():submitSong()" disabled>Submit &amp; Continue →</button>
   </div>
 </div>
 
@@ -1110,26 +1095,14 @@ textarea:focus { border-color: var(--gold); }
         <div class="admin-stat-value" id="admin-avg">—</div>
       </div>
     </div>
-    <div class="admin-section-title" style="margin-top:20px;">Qualifier Stats</div>
-    <div class="admin-stats-row">
-      <div class="admin-stat">
-        <div class="admin-stat-label">Attempts</div>
-        <div class="admin-stat-value" id="admin-qual-attempts">—</div>
-      </div>
-      <div class="admin-stat">
-        <div class="admin-stat-label">Passed</div>
-        <div class="admin-stat-value" id="admin-qual-passed" style="color:var(--sage);">—</div>
-      </div>
-      <div class="admin-stat">
-        <div class="admin-stat-label">Failed S1</div>
-        <div class="admin-stat-value" id="admin-qual-fail1" style="color:var(--rust);">—</div>
-      </div>
-      <div class="admin-stat">
-        <div class="admin-stat-label">Failed S2</div>
-        <div class="admin-stat-value" id="admin-qual-fail2" style="color:var(--rust);">—</div>
-      </div>
-    </div>
 
+    <div class="admin-section-title">Qualifier Stats</div>
+    <div class="admin-stats-row" style="margin-bottom:20px;">
+      <div class="admin-stat"><div class="admin-stat-label">Attempts</div><div class="admin-stat-value" id="admin-qual-attempts">—</div></div>
+      <div class="admin-stat"><div class="admin-stat-label">Passed</div><div class="admin-stat-value" id="admin-qual-passed" style="color:var(--sage);">—</div></div>
+      <div class="admin-stat"><div class="admin-stat-label">Failed S1</div><div class="admin-stat-value" id="admin-qual-fail1" style="color:var(--rust);">—</div></div>
+      <div class="admin-stat"><div class="admin-stat-label">Failed S2</div><div class="admin-stat-value" id="admin-qual-fail2" style="color:var(--rust);">—</div></div>
+    </div>
     <div class="admin-section-title">Corpus Distribution</div>
     <div id="admin-corpus-dist"></div>
 
@@ -1312,7 +1285,7 @@ const LYRICS = [
   },
 ];
 
-const QUALIFIER_SONGS = [
+const QUAL_SONGS = [
   {
     title: "I Want to Know What Love Is",
     artist: "Foreigner",
@@ -1373,135 +1346,73 @@ const QUALIFIER_SONGS = [
 ];
 
 // ═══════════════════════════════════════════════════════
-// QUALIFIER STATE
+// QUALIFIER + SESSION STATE
 // ═══════════════════════════════════════════════════════
+let inQualifier = false;
 let currentLyric = 0;
 let s1Answers = {};
 let missCount = 0;
-let s2QualSong = 0;
-let s2QualCorpus = null;
-let s2QualScores = {};
-let s2QualParody = null;
-let s2FailCount = 0;
-let qualResponses = [];
-
-// ═══════════════════════════════════════════════════════
-// SESSION PERSISTENCE STATE
-// ═══════════════════════════════════════════════════════
-// Keys stored in window.storage:
-//   'user_state'   — { qualPassed, demoDone, sessionId, demographics }
-//   'song_queue'   — serialized song queue for resume
-//   'song_idx'     — current position in queue
-//   'session_responses' — responses saved so far this session
-
+let qualSongIdx = 0;
+let qualCorpus = null;
+let qualScores = {};
+let qualParody = null;
+let qualFailCount = 0;
 let userState = { qualPassed: false, demoDone: false, sessionId: '', demographics: {} };
 
 async function loadUserState() {
-  try {
-    const r = await window.storage.get('user_state', false);
-    if (r) userState = JSON.parse(r.value);
-  } catch(e) {}
+  try { const r = await window.storage.get('user_state',false); if(r) userState=JSON.parse(r.value); } catch(e) {}
 }
-
-async function saveQualStat(outcome) {
-  // outcome: 'passed', 'fail1', 'fail2'
-  try {
-    let qs = { attempts: 0, passed: 0, fail1: 0, fail2: 0 };
-    const r = await window.storage.get('qualifier_stats', true);
-    if (r) qs = JSON.parse(r.value);
-    qs.attempts++;
-    qs[outcome]++;
-    await window.storage.set('qualifier_stats', JSON.stringify(qs), true);
-  } catch(e) {}
-}
-
 async function saveUserState() {
+  try { await window.storage.set('user_state',JSON.stringify(userState),false); } catch(e) {}
+}
+async function saveQualStat(outcome) {
   try {
-    await window.storage.set('user_state', JSON.stringify(userState), false);
+    let qs={attempts:0,passed:0,fail1:0,fail2:0};
+    const r=await window.storage.get('qualifier_stats',true);
+    if(r) qs=JSON.parse(r.value);
+    qs.attempts++; qs[outcome]++;
+    await window.storage.set('qualifier_stats',JSON.stringify(qs),true);
   } catch(e) {}
 }
-
 async function checkReturningUser() {
   await loadUserState();
-
-  if (!userState.qualPassed) {
-    // Fresh user — start qualifier
-    startStage1();
-    return;
-  }
-
-  if (!userState.demoDone) {
-    // Passed qualifier but never finished demographics
-    showScreen('screen-demo');
-    return;
-  }
-
-  // Check for in-progress session
+  if(!userState.qualPassed){startStage1();return;}
+  if(!userState.demoDone){showScreen('screen-demo');return;}
   try {
-    const idxR = await window.storage.get('song_idx', false);
-    const queueR = await window.storage.get('song_queue', false);
-    const responsesR = await window.storage.get('session_responses', false);
-
-    if (idxR && queueR) {
-      const idx = parseInt(idxR.value);
-      const savedResponses = responsesR ? JSON.parse(responsesR.value) : [];
-      if (idx > 0) {
-        document.getElementById('resume-status').textContent =
-          `You have scored ${idx} song${idx !== 1 ? 's' : ''} in your current session.`;
-        showScreen('screen-resume');
-        return;
+    const idxR=await window.storage.get('song_idx',false);
+    const queueR=await window.storage.get('song_queue',false);
+    if(idxR&&queueR){
+      const idx=parseInt(idxR.value);
+      if(idx>0){
+        document.getElementById('resume-status').textContent='You have scored '+idx+' song'+(idx!==1?'s':'')+' in your current session.';
+        showScreen('screen-resume');return;
       }
     }
   } catch(e) {}
-
-  // Qual done, demo done, no active session — go to session ID
-  document.getElementById('session-display').textContent = userState.sessionId;
+  document.getElementById('session-display').textContent=userState.sessionId;
   showScreen('screen-session');
 }
-
 async function resumeSession() {
   try {
-    const queueR = await window.storage.get('song_queue', false);
-    const idxR = await window.storage.get('song_idx', false);
-    const responsesR = await window.storage.get('session_responses', false);
-
-    songQueue = JSON.parse(queueR.value);
-    currentIdx = parseInt(idxR.value);
-    sessionResponses = responsesR ? JSON.parse(responsesR.value) : [];
-    demographics = userState.demographics;
-    sessionId = userState.sessionId;
-
-    loadSong(currentIdx);
-    showScreen('screen-song');
-  } catch(e) {
-    startFreshSession();
-  }
+    const qR=await window.storage.get('song_queue',false);
+    const iR=await window.storage.get('song_idx',false);
+    const rR=await window.storage.get('session_responses',false);
+    songQueue=JSON.parse(qR.value); currentIdx=parseInt(iR.value);
+    sessionResponses=rR?JSON.parse(rR.value):[];
+    demographics=userState.demographics; sessionId=userState.sessionId;
+    inQualifier=false; loadSong(currentIdx); showScreen('screen-song');
+  } catch(e){startFreshSession();}
 }
-
 async function startFreshSession() {
-  // Clear session progress but keep qual+demo state
-  try {
-    await window.storage.delete('song_queue', false);
-    await window.storage.delete('song_idx', false);
-    await window.storage.delete('session_responses', false);
-  } catch(e) {}
-
-  userState.sessionId = generateId();
-  await saveUserState();
-
-  document.getElementById('session-display').textContent = userState.sessionId;
+  try{await window.storage.delete('song_queue',false);await window.storage.delete('song_idx',false);await window.storage.delete('session_responses',false);}catch(e){}
+  userState.sessionId=generateId(); await saveUserState();
+  document.getElementById('session-display').textContent=userState.sessionId;
   showScreen('screen-session');
 }
-
-function qualifierPassed() {
-  saveQualStat('passed');
-  userState.qualPassed = true;
-  saveUserState();
-  showScreen('screen-demo');
-}
+function qualifierPassed(){saveQualStat('passed');userState.qualPassed=true;saveUserState();showScreen('screen-demo');}
 
 // ═══════════════════════════════════════════════════════
-// QUALIFIER LOGIC
+// QUALIFIER STAGE 1 LOGIC
 // ═══════════════════════════════════════════════════════
 
 function startStage1() {
@@ -1572,11 +1483,7 @@ function submitLyric() {
     if (s1Answers[q.id] !== q.correct) missCount++;
   });
 
-  if (missCount >= 3) {
-    saveQualStat('fail1');
-    showScreen('screen-fail');
-    return;
-  }
+  if (missCount >= 3) { saveQualStat('fail1'); showScreen('screen-fail'); return; }
 
   currentLyric++;
   if (currentLyric >= LYRICS.length) {
@@ -1588,325 +1495,127 @@ function submitLyric() {
 }
 
 // ═══════════════════════════════════════════════════════
-// STAGE 2 LOGIC
+
+// ═══════════════════════════════════════════════════════
+// QUALIFIER STAGE 2 LOGIC
 // ═══════════════════════════════════════════════════════
 
-function startStage2() {
-  showScreen('screen-s2-intro');
-}
+function startStage2(){showScreen('screen-s2-intro');}
 
-function startScoring() {
-  currentSong = 0;
-  allResponses = [];
-  s2FailCount = 0;
-  loadSong(0);
+function startScoring(){
+  inQualifier=true; qualSongIdx=0; qualFailCount=0;
   showScreen('screen-song');
+  setTimeout(function(){ loadQualSong(0); }, 50);
 }
 
-function loadSong(idx) {
-  selectedCorpus = null;
-  scores = {};
-  parodyScore = null;
-
-  const s = QUALIFIER_SONGS[idx];
-  document.getElementById('song-counter').textContent = `Song ${idx + 1} of ${QUALIFIER_SONGS.length}`;
-  document.getElementById('song-title').textContent = `"${s.title}"`;
-  document.getElementById('song-artist').textContent = s.artist;
-  document.getElementById('song-year').textContent = s.year;
-  document.getElementById('song-genre').textContent = s.genre;
-  document.getElementById('notes-input').value = '';
-
-  document.querySelectorAll('.corpus-btn').forEach(b => b.classList.remove('selected'));
+function loadQualSong(idx){
+  qualCorpus=null; qualScores={}; qualParody=null;
+  const s=QUAL_SONGS[idx];
+  document.getElementById('song-counter').textContent='Song '+(idx+1)+' of '+QUAL_SONGS.length;
+  document.getElementById('song-title').textContent='"'+s.title+'"';
+  document.getElementById('song-artist').textContent=s.artist;
+  document.getElementById('song-year').textContent=s.year;
+  document.getElementById('song-genre').textContent=s.genre;
+  document.getElementById('notes-input').value='';
+  const prog=document.getElementById('song-progress');
+  if(prog) prog.style.width=((idx/QUAL_SONGS.length)*100)+'%';
+  document.querySelectorAll('.corpus-btn').forEach(b=>b.classList.remove('selected'));
   document.getElementById('rubric-section').classList.remove('visible');
   document.getElementById('notes-section').classList.remove('visible');
   document.getElementById('submit-section').classList.remove('visible');
-  document.getElementById('lens-container').innerHTML = '';
-  const _s2p = document.getElementById('s2-progress'); if(_s2p) _s2p.style.width = ((idx / QUALIFIER_SONGS.length) * 100) + '%';
-
-  const lyricsBody = document.getElementById('lyrics-body');
-  const lyricsIcon = document.getElementById('lyrics-icon');
-  lyricsBody.classList.remove('open');
-  lyricsIcon.classList.remove('open');
-  lyricsBody.innerHTML = s.lyrics.map(section =>
-    `<div class="lyrics-section-label">${section.label}</div><div>${section.text.replace(/\n/g, '<br>')}</div>`
-  ).join('');
+  document.getElementById('lens-container').innerHTML='';
+  const lb=document.getElementById('lyrics-body');
+  const li=document.getElementById('lyrics-icon');
+  lb.classList.remove('open'); li.classList.remove('open');
+  lb.innerHTML=s.lyrics.map(function(sec){return '<div class="lyrics-section-label">'+sec.label+'</div><div style="font-family:Playfair Display,serif;font-style:italic;">'+sec.text.split('\n').join('<br>')+'</div>';}).join('');
 }
 
-function toggleLyrics() {
-  document.getElementById('lyrics-body').classList.toggle('open');
-  document.getElementById('lyrics-icon').classList.toggle('open');
-}
-
-function selectCorpus(letter) {
-  selectedCorpus = letter;
-  document.querySelectorAll('.corpus-btn').forEach(b => b.classList.remove('selected'));
-  document.getElementById('corpus-' + letter).classList.add('selected');
-  scores = {};
-  parodyScore = null;
-
-  if (letter === 'NONE') {
+function selectCorpusQual(letter){
+  qualCorpus=letter; qualScores={}; qualParody=null;
+  document.querySelectorAll('.corpus-btn').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('corpus-'+letter).classList.add('selected');
+  if(letter==='NONE'){
     document.getElementById('rubric-section').classList.remove('visible');
     document.getElementById('notes-section').classList.add('visible');
     document.getElementById('submit-section').classList.add('visible');
-    updateSubmitBtn();
-  } else {
-    buildRubric(letter);
-    document.getElementById('rubric-section').classList.add('visible');
-    document.getElementById('notes-section').classList.add('visible');
-    document.getElementById('submit-section').classList.add('visible');
-    updateSubmitBtn();
-    setTimeout(() => {
-      document.getElementById('rubric-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-  }
-}
-
-function buildRubric(corpus) {
-  const r = RUBRICS[corpus];
-  if (!r) return;
-  document.getElementById('rubric-title').textContent = r.label;
-  const container = document.getElementById('lens-container');
-  container.innerHTML = '';
-
-  r.lenses.forEach(lens => {
-    const card = document.createElement('div');
-    card.className = 'lens-card fade-up';
-    card.innerHTML = `
-      <div class="lens-name">${lens.name}</div>
-      <div class="lens-weight">Weight ${lens.weight}</div>
-      <div class="score-row" id="scores-${lens.id}">
-        ${lens.scores.map((desc, i) => `
-          <button class="score-btn" onclick="selectScore('${lens.id}', ${i})">
-            <span class="score-num">${i}</span>
-            <div class="score-desc">${desc}</div>
-          </button>
-        `).join('')}
-      </div>
-    `;
-    container.appendChild(card);
-  });
-
-  if (r.hasParody) {
-    const parody = document.createElement('div');
-    parody.className = 'parody-section fade-up';
-    parody.innerHTML = `
-      <div class="parody-label">Parody Modifier</div>
-      <div class="parody-row">
-        <button class="parody-btn" onclick="selectParody(0)" id="parody-0">0 — Sincere. No irony or self-awareness.</button>
-        <button class="parody-btn" onclick="selectParody(1)" id="parody-1">1 — Intent unclear. Could be sincere or winking.</button>
-        <button class="parody-btn" onclick="selectParody(2)" id="parody-2">2 — The song knows what it is doing but does it anyway.</button>
-        <button class="parody-btn" onclick="selectParody(3)" id="parody-3">3 — Full parody. Mocking the dynamic, not endorsing it. Score halved.</button>
-      </div>
-    `;
-    container.appendChild(parody);
-  }
-}
-
-function selectScore(lensId, value) {
-  scores[lensId] = value;
-  document.getElementById('scores-' + lensId).querySelectorAll('.score-btn').forEach((b, i) => {
-    b.classList.toggle('selected', i === value);
-  });
-  updateSubmitBtn();
-}
-
-function selectParody(value) {
-  parodyScore = value;
-  for (let i = 0; i <= 3; i++) {
-    const btn = document.getElementById('parody-' + i);
-    if (btn) btn.classList.toggle('selected', i === value);
-  }
-  updateSubmitBtn();
-}
-
-function updateSubmitBtn() {
-  const btn = document.getElementById('submit-btn');
-  if (!selectedCorpus) { btn.disabled = true; return; }
-  if (selectedCorpus === 'NONE') { btn.disabled = false; return; }
-  const r = RUBRICS[selectedCorpus];
-  if (!r) { btn.disabled = true; return; }
-  const allScored = r.lenses.every(l => scores[l.id] !== undefined);
-  const parodyOk = !r.hasParody || parodyScore !== null;
-  btn.disabled = !(allScored && parodyOk);
-}
-
-function submitQualSong() {
-  const song = QUALIFIER_SONGS[currentSong];
-  allResponses.push({
-    song: song.title,
-    artist: song.artist,
-    assignedCorpus: selectedCorpus,
-    correctCorpus: song.correctCorpus,
-    scores: { ...scores },
-    parody: parodyScore,
-    notes: document.getElementById('notes-input').value,
-  });
-
-  if (selectedCorpus !== song.correctCorpus) {
-    s2FailCount++;
-    if (s2FailCount >= 2) {
-      saveQualStat('fail2');
-      showScreen('screen-fail');
-      return;
-    }
-  }
-
-  currentSong++;
-  if (currentSong >= QUALIFIER_SONGS.length) {
-    const _s2p = document.getElementById('s2-progress'); if(_s2p) _s2p.style.width = '100%';
-    showScreen('screen-pass');
-  } else {
-    loadSong(currentSong);
-  }
-}
-
-// Override startStage2 to use qualifier song loading
-function startStage2() {
-  showScreen('screen-s2-intro');
-}
-
-function startScoring() {
-  inQualifier = true;
-  s2QualSong = 0;
-  s2FailCount = 0;
-  qualResponses = [];
-  loadQualSong(0);
-  showScreen('screen-song');
-}
-
-function loadQualSong(idx) {
-  s2QualCorpus = null; s2QualScores = {}; s2QualParody = null;
-  const s = QUALIFIER_SONGS[idx];
-  document.getElementById('song-counter').textContent = `Song ${idx + 1} of ${QUALIFIER_SONGS.length}`;
-  document.getElementById('song-title').textContent = `"${s.title}"`;
-  document.getElementById('song-artist').textContent = s.artist;
-  document.getElementById('song-year').textContent = s.year;
-  document.getElementById('song-genre').textContent = s.genre;
-  document.getElementById('notes-input').value = '';
-  const _s2p = document.getElementById('s2-progress'); if(_s2p) _s2p.style.width = ((idx / QUALIFIER_SONGS.length) * 100) + '%';
-  document.querySelectorAll('.corpus-btn').forEach(b => b.classList.remove('selected'));
-  document.getElementById('rubric-section').classList.remove('visible');
-  document.getElementById('notes-section').classList.remove('visible');
-  document.getElementById('submit-section').classList.remove('visible');
-  document.getElementById('lens-container').innerHTML = '';
-
-  const lyricsBody = document.getElementById('lyrics-body');
-  const lyricsIcon = document.getElementById('lyrics-icon');
-  lyricsBody.classList.remove('open');
-  lyricsIcon.classList.remove('open');
-  lyricsBody.innerHTML = s.lyrics.map(sec =>
-    `<div class="lyrics-section-label">${sec.label}</div><div style="font-family:'Playfair Display',serif;font-style:italic;">${sec.text.replace(/\n/g,'<br>')}</div>`
-  ).join('');
-}
-
-function selectCorpusQual(letter) {
-  s2QualCorpus = letter; s2QualScores = {}; s2QualParody = null;
-  document.querySelectorAll('.corpus-btn').forEach(b => b.classList.remove('selected'));
-  document.getElementById('corpus-' + letter).classList.add('selected');
-  if (letter === 'NONE') {
-    document.getElementById('rubric-section').classList.remove('visible');
-    document.getElementById('notes-section').classList.add('visible');
-    document.getElementById('submit-section').classList.add('visible');
-    document.getElementById('submit-btn').disabled = false;
+    document.getElementById('submit-btn').disabled=false;
   } else {
     buildRubricQual(letter);
     document.getElementById('rubric-section').classList.add('visible');
     document.getElementById('notes-section').classList.add('visible');
     document.getElementById('submit-section').classList.add('visible');
-    document.getElementById('submit-btn').disabled = true;
-    setTimeout(() => {
-      document.getElementById('rubric-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
+    document.getElementById('submit-btn').disabled=true;
+    setTimeout(()=>document.getElementById('rubric-section').scrollIntoView({behavior:'smooth',block:'start'}),100);
   }
 }
 
-function buildRubricQual(corpus) {
-  const r = RUBRICS[corpus];
-  if (!r) return;
-  document.getElementById('rubric-title').textContent = r.label + ' — Score the Lenses';
-  const container = document.getElementById('lens-container');
-  container.innerHTML = '';
-  r.lenses.forEach(lens => {
-    const card = document.createElement('div');
-    card.className = 'lens-card fade-up';
-    card.innerHTML = `
-      <div class="lens-name">${lens.name}</div>
-      <div class="lens-weight">Weight ${lens.weight}</div>
-      <div class="score-row" id="qscores-${lens.id}">
-        ${lens.scores.map((desc,i) => `
-          <button class="score-btn" onclick="selectScoreQual('${lens.id}',${i},this)">
-            <span class="score-num">${i}</span>
-            <div class="score-desc">${desc}</div>
-          </button>
-        `).join('')}
-      </div>
-    `;
+function buildRubricQual(corpus){
+  const r=RUBRICS[corpus]; if(!r) return;
+  document.getElementById('rubric-title').textContent=r.label+' — Score the Lenses';
+  const container=document.getElementById('lens-container');
+  container.innerHTML='';
+  r.lenses.forEach(function(lens){
+    const card=document.createElement('div');
+    card.className='lens-card fade-up';
+    const scoreRow=document.createElement('div');
+    scoreRow.className='score-row';
+    scoreRow.id='qsc-'+lens.id;
+    lens.scores.forEach(function(desc,i){
+      const btn=document.createElement('button');
+      btn.className='score-btn';
+      btn.innerHTML='<span class="score-num">'+i+'</span><div class="score-desc">'+desc+'</div>';
+      btn.onclick=function(){selectScoreQual(lens.id,i,btn);};
+      scoreRow.appendChild(btn);
+    });
+    const nameEl=document.createElement('div'); nameEl.className='lens-name'; nameEl.textContent=lens.name;
+    const wtEl=document.createElement('div'); wtEl.className='lens-weight'; wtEl.textContent='Weight '+lens.weight;
+    card.appendChild(nameEl); card.appendChild(wtEl); card.appendChild(scoreRow);
     container.appendChild(card);
   });
-  if (r.hasParody) {
-    const par = document.createElement('div');
-    par.className = 'parody-section fade-up';
-    par.innerHTML = `
-      <div class="parody-label">Parody Modifier</div>
-      <div class="parody-row">
-        <button class="parody-btn" onclick="selectParodyQual(0,this)">0 — Sincere.</button>
-        <button class="parody-btn" onclick="selectParodyQual(1,this)">1 — Unclear.</button>
-        <button class="parody-btn" onclick="selectParodyQual(2,this)">2 — Knows but does it anyway.</button>
-        <button class="parody-btn" onclick="selectParodyQual(3,this)">3 — Full parody. Score halved.</button>
-      </div>
-    `;
-    container.appendChild(par);
+  if(r.hasParody){
+    const par=document.createElement('div'); par.className='parody-section fade-up';
+    const lbl=document.createElement('div'); lbl.className='parody-label'; lbl.textContent='Parody Modifier';
+    const row=document.createElement('div'); row.className='parody-row';
+    ['0 — Sincere.','1 — Intent unclear.','2 — Knows but does it anyway.','3 — Full parody. Score halved.'].forEach(function(t,i){
+      const btn=document.createElement('button'); btn.className='parody-btn'; btn.textContent=t;
+      btn.onclick=function(){selectParodyQual(i,btn);}; row.appendChild(btn);
+    });
+    par.appendChild(lbl); par.appendChild(row); container.appendChild(par);
   }
 }
 
-function selectScoreQual(lensId, value, btn) {
-  s2QualScores[lensId] = value;
-  document.getElementById('qscores-' + lensId).querySelectorAll('.score-btn').forEach((b,i) => {
-    b.classList.toggle('selected', i === value);
-  });
+function selectScoreQual(lensId,value,btn){
+  qualScores[lensId]=value;
+  document.getElementById('qsc-'+lensId).querySelectorAll('.score-btn').forEach((b,i)=>b.classList.toggle('selected',i===value));
   updateSubmitBtnQual();
 }
-
-function selectParodyQual(value, btn) {
-  s2QualParody = value;
-  document.querySelectorAll('.parody-btn').forEach((b,i) => b.classList.toggle('selected', i === value));
+function selectParodyQual(value,btn){
+  qualParody=value;
+  document.querySelectorAll('.parody-btn').forEach((b,i)=>b.classList.toggle('selected',i===value));
   updateSubmitBtnQual();
 }
-
-function updateSubmitBtnQual() {
-  const btn = document.getElementById('submit-btn');
-  if (!s2QualCorpus) { btn.disabled = true; return; }
-  if (s2QualCorpus === 'NONE') { btn.disabled = false; return; }
-  const r = RUBRICS[s2QualCorpus];
-  if (!r) { btn.disabled = true; return; }
-  const allScored = r.lenses.every(l => s2QualScores[l.id] !== undefined);
-  const parodyOk = !r.hasParody || s2QualParody !== null;
-  btn.disabled = !(allScored && parodyOk);
+function updateSubmitBtnQual(){
+  const btn=document.getElementById('submit-btn');
+  if(!qualCorpus){btn.disabled=true;return;}
+  if(qualCorpus==='NONE'){btn.disabled=false;return;}
+  const r=RUBRICS[qualCorpus]; if(!r){btn.disabled=true;return;}
+  const allScored=r.lenses.every(l=>qualScores[l.id]!==undefined);
+  const parodyOk=!r.hasParody||qualParody!==null;
+  btn.disabled=!(allScored&&parodyOk);
 }
-
-function submitQualSong() {
-  const song = QUALIFIER_SONGS[s2QualSong];
-  qualResponses.push({
-    song: song.title,
-    assignedCorpus: s2QualCorpus,
-    correctCorpus: song.correctCorpus,
-  });
-
-  if (s2QualCorpus !== song.correctCorpus) {
-    s2FailCount++;
-    if (s2FailCount >= 2) {
-      saveQualStat('fail2');
-      showScreen('screen-fail');
-      return;
-    }
+function submitQualSong(){
+  const song=QUAL_SONGS[qualSongIdx];
+  if(qualCorpus!==song.correctCorpus){
+    qualFailCount++;
+    if(qualFailCount>=2){saveQualStat('fail2');showScreen('screen-fail');return;}
   }
-
-  s2QualSong++;
-  if (s2QualSong >= QUALIFIER_SONGS.length) {
-    const _s2p = document.getElementById('s2-progress'); if(_s2p) _s2p.style.width = '100%';
+  qualSongIdx++;
+  const prog=document.getElementById('song-progress');
+  if(qualSongIdx>=QUAL_SONGS.length){
+    if(prog) prog.style.width='100%';
     showScreen('screen-pass');
   } else {
-    loadQualSong(s2QualSong);
+    loadQualSong(qualSongIdx);
   }
 }
 
@@ -2266,12 +1975,8 @@ async function submitDemo() {
 // ═══════════════════════════════════════════════════════
 // SCORING
 // ═══════════════════════════════════════════════════════
-let inQualifier = false;
-
 async function beginScoring() {
-  inQualifier = false;
-  demographics = userState.demographics;
-  sessionId = userState.sessionId;
+  // Show loading state while fetching song list from sheet
   const btn = document.querySelector('#screen-session .btn-primary');
   if(btn) { btn.disabled = true; btn.textContent = 'Loading songs…'; }
   const songs = await loadSongList();
@@ -2448,13 +2153,10 @@ async function submitSong() {
   await saveResponse(response);
 
   currentIdx++;
-
-  // Save progress for resume
   try {
     await window.storage.set('song_idx', String(currentIdx), false);
     await window.storage.set('session_responses', JSON.stringify(sessionResponses), false);
   } catch(e) {}
-
   if(currentIdx === 20) {
     showScreen('screen-gate');
   } else {
@@ -2520,22 +2222,20 @@ let _adminSongs = [];
 let _adminResponses = [];
 
 async function loadAdminPanel() {
-  // Load qualifier stats
   try {
     const qStats = await window.storage.get('qualifier_stats', true);
-    if (qStats) {
+    if(qStats) {
       const qs = JSON.parse(qStats.value);
-      document.getElementById('admin-qual-attempts').textContent = qs.attempts || 0;
-      document.getElementById('admin-qual-passed').textContent = qs.passed || 0;
-      document.getElementById('admin-qual-fail1').textContent = qs.fail1 || 0;
-      document.getElementById('admin-qual-fail2').textContent = qs.fail2 || 0;
+      document.getElementById('admin-qual-attempts').textContent = qs.attempts||0;
+      document.getElementById('admin-qual-passed').textContent = qs.passed||0;
+      document.getElementById('admin-qual-fail1').textContent = qs.fail1||0;
+      document.getElementById('admin-qual-fail2').textContent = qs.fail2||0;
     } else {
-      ['admin-qual-attempts','admin-qual-passed','admin-qual-fail1','admin-qual-fail2'].forEach(id => {
-        document.getElementById(id).textContent = '0';
+      ['admin-qual-attempts','admin-qual-passed','admin-qual-fail1','admin-qual-fail2'].forEach(id=>{
+        document.getElementById(id).textContent='0';
       });
     }
   } catch(e) {}
-
   const all = await loadAllResponses();
   _adminResponses = all;
   const sessions = new Set(all.map(r=>r.sessionId)).size;
