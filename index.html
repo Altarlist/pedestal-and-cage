@@ -56,6 +56,15 @@ body {
 }
 .btn-ghost:hover { background: var(--gold); color: var(--ink); }
 
+.btn-exit {
+  display: inline-block; background: transparent; color: var(--muted);
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase; padding: 14px 32px;
+  border: 1.5px solid #3a3530; cursor: pointer; transition: all 0.2s;
+  width: 100%; max-width: 300px;
+}
+.btn-exit:hover { border-color: var(--muted); color: var(--paper); background: #2a2420; }
+
 /* ── INTRO ── */
 #screen-intro {
   background: var(--ink); color: var(--paper);
@@ -71,13 +80,22 @@ body {
 .intro-body strong { color: var(--paper); font-weight: 400; }
 .intro-note { font-size: 11px; color: #5a4e40; max-width: 320px; margin: 0 auto 40px; line-height: 1.7; font-style: italic; }
 
+/* ── CONSENT ── */
+#screen-consent {
+  background: var(--ink); color: var(--paper);
+  justify-content: center; align-items: center;
+  padding: 48px 28px; text-align: center;
+}
+.consent-eyebrow { font-size: 10px; letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase; margin-bottom: 28px; }
+.consent-title { font-family: 'Playfair Display', serif; font-size: clamp(20px, 5vw, 26px); font-weight: 400; line-height: 1.2; margin-bottom: 28px; }
+.consent-rule { width: 48px; height: 1px; background: var(--gold); margin: 0 auto 28px; }
+.consent-body { font-size: 13px; line-height: 1.9; color: #b0a090; max-width: 360px; margin: 0 auto 40px; }
+.consent-body strong { color: var(--paper); font-weight: 400; }
+.consent-actions { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
 /* ── DEMOGRAPHICS ── */
-#screen-demo {
-  background: var(--paper); padding: 0;
-}
-.demo-header {
-  background: var(--ink); color: var(--paper); padding: 28px 24px 22px;
-}
+#screen-demo { background: var(--paper); padding: 0; }
+.demo-header { background: var(--ink); color: var(--paper); padding: 28px 24px 22px; }
 .demo-eyebrow { font-size: 10px; letter-spacing: 0.28em; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; }
 .demo-title { font-family: 'Playfair Display', serif; font-size: clamp(20px, 5vw, 26px); font-weight: 400; line-height: 1.2; }
 .demo-sub { font-size: 11px; color: #6a5e50; margin-top: 6px; line-height: 1.6; }
@@ -97,7 +115,7 @@ body {
 .field-options-row { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 .demo-submit-wrap { padding: 0 24px 40px; }
 
-/* ── SESSION ID SCREEN ── */
+/* ── SESSION ID ── */
 #screen-session {
   background: var(--ink); color: var(--paper);
   justify-content: center; align-items: center;
@@ -133,50 +151,51 @@ body {
 .lyrics-section-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-top: 14px; margin-bottom: 4px; }
 .lyrics-section-label:first-child { margin-top: 0; }
 
-.corpus-section { padding: 24px 24px 18px; border-bottom: 1px solid var(--line); }
-.section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
-.corpus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.corpus-btn {
-  background: var(--aged); border: 1.5px solid var(--line); padding: 14px 10px;
+/* ── QUESTION SECTIONS ── */
+.q-section { padding: 22px 24px 18px; border-bottom: 1px solid var(--line); }
+.q-section:last-of-type { border-bottom: none; }
+.q-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; display: block; }
+.q-text { font-size: 13px; line-height: 1.65; color: var(--ink); margin-bottom: 16px; padding-left: 14px; border-left: 2px solid var(--gold); }
+
+.q-options { display: flex; flex-direction: column; gap: 7px; }
+.q-option {
+  background: var(--aged); border: 1.5px solid var(--line); padding: 11px 14px;
+  cursor: pointer; text-align: left; font-family: 'DM Mono', monospace;
+  font-size: 12px; color: var(--ink); transition: all 0.15s;
+  display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;
+}
+.q-option:hover { border-color: var(--gold); background: #ece4d0; }
+.q-option.selected { background: var(--ink); border-color: var(--gold); color: var(--paper); }
+.q-option.multi-selected { background: var(--ink); border-color: var(--gold); color: var(--paper); }
+.q-option-dot { width: 7px; height: 7px; border: 1.5px solid var(--gold); border-radius: 50%; flex-shrink: 0; margin-top: 4px; transition: background 0.15s; }
+.q-option.selected .q-option-dot,
+.q-option.multi-selected .q-option-dot { background: var(--gold); }
+.q-option-check { width: 7px; height: 7px; border: 1.5px solid var(--gold); flex-shrink: 0; margin-top: 4px; transition: background 0.15s; }
+.q-option.multi-selected .q-option-check { background: var(--gold); }
+.q-multi-note { font-size: 10px; color: var(--muted); font-style: italic; margin-bottom: 12px; }
+
+/* corpus special layout */
+.corpus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.corpus-option {
+  background: var(--aged); border: 1.5px solid var(--line); padding: 14px 12px;
   cursor: pointer; text-align: left; transition: all 0.15s;
 }
-.corpus-btn:active { transform: scale(0.97); }
-.corpus-btn.selected { background: var(--ink); border-color: var(--gold); color: var(--paper); }
-.corpus-letter { font-family: 'Playfair Display', serif; font-size: 22px; font-style: italic; color: var(--gold); display: block; margin-bottom: 2px; }
-.corpus-name { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); line-height: 1.4; }
-.corpus-btn.selected .corpus-name { color: #c8bfaa; }
-.corpus-def { font-size: 9px; color: #5a4e40; margin-top: 4px; line-height: 1.4; font-style: italic; display: none; }
-.corpus-btn.selected .corpus-def { color: #8a7a6a; display: block; }
+.corpus-option:hover { border-color: var(--gold); }
+.corpus-option.selected { background: var(--ink); border-color: var(--gold); color: var(--paper); }
+.corpus-letter { font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic; color: var(--gold); display: block; margin-bottom: 3px; }
+.corpus-name { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); line-height: 1.4; display: block; }
+.corpus-option.selected .corpus-name { color: #c8bfaa; }
+.corpus-desc { font-size: 10px; color: #6a5e50; margin-top: 5px; line-height: 1.5; font-style: italic; display: none; }
+.corpus-option.selected .corpus-desc { display: block; color: #8a7a6a; }
+.corpus-desc-always { font-size: 10px; color: #6a5e50; margin-top: 5px; line-height: 1.5; font-style: italic; display: block; }
+.corpus-option.selected .corpus-desc-always { color: #a89a88; }
 
-.rubric-section { padding: 22px 24px 18px; display: none; border-bottom: 1px solid var(--line); }
-.rubric-section.visible { display: block; }
-.rubric-title { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
-.lens-card { margin-bottom: 22px; border-left: 2px solid var(--gold); padding-left: 14px; }
-.lens-name { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); font-weight: 400; margin-bottom: 2px; }
-.lens-weight { font-size: 10px; color: var(--gold); margin-bottom: 10px; }
-.score-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-.score-btn {
-  background: var(--aged); border: 1px solid var(--line); padding: 8px 4px;
-  cursor: pointer; text-align: center; transition: all 0.15s;
-}
-.score-btn.selected { background: var(--ink); border-color: var(--gold); color: var(--paper); }
-.score-num { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--gold); display: block; }
-.score-desc { font-size: 8px; letter-spacing: 0.03em; color: var(--muted); line-height: 1.3; margin-top: 3px; }
-.score-btn.selected .score-desc { color: #c8bfaa; }
+/* follow-up */
+.followup-section { padding: 22px 24px 18px; border-top: 1px dashed var(--line); display: none; }
+.followup-section.visible { display: block; }
 
-.parody-section { margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line); }
-.parody-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
-.parody-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.parody-btn {
-  background: var(--aged); border: 1px solid var(--line); padding: 10px 8px;
-  cursor: pointer; font-size: 9px; letter-spacing: 0.06em;
-  color: var(--muted); transition: all 0.15s; text-align: left;
-  font-family: 'DM Mono', monospace;
-}
-.parody-btn.selected { background: var(--ink); border-color: var(--gold); color: #c8bfaa; }
-
-.notes-section { padding: 20px 24px; display: none; border-bottom: 1px solid var(--line); }
-.notes-section.visible { display: block; }
+/* notes */
+.notes-section { padding: 20px 24px; border-top: 1px solid var(--line); }
 .notes-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; display: block; }
 textarea {
   width: 100%; background: var(--aged); border: 1px solid var(--line); padding: 12px;
@@ -185,10 +204,8 @@ textarea {
 }
 textarea:focus { border-color: var(--gold); }
 
-.time-note { font-size: 9px; color: var(--muted); margin-top: 8px; font-style: italic; }
-
-.submit-section { padding: 20px 24px 40px; display: none; }
-.submit-section.visible { display: block; }
+/* submit */
+.submit-section { padding: 20px 24px 40px; }
 .btn-submit {
   width: 100%; background: var(--rust); color: var(--paper);
   font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.15em;
@@ -198,7 +215,7 @@ textarea:focus { border-color: var(--gold); }
 .btn-submit:active { transform: scale(0.98); }
 .btn-submit:disabled { background: var(--line); color: var(--muted); cursor: not-allowed; }
 
-/* ── GATE SCREEN (20 songs) ── */
+/* ── GATE ── */
 #screen-gate {
   background: var(--ink); color: var(--paper);
   justify-content: center; align-items: center;
@@ -210,11 +227,8 @@ textarea:focus { border-color: var(--gold); }
 .gate-body { font-size: 13px; color: #b0a090; line-height: 1.9; max-width: 320px; margin: 0 auto 32px; }
 .gate-actions { display: flex; flex-direction: column; align-items: center; gap: 14px; }
 
-/* ── RESULTS SCREEN ── */
-#screen-results {
-  background: var(--ink); color: var(--paper);
-  padding: 0; flex-direction: column;
-}
+/* ── RESULTS ── */
+#screen-results { background: var(--ink); color: var(--paper); padding: 0; flex-direction: column; }
 .results-header { padding: 36px 24px 28px; border-bottom: 1px solid #2a2420; text-align: center; }
 .results-eyebrow { font-size: 10px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; }
 .results-title { font-family: 'Playfair Display', serif; font-size: clamp(22px, 6vw, 32px); font-weight: 400; }
@@ -231,6 +245,7 @@ textarea:focus { border-color: var(--gold); }
 .session-save-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #5a4e40; margin-bottom: 8px; }
 .session-save-id { font-family: 'Playfair Display', serif; font-size: 24px; font-style: italic; color: var(--gold); }
 .results-actions { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 0 24px 48px; }
+.admin-section-title { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
 
 /* ── ADMIN ── */
 #screen-admin-login {
@@ -258,7 +273,6 @@ textarea:focus { border-color: var(--gold); }
 .admin-stat { background: var(--aged); border: 1px solid var(--line); padding: 16px 14px; }
 .admin-stat-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .admin-stat-value { font-family: 'Playfair Display', serif; font-size: 26px; font-style: italic; color: var(--ink); }
-.admin-section-title { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
 .admin-corpus-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
 .admin-corpus-name { color: var(--ink); }
 .admin-corpus-count { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 16px; font-style: italic; }
@@ -270,476 +284,6 @@ textarea:focus { border-color: var(--gold); }
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 .fade-up { animation: fadeUp 0.35s ease forwards; }
-/* ── STAGE 1: LYRIC SCREEN ── */
-  #screen-lyric { background: var(--paper); }
-
-  .lyric-header {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 22px 24px 18px;
-  }
-  .lyric-counter {
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .lyric-label {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(18px, 5vw, 24px);
-    font-style: italic;
-    font-weight: 400;
-    line-height: 1.25;
-    margin-bottom: 4px;
-  }
-  .lyric-sub { font-size: 11px; color: #5a4e40; letter-spacing: 0.1em; }
-
-  .lyric-block {
-    margin: 24px 24px 0;
-    background: var(--ink);
-    color: #c8bfaa;
-    padding: 22px 24px;
-    font-size: 13px;
-    line-height: 2;
-    position: relative;
-  }
-  .lyric-block::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: var(--gold);
-  }
-  .lyric-section-label {
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: #4a3e30;
-    margin-bottom: 6px;
-    margin-top: 16px;
-  }
-  .lyric-section-label:first-child { margin-top: 0; }
-  .lyric-text {
-    color: #c8bfaa;
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 13px;
-    line-height: 1.9;
-  }
-
-  .questions-wrap { padding: 28px 24px 32px; }
-  .questions-label {
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 22px;
-  }
-
-  .question-block {
-    margin-bottom: 28px;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  .question-block.visible { opacity: 1; transform: translateY(0); }
-
-  .question-text {
-    font-size: 13px;
-    line-height: 1.7;
-    color: var(--ink);
-    margin-bottom: 14px;
-    padding-left: 14px;
-    border-left: 2px solid var(--gold);
-  }
-  .question-num {
-    font-size: 10px;
-    color: var(--gold);
-    letter-spacing: 0.15em;
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  .options-list { display: flex; flex-direction: column; gap: 8px; }
-  .option-btn {
-    background: var(--aged);
-    border: 1.5px solid var(--line);
-    padding: 12px 14px;
-    cursor: pointer;
-    text-align: left;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--ink);
-    line-height: 1.5;
-    transition: all 0.15s;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .option-btn:hover { border-color: var(--gold); background: #ece4d0; }
-  .option-btn.selected { background: var(--ink); border-color: var(--gold); color: var(--paper); }
-  .option-letter { font-size: 10px; color: var(--gold); letter-spacing: 0.1em; flex-shrink: 0; padding-top: 1px; }
-  .option-btn.selected .option-letter { color: var(--gold); }
-
-  .s1-submit-wrap { padding: 0 24px 40px; }
-  .btn-s1-submit {
-    width: 100%;
-    background: var(--ink);
-    color: var(--paper);
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    padding: 16px;
-    border: 1.5px solid var(--gold);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-s1-submit:disabled { opacity: 0.3; cursor: not-allowed; border-color: var(--line); }
-  .btn-s1-submit:not(:disabled):hover { background: var(--gold); color: var(--ink); }
-
-  /* ── TRANSITION ── */
-  #screen-transition {
-    background: var(--ink);
-    color: var(--paper);
-    justify-content: center;
-    align-items: center;
-    padding: 48px 28px;
-    text-align: center;
-  }
-  .transition-symbol { font-size: 40px; color: var(--gold); margin-bottom: 20px; }
-  .transition-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(20px, 5vw, 28px);
-    font-weight: 400;
-    margin-bottom: 8px;
-  }
-  .transition-body {
-    font-size: 12px;
-    color: #8a7a6a;
-    line-height: 1.9;
-    max-width: 340px;
-    margin: 24px auto 16px;
-  }
-  .transition-note {
-    font-size: 11px;
-    color: #5a4e40;
-    font-style: italic;
-    max-width: 300px;
-    margin: 0 auto 40px;
-    line-height: 1.7;
-  }
-
-  /* ── STAGE 2: INTRO ── */
-  #screen-s2-intro {
-    background: var(--ink);
-    color: var(--paper);
-    justify-content: center;
-    align-items: center;
-    padding: 48px 28px;
-    text-align: center;
-  }
-  .s2-ornament {
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 28px;
-  }
-  .s2-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(26px, 7vw, 38px);
-    line-height: 1.2;
-    font-weight: 400;
-    margin-bottom: 8px;
-  }
-  .s2-title em { font-style: italic; color: var(--gold); }
-  .s2-body {
-    font-size: 13px;
-    line-height: 1.9;
-    color: #b0a090;
-    max-width: 360px;
-    margin: 0 auto 40px;
-  }
-  .s2-body strong { color: var(--paper); font-weight: 400; }
-
-  /* ── STAGE 2: SONG SCREEN ── */
-  #screen-song { background: var(--paper); padding: 0; }
-
-  .song-header {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 24px 24px 20px;
-  }
-  .song-counter {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .song-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(20px, 6vw, 28px);
-    font-style: italic;
-    line-height: 1.2;
-    margin-bottom: 4px;
-  }
-  .song-artist { font-size: 12px; color: #c8bfaa; letter-spacing: 0.08em; }
-  .song-meta { display: flex; gap: 16px; margin-top: 12px; }
-  .meta-pill {
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #c8bfaa;
-    border: 1px solid #3a3530;
-    padding: 4px 10px;
-  }
-
-  /* lyrics toggle */
-  .lyrics-section { padding: 20px 24px; border-bottom: 1px solid var(--line); }
-  .lyrics-toggle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    user-select: none;
-  }
-  .lyrics-toggle-label {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .lyrics-toggle-icon {
-    font-size: 18px;
-    color: var(--gold);
-    transition: transform 0.25s;
-    line-height: 1;
-  }
-  .lyrics-toggle-icon.open { transform: rotate(180deg); }
-  .lyrics-body {
-    display: none;
-    margin-top: 16px;
-    font-size: 12px;
-    line-height: 2;
-    color: var(--ink);
-    border-left: 2px solid var(--line);
-    padding-left: 14px;
-  }
-  .lyrics-body.open { display: block; }
-  .lyrics-section-label {
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-top: 14px;
-    margin-bottom: 4px;
-  }
-
-  /* corpus selection */
-  .corpus-section { padding: 28px 24px 20px; border-bottom: 1px solid var(--line); }
-  .section-label {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 16px;
-  }
-  .corpus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .corpus-btn {
-    background: var(--aged);
-    border: 1.5px solid var(--line);
-    padding: 14px 10px;
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.15s;
-  }
-  .corpus-btn:active { transform: scale(0.97); }
-  .corpus-btn.selected { background: var(--ink); border-color: var(--gold); color: var(--paper); }
-  .corpus-letter {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-style: italic;
-    color: var(--gold);
-    display: block;
-    margin-bottom: 2px;
-  }
-  .corpus-name {
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    line-height: 1.4;
-  }
-  .corpus-btn.selected .corpus-name { color: #c8bfaa; }
-
-  /* rubric */
-  .rubric-section { padding: 24px 24px 20px; display: none; border-bottom: 1px solid var(--line); }
-  .rubric-section.visible { display: block; }
-  .rubric-title {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 18px;
-  }
-  .lens-card { margin-bottom: 20px; border-left: 2px solid var(--gold); padding-left: 14px; }
-  .lens-name {
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink);
-    font-weight: 400;
-    margin-bottom: 4px;
-  }
-  .lens-weight { font-size: 10px; color: var(--gold); margin-bottom: 10px; }
-  .score-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-  .score-btn {
-    background: var(--aged);
-    border: 1px solid var(--line);
-    padding: 8px 4px;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.15s;
-  }
-  .score-btn.selected { background: var(--ink); border-color: var(--gold); color: var(--paper); }
-  .score-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    color: var(--gold);
-    display: block;
-  }
-  .score-desc {
-    font-size: 8px;
-    letter-spacing: 0.05em;
-    color: var(--muted);
-    line-height: 1.3;
-    margin-top: 3px;
-  }
-  .score-btn.selected .score-desc { color: #c8bfaa; }
-
-  /* parody */
-  .parody-section { margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--line); }
-  .parody-label {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
-  .parody-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .parody-btn {
-    background: var(--aged);
-    border: 1px solid var(--line);
-    padding: 10px 8px;
-    cursor: pointer;
-    font-size: 9px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    transition: all 0.15s;
-    text-align: center;
-  }
-  .parody-btn.selected { background: var(--ink); border-color: var(--gold); color: #c8bfaa; }
-
-  /* notes */
-  .notes-section { padding: 0 24px 24px; display: none; }
-  .notes-section.visible { display: block; }
-  .notes-label {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 10px;
-    display: block;
-  }
-  textarea {
-    width: 100%;
-    background: var(--aged);
-    border: 1px solid var(--line);
-    padding: 12px;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--ink);
-    resize: vertical;
-    min-height: 80px;
-    outline: none;
-  }
-  textarea:focus { border-color: var(--gold); }
-
-  /* song submit */
-  .submit-section { padding: 20px 24px 40px; display: none; }
-  .submit-section.visible { display: block; }
-  .btn-submit {
-    width: 100%;
-    background: var(--rust);
-    color: var(--paper);
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 18px;
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-  }
-  .btn-submit:active { transform: scale(0.98); background: #7a3020; }
-  .btn-submit:disabled { background: var(--line); color: var(--muted); cursor: not-allowed; }
-
-  /* ── FAIL ── */
-  #screen-fail {
-    background: var(--ink);
-    color: var(--paper);
-    justify-content: center;
-    align-items: center;
-    padding: 48px 28px;
-    text-align: center;
-  }
-  .fail-symbol {
-    font-family: 'Playfair Display', serif;
-    font-size: 48px;
-    font-style: italic;
-    color: var(--rust);
-    margin-bottom: 20px;
-  }
-  .fail-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(20px, 5vw, 28px);
-    font-weight: 400;
-    margin-bottom: 8px;
-  }
-  .fail-rule { width: 40px; height: 1px; background: var(--rust); margin: 24px auto; }
-  .fail-body { font-size: 12px; color: #8a7a6a; line-height: 1.9; max-width: 320px; margin: 0 auto 12px; }
-  .fail-sub { font-size: 11px; color: #5a4e40; max-width: 280px; margin: 0 auto; font-style: italic; line-height: 1.7; }
-
-  /* ── PASS ── */
-  #screen-pass {
-    background: var(--ink);
-    color: var(--paper);
-    justify-content: center;
-    align-items: center;
-    padding: 48px 28px;
-    text-align: center;
-  }
-  .pass-symbol { font-size: 40px; color: var(--gold); margin-bottom: 20px; }
-  .pass-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(22px, 6vw, 32px);
-    font-weight: 400;
-    margin-bottom: 8px;
-  }
-  .pass-rule { width: 40px; height: 1px; background: var(--gold); margin: 24px auto; }
-  .pass-body { font-size: 13px; color: var(--paper); line-height: 1.9; max-width: 320px; margin: 0 auto 12px; }
-  .pass-sub { font-size: 11px; color: #6a5e4e; max-width: 300px; margin: 0 auto 36px; line-height: 1.7; font-style: italic; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .fade-up { animation: fadeUp 0.35s ease forwards; }
-
 </style>
 </head>
 <body>
@@ -751,107 +295,39 @@ textarea:focus { border-color: var(--gold); }
   <div class="intro-sub">Reviewer Scoring Instrument</div>
   <div class="intro-rule"></div>
   <p class="intro-body">
-    This is a two-stage screening.<br><br>
-    <strong>Stage One:</strong> Three lyrics. Nine questions. Read carefully and say what you see.<br><br>
-    <strong>Stage Two:</strong> Four songs. Assign each to a corpus and score it across the weighted lenses.
+    This study asks how you see the woman in a song lyric.<br><br>
+    For each song you will read the lyric, answer a few questions about how it made you feel, and describe how you saw the woman in it.<br><br>
+    <strong>There are no right or wrong answers.</strong> This is a study of perception, not analysis.
   </p>
-  <p class="intro-note">There are no trick questions. Take your time with each lyric.</p>
-  <button class="btn-primary" onclick="checkReturningUser()">Begin →</button>
+  <p class="intro-note">The study takes about two minutes per song. You can stop at any time.</p>
+  <button class="btn-primary" onclick="showScreen('screen-consent')" style="margin-top:8px;">Begin →</button>
   <div style="margin-top:20px;">
     <button class="btn-ghost" style="max-width:200px;font-size:10px;" onclick="showScreen('screen-admin-login')">Admin</button>
   </div>
-  <div style="margin-top:32px;font-size:9px;letter-spacing:0.2em;color:#3a3028;text-transform:uppercase;">v1.2</div>
+  <div style="margin-top:32px;font-size:9px;letter-spacing:0.2em;color:#3a3028;text-transform:uppercase;">v2.0</div>
 </div>
 
-<!-- RESUME SCREEN -->
-<div id="screen-resume" class="screen" style="background:var(--ink);color:var(--paper);justify-content:center;align-items:center;padding:48px 28px;text-align:center;">
-  <div style="font-size:10px;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:28px;">Welcome Back</div>
-  <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,6vw,30px);font-weight:400;margin-bottom:16px;">Session in progress.</h2>
-  <div style="width:40px;height:1px;background:var(--gold);margin:0 auto 28px;"></div>
-  <p style="font-size:13px;color:#b0a090;line-height:1.9;max-width:320px;margin:0 auto 12px;" id="resume-status">You have songs scored.</p>
-  <p style="font-size:11px;color:#5a4e40;max-width:300px;margin:0 auto 36px;font-style:italic;">Continue from where you left off, or start a new session.</p>
-  <div style="display:flex;flex-direction:column;align-items:center;gap:14px;">
-    <button class="btn-primary" onclick="resumeSession()">Continue Scoring →</button>
-    <button class="btn-ghost" onclick="startFreshSession()">Start New Session</button>
-  </div>
-</div>
-
-<!-- S1 Lyric Screen -->
-<div id="screen-lyric" class="screen">
-  <div class="progress-bar-wrap">
-    <div class="progress-bar-fill" id="s1-progress" style="width:0%"></div>
-  </div>
-  <div class="lyric-header">
-    <div class="lyric-counter" id="lyric-counter">Lyric 1 of 3</div>
-    <div class="lyric-label" id="lyric-label">Lyric A</div>
-    <div class="lyric-sub">Read carefully before answering.</div>
-  </div>
-  <div class="lyric-block" id="lyric-body"></div>
-  <div class="questions-wrap">
-    <div class="questions-label">Questions</div>
-    <div id="questions-container"></div>
-  </div>
-  <div class="s1-submit-wrap">
-    <button class="btn-s1-submit" id="s1-submit-btn" disabled onclick="submitLyric()">Next →</button>
-  </div>
-</div>
-
-<!-- S1 → S2 Transition -->
-<div id="screen-transition" class="screen">
-  <div class="transition-symbol">✓</div>
-  <h2 class="transition-title">Reading confirmed.</h2>
-  <div class="intro-rule" style="margin:24px auto;"></div>
-  <p class="transition-body">
-    You read the lyrics for what was actually on the page.<br><br>
-    Stage Two asks you to do the same thing — but now with the full framework in front of you.
+<!-- CONSENT -->
+<div id="screen-consent" class="screen">
+  <div class="consent-eyebrow">Before You Begin</div>
+  <h2 class="consent-title">A note on content.</h2>
+  <div class="consent-rule"></div>
+  <p class="consent-body">
+    This study contains song lyrics with adult themes, including <strong>sexual content</strong> and <strong>violence</strong>. Some lyrics are explicit.<br><br>
+    By continuing you acknowledge that you are 18 or older and that you consent to read material of this nature and wish to continue.
   </p>
-  <p class="transition-note">
-    You'll be given song titles, artists, and years. You'll assign each to a corpus and score it across a set of weighted lenses. The rubric will be on screen throughout.
-  </p>
-  <button class="btn-primary" onclick="startStage2()">Continue to Stage Two →</button>
-</div>
-
-<!-- S2 Intro -->
-<div id="screen-s2-intro" class="screen">
-  <div class="s2-ornament">Stage Two — Corpus Scoring</div>
-  <h1 class="s2-title">The Pedestal<br>&amp; the <em>Cage</em></h1>
-  <div class="intro-rule" style="margin:24px auto 32px;"></div>
-  <p class="s2-body">
-    You will score <strong>four songs</strong> using the study rubric.<br><br>
-    For each song: assign a corpus, then score each lens. Lyrics are available to review throughout.<br><br>
-    Take your time. There is no clock.
-  </p>
-  <button class="btn-primary" onclick="startScoring()">Begin Scoring</button>
-</div>
-
-<!-- Pass -->
-<div id="screen-pass" class="screen">
-  <div class="pass-symbol">✓</div>
-  <h2 class="pass-title">You're in.</h2>
-  <div class="pass-rule"></div>
-  <p class="pass-body">Screening complete. The study begins now.</p>
-  <p class="pass-sub">Before you begin scoring, we need a few details about you. This takes under a minute and is asked once only.</p>
-  <button class="btn-primary" onclick="qualifierPassed()" style="margin-top:8px;">Continue →</button>
-</div>
-
-<!-- Fail -->
-<div id="screen-fail" class="screen">
-  <div class="fail-symbol">—</div>
-  <h2 class="fail-title">Screening Incomplete</h2>
-  <div class="fail-rule"></div>
-  <p class="fail-body">Your responses didn't meet the threshold for this study.</p>
-  <p class="fail-sub">
-    This doesn't reflect your intelligence or your taste.<br><br>
-    Thank you for your time. Please reach out to the study coordinator if you believe this is an error.
-  </p>
+  <div class="consent-actions">
+    <button class="btn-primary" onclick="consentAndContinue()">I consent — Continue →</button>
+    <button class="btn-exit" onclick="showScreen('screen-intro')">Exit</button>
+  </div>
 </div>
 
 <!-- DEMOGRAPHICS -->
 <div id="screen-demo" class="screen">
   <div class="demo-header">
-    <div class="demo-eyebrow">Before You Begin</div>
-    <h2 class="demo-title">About You</h2>
-    <p class="demo-sub">Seven quick questions. Your responses are anonymous and used only for research.</p>
+    <div class="demo-eyebrow">About You</div>
+    <h2 class="demo-title">Seven quick questions.</h2>
+    <p class="demo-sub">Asked once only. Your responses are anonymous and used only for research.</p>
   </div>
   <div class="demo-body">
 
@@ -947,13 +423,13 @@ textarea:focus { border-color: var(--gold); }
   <h2 class="session-title">Save this before you continue.</h2>
   <div class="session-id-box" id="session-display">—</div>
   <p class="session-note">
-    If you'd like to return and score more songs later, use this ID to link your sessions.<br><br>
-    It will also appear at the end of your session.
+    This links your responses across sessions.<br><br>
+    It will appear again at the end.
   </p>
   <button class="btn-primary" onclick="beginScoring()">Begin Scoring →</button>
 </div>
 
-<!-- SONG -->
+<!-- SONG SCREEN -->
 <div id="screen-song" class="screen">
   <div class="progress-bar-wrap">
     <div class="progress-bar-fill" id="song-progress" style="width:0%"></div>
@@ -969,6 +445,7 @@ textarea:focus { border-color: var(--gold); }
     </div>
   </div>
 
+  <!-- Lyrics -->
   <div class="lyrics-section">
     <div class="lyrics-toggle" onclick="toggleLyrics()">
       <span class="lyrics-toggle-label">View Lyrics</span>
@@ -977,55 +454,97 @@ textarea:focus { border-color: var(--gold); }
     <div class="lyrics-body" id="lyrics-body"></div>
   </div>
 
-  <div class="corpus-section">
-    <div class="section-label">Assign Corpus</div>
-    <div class="corpus-grid">
-      <button class="corpus-btn" onclick="inQualifier?selectCorpusQual('A'):selectCorpus('A')" id="corpus-A">
+  <!-- Q8: Familiarity -->
+  <div class="q-section">
+    <span class="q-label">Question 1 of 5</span>
+    <div class="q-text">Do you know this song?</div>
+    <div class="q-options" id="q-familiarity">
+      <button class="q-option" onclick="selectSingle('familiarity','know-well',this)"><span class="q-option-dot"></span>Yes, I know it well</button>
+      <button class="q-option" onclick="selectSingle('familiarity','heard-before',this)"><span class="q-option-dot"></span>I've heard it before</button>
+      <button class="q-option" onclick="selectSingle('familiarity','new',this)"><span class="q-option-dot"></span>No, this is new to me</button>
+    </div>
+  </div>
+
+  <!-- Q9: Feeling (multi-select) -->
+  <div class="q-section">
+    <span class="q-label">Question 2 of 5</span>
+    <div class="q-text">How does this song make you feel?</div>
+    <p class="q-multi-note">Choose all that apply.</p>
+    <div class="q-options" id="q-feeling">
+      <button class="q-option" onclick="toggleMulti('feeling','warm',this)"><span class="q-option-check"></span>Warm / moved</button>
+      <button class="q-option" onclick="toggleMulti('feeling','uncomfortable',this)"><span class="q-option-check"></span>Uncomfortable</button>
+      <button class="q-option" onclick="toggleMulti('feeling','amused',this)"><span class="q-option-check"></span>Amused</button>
+      <button class="q-option" onclick="toggleMulti('feeling','indifferent',this)"><span class="q-option-check"></span>Indifferent</button>
+      <button class="q-option" onclick="toggleMulti('feeling','angry',this)"><span class="q-option-check"></span>Angry</button>
+    </div>
+  </div>
+
+  <!-- Q10: Intent -->
+  <div class="q-section">
+    <span class="q-label">Question 3 of 5</span>
+    <div class="q-text">How do you read the song's intent toward the woman in it?</div>
+    <div class="q-options" id="q-intent">
+      <button class="q-option" onclick="selectSingle('intent','celebrating',this)"><span class="q-option-dot"></span>Celebrating her</button>
+      <button class="q-option" onclick="selectSingle('intent','using',this)"><span class="q-option-dot"></span>Using her</button>
+      <button class="q-option" onclick="selectSingle('intent','mourning',this)"><span class="q-option-dot"></span>Mourning her</button>
+      <button class="q-option" onclick="selectSingle('intent','watching',this)"><span class="q-option-dot"></span>Watching her</button>
+    </div>
+  </div>
+
+  <!-- Q11: Corpus Assignment -->
+  <div class="q-section">
+    <span class="q-label">Question 4 of 5</span>
+    <div class="q-text">How do you see the woman in this song?</div>
+    <div class="corpus-grid" id="q-corpus">
+      <button class="corpus-option" onclick="selectCorpus('A',this)" id="corpus-btn-A">
         <span class="corpus-letter">A</span>
         <span class="corpus-name">She Saves</span>
-        <span class="corpus-def">She is the instrument of his salvation, healing, or transformation.</span>
+        <span class="corpus-desc-always">A source of rescue or healing for him.</span>
       </button>
-      <button class="corpus-btn" onclick="inQualifier?selectCorpusQual('B'):selectCorpus('B')" id="corpus-B">
+      <button class="corpus-option" onclick="selectCorpus('B',this)" id="corpus-btn-B">
         <span class="corpus-letter">B</span>
-        <span class="corpus-name">She Leaves / She Is a Wound</span>
-        <span class="corpus-def">Her absence or departure defines the emotional landscape.</span>
+        <span class="corpus-name">She's Gone</span>
+        <span class="corpus-desc-always">An absence or a wound he's processing.</span>
       </button>
-      <button class="corpus-btn" onclick="inQualifier?selectCorpusQual('C'):selectCorpus('C')" id="corpus-C">
+      <button class="corpus-option" onclick="selectCorpus('C',this)" id="corpus-btn-C">
         <span class="corpus-letter">C</span>
-        <span class="corpus-name">She Is a Commodity</span>
-        <span class="corpus-def">She is observed, cataloged, or possessed. Her value is conditional.</span>
+        <span class="corpus-name">She Is an Object</span>
+        <span class="corpus-desc-always">Something to be desired or consumed.</span>
       </button>
-      <button class="corpus-btn" onclick="inQualifier?selectCorpusQual('D'):selectCorpus('D')" id="corpus-D">
+      <button class="corpus-option" onclick="selectCorpus('D',this)" id="corpus-btn-D">
         <span class="corpus-letter">D</span>
-        <span class="corpus-name">She Is Known and Whole</span>
-        <span class="corpus-def">She has an inner life, her own direction, and is seen as a full person.</span>
+        <span class="corpus-name">She Is Accepted</span>
+        <span class="corpus-desc-always">A full person in a mutual relationship.</span>
       </button>
-      <button class="corpus-btn" onclick="inQualifier?selectCorpusQual('E'):selectCorpus('E')" id="corpus-E">
+      <button class="corpus-option" onclick="selectCorpus('E',this)" id="corpus-btn-E">
         <span class="corpus-letter">E</span>
-        <span class="corpus-name">She Is a Force</span>
-        <span class="corpus-def">Her energy is self-generated. She requires no male audience to function.</span>
+        <span class="corpus-name">She Chooses</span>
+        <span class="corpus-desc-always">Her own force, independent of him.</span>
       </button>
-      <button class="corpus-btn" onclick="inQualifier?selectCorpusQual('NONE'):selectCorpus('NONE')" id="corpus-NONE">
+      <button class="corpus-option" onclick="selectCorpus('NONE',this)" id="corpus-btn-NONE">
         <span class="corpus-letter" style="font-size:16px;margin-top:4px;">—</span>
-        <span class="corpus-name">No Valid Corpus</span>
-        <span class="corpus-def">The song does not center a female subject.</span>
+        <span class="corpus-name">None</span>
+        <span class="corpus-desc-always">Not clearly present in this lyric.</span>
       </button>
     </div>
   </div>
 
-  <div class="rubric-section" id="rubric-section">
-    <div class="rubric-title" id="rubric-title">Score the Lenses</div>
-    <div id="lens-container"></div>
+  <!-- Q12: Follow-up (corpus-dependent) -->
+  <div class="followup-section" id="followup-section">
+    <span class="q-label">Question 5 of 5</span>
+    <div class="q-text" id="followup-text"></div>
+    <div class="q-options" id="followup-options"></div>
   </div>
 
-  <div class="notes-section" id="notes-section">
+  <!-- Notes -->
+  <div class="notes-section">
     <label class="notes-label">Notes (optional)</label>
-    <textarea id="notes-input" placeholder="Edge cases, ambiguities, reasoning…"></textarea>
-    <p class="time-note" id="time-note"></p>
+    <textarea id="notes-input" placeholder="Anything you want to flag — edge cases, ambiguities, why you chose what you chose."></textarea>
   </div>
 
-  <div class="submit-section" id="submit-section">
-    <button class="btn-submit" id="submit-btn" onclick="inQualifier?submitQualSong():submitSong()" disabled>Submit &amp; Continue →</button>
+  <!-- Submit -->
+  <div class="submit-section">
+    <button class="btn-submit" id="submit-btn" onclick="submitSong()" disabled>Submit &amp; Continue →</button>
   </div>
 </div>
 
@@ -1073,37 +592,18 @@ textarea:focus { border-color: var(--gold); }
   <div class="admin-header">
     <div>
       <div class="admin-header-title">Admin Panel</div>
-      <div class="admin-header-sub">The Pedestal &amp; The Cage</div>
+      <div class="admin-header-sub">The Pedestal &amp; The Cage — v2.0</div>
     </div>
     <span class="admin-exit" onclick="showScreen('screen-intro')">Exit</span>
   </div>
   <div class="admin-body">
     <div class="admin-stats-row">
-      <div class="admin-stat">
-        <div class="admin-stat-label">Total Sessions</div>
-        <div class="admin-stat-value" id="admin-sessions">—</div>
-      </div>
-      <div class="admin-stat">
-        <div class="admin-stat-label">Songs Scored</div>
-        <div class="admin-stat-value" id="admin-total">—</div>
-      </div>
-      <div class="admin-stat">
-        <div class="admin-stat-label">Unique Songs</div>
-        <div class="admin-stat-value" id="admin-unique">—</div>
-      </div>
-      <div class="admin-stat">
-        <div class="admin-stat-label">Avg per Session</div>
-        <div class="admin-stat-value" id="admin-avg">—</div>
-      </div>
+      <div class="admin-stat"><div class="admin-stat-label">Total Sessions</div><div class="admin-stat-value" id="admin-sessions">—</div></div>
+      <div class="admin-stat"><div class="admin-stat-label">Songs Scored</div><div class="admin-stat-value" id="admin-total">—</div></div>
+      <div class="admin-stat"><div class="admin-stat-label">Unique Songs</div><div class="admin-stat-value" id="admin-unique">—</div></div>
+      <div class="admin-stat"><div class="admin-stat-label">Avg per Session</div><div class="admin-stat-value" id="admin-avg">—</div></div>
     </div>
 
-    <div class="admin-section-title">Qualifier Stats</div>
-    <div class="admin-stats-row" style="margin-bottom:20px;">
-      <div class="admin-stat"><div class="admin-stat-label">Attempts</div><div class="admin-stat-value" id="admin-qual-attempts">—</div></div>
-      <div class="admin-stat"><div class="admin-stat-label">Passed</div><div class="admin-stat-value" id="admin-qual-passed" style="color:var(--sage);">—</div></div>
-      <div class="admin-stat"><div class="admin-stat-label">Failed S1</div><div class="admin-stat-value" id="admin-qual-fail1" style="color:var(--rust);">—</div></div>
-      <div class="admin-stat"><div class="admin-stat-label">Failed S2</div><div class="admin-stat-value" id="admin-qual-fail2" style="color:var(--rust);">—</div></div>
-    </div>
     <div class="admin-section-title">Corpus Distribution</div>
     <div id="admin-corpus-dist"></div>
 
@@ -1118,8 +618,7 @@ textarea:focus { border-color: var(--gold); }
         <span id="admin-song-count" style="color:var(--gold);font-family:'Playfair Display',serif;font-size:16px;font-style:italic;">—</span>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;">
-        <input id="admin-song-search" type="text" placeholder="Search title or artist…"
-          oninput="filterSongList()"
+        <input id="admin-song-search" type="text" placeholder="Search title or artist…" oninput="filterSongList()"
           style="grid-column:1/-1;background:var(--aged);border:1px solid var(--line);border-bottom-color:var(--gold);padding:10px 12px;font-family:'DM Mono',monospace;font-size:11px;color:var(--ink);outline:none;">
         <select id="admin-song-genre" onchange="filterSongList()"
           style="background:var(--aged);border:1px solid var(--line);padding:8px 10px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);outline:none;">
@@ -1135,7 +634,6 @@ textarea:focus { border-color: var(--gold); }
       </div>
       <div id="admin-song-list"></div>
     </div>
-
   </div>
   <div class="admin-actions">
     <div style="width:100%;max-width:300px;background:var(--aged);border:1px solid var(--line);padding:12px 16px;margin-bottom:4px;text-align:center;">
@@ -1149,7 +647,6 @@ textarea:focus { border-color: var(--gold); }
 </div>
 
 <script>
-
 // ═══════════════════════════════════════════════════════
 // SUPABASE DATA LAYER
 // ═══════════════════════════════════════════════════════
@@ -1157,14 +654,15 @@ const SUPABASE_URL = 'https://wazupjwfwdhkgcsytrlq.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_ZoWN0tLKdeUGS_mZoVQbLA_z6FtSrdJ';
 
 function sbFetch(path, options = {}) {
-  const url = SUPABASE_URL + path;
-  const headers = {
-    'apikey': SUPABASE_KEY,
-    'Authorization': 'Bearer ' + SUPABASE_KEY,
-    'Content-Type': 'application/json',
-    ...( options.headers || {} )
-  };
-  return fetch(url, { ...options, headers });
+  return fetch(SUPABASE_URL + path, {
+    ...options,
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json',
+      ...(options.headers || {})
+    }
+  });
 }
 
 async function saveResponse(r) {
@@ -1184,684 +682,143 @@ async function saveResponse(r) {
     artist:          r.artist,
     year:            r.year,
     genre:           r.genre,
+    familiarity:     r.familiarity || null,
+    feeling:         r.feeling ? r.feeling.join('|') : null,
+    intent:          r.intent || null,
     assigned_corpus: r.assignedCorpus,
-    weighted_total:  r.weightedTotal ?? null,
-    parody_score:    r.parodyScore ?? null,
+    followup:        r.followup || null,
     notes:           r.notes || null,
-    wound:           r.scores?.wound ?? null,
-    transaction:     r.scores?.transaction ?? null,
-    vocabulary:      r.scores?.vocabulary ?? null,
-    specificity:     r.scores?.specificity ?? null,
-    absence:         r.scores?.absence ?? null,
-    causality:       r.scores?.causality ?? null,
-    perspective:     r.scores?.perspective ?? null,
-    subject:         r.scores?.subject ?? null,
-    conditionality:  r.scores?.conditionality ?? null,
-    consent:         r.scores?.consent ?? null,
-    possession:      r.scores?.possession ?? null,
-    interiority:     r.scores?.interiority ?? null,
-    directionality:  r.scores?.directionality ?? null,
-    reciprocity:     r.scores?.reciprocity ?? null,
-    flaw:            r.scores?.flaw ?? null,
-    origin:          r.scores?.origin ?? null,
-    male:            r.scores?.male ?? null,
-    self:            r.scores?.self ?? null,
-    freedom:         r.scores?.freedom ?? null,
   };
-  const res = await sbFetch('/rest/v1/submissions', {
+  const res = await sbFetch('/rest/v1/submissions_v2', {
     method: 'POST',
     headers: { 'Prefer': 'return=minimal' },
     body: JSON.stringify(payload)
   });
   if (!res.ok) {
     const text = await res.text();
-    throw new Error('saveResponse failed: ' + text);
+    console.error('saveResponse failed:', text);
+    // Store locally as fallback
+    storeLocalFallback(payload);
   }
 }
 
+function storeLocalFallback(payload) {
+  try {
+    const key = 'ptc_v2_fallback';
+    const existing = JSON.parse(localStorage.getItem(key) || '[]');
+    existing.push(payload);
+    localStorage.setItem(key, JSON.stringify(existing));
+  } catch(e) {}
+}
+
 async function loadAllResponses() {
-  const res = await sbFetch('/rest/v1/submissions?select=*&order=created_at.asc&limit=10000');
-  if (!res.ok) throw new Error('loadAllResponses failed: ' + res.status);
-  const rows = await res.json();
-  // Map DB column names back to the shape the rest of the app expects
-  return rows.map(r => ({
-    sessionId:      r.session_id,
-    timestamp:      r.timestamp,
-    elapsedSeconds: r.elapsed_seconds,
-    demographics: {
-      gender:    r.gender,
-      age:       r.age,
-      race:      r.race,
-      country:   r.country,
-      education: r.education,
-      music:     r.music,
-      politics:  r.politics,
-    },
-    songId:         r.song_id,
-    songTitle:      r.song_title,
-    artist:         r.artist,
-    year:           r.year,
-    genre:          r.genre,
-    assignedCorpus: r.assigned_corpus,
-    weightedTotal:  r.weighted_total,
-    parodyScore:    r.parody_score,
-    notes:          r.notes,
-    scores: {
-      wound:        r.wound,
-      transaction:  r.transaction,
-      vocabulary:   r.vocabulary,
-      specificity:  r.specificity,
-      absence:      r.absence,
-      causality:    r.causality,
-      perspective:  r.perspective,
-      subject:      r.subject,
-      conditionality: r.conditionality,
-      consent:      r.consent,
-      possession:   r.possession,
-      interiority:  r.interiority,
-      directionality: r.directionality,
-      reciprocity:  r.reciprocity,
-      flaw:         r.flaw,
-      origin:       r.origin,
-      male:         r.male,
-      self:         r.self,
-      freedom:      r.freedom,
-    }
-  }));
+  try {
+    const res = await sbFetch('/rest/v1/submissions_v2?select=*&order=created_at.asc&limit=10000');
+    if (!res.ok) throw new Error('loadAllResponses failed: ' + res.status);
+    return await res.json();
+  } catch(e) {
+    // Fall back to localStorage
+    try {
+      return JSON.parse(localStorage.getItem('ptc_v2_fallback') || '[]');
+    } catch(e2) { return []; }
+  }
 }
 
 async function clearAllData() {
-  // Deletes all rows from submissions. Supabase requires a filter; neq id 0 matches all int rows.
-  const res = await sbFetch('/rest/v1/submissions?id=neq.0', {
+  const res = await sbFetch('/rest/v1/submissions_v2?id=neq.0', {
     method: 'DELETE',
     headers: { 'Prefer': 'return=minimal' }
   });
   if (!res.ok) throw new Error('clearAllData failed: ' + res.status);
-}
-
-async function getLastExportTime() {
-  try {
-    const val = localStorage.getItem('ptc_last_export');
-    return val || null;
-  } catch(e) { return null; }
-}
-
-async function setLastExportTime(iso) {
-  try { localStorage.setItem('ptc_last_export', iso); } catch(e) {}
+  try { localStorage.removeItem('ptc_v2_fallback'); } catch(e) {}
 }
 
 // ═══════════════════════════════════════════════════════
-// QUALIFIER DATA
+// SONG DATABASE
 // ═══════════════════════════════════════════════════════
-
-const LYRICS = [
-  {
-    label: "Lyric A",
-    sections: [
-      { label: "Part 1", text: "I gotta take a little time\nA little time to think things over\nI better read between the lines\nIn case I need it when I'm older\nNow this mountain I must climb\nFeels like a world upon my shoulders\nThrough the clouds I see love shine\nIt keeps me warm as life grows colder" },
-      { label: "Part 2", text: "In my life there's been heartache and pain\nI don't know if I can face it again\nCan't stop now, I've traveled so far\nTo change this lonely life" },
-      { label: "Chorus", text: "I wanna know what love is\nI want you to show me\nI wanna feel what love is\nI know you can show me" },
-    ],
-    questions: [
-      {
-        id: "q1",
-        text: "What is the person speaking this lyric asking for?",
-        options: [
-          { letter: "A", text: "To be left alone to figure things out himself." },
-          { letter: "B", text: "For someone else to show him or give him something he lacks." },
-          { letter: "C", text: "To understand why a relationship ended." },
-          { letter: "D", text: "To warn someone about the pain ahead of them." },
-        ],
-        correct: "B",
-      },
-      {
-        id: "q2",
-        text: "How is the speaker described in this lyric?",
-        options: [
-          { letter: "A", text: "Confident and in control." },
-          { letter: "B", text: "Angry at someone who hurt him." },
-          { letter: "C", text: "Worn down, struggling, and in need." },
-          { letter: "D", text: "Hopeful but not yet in pain." },
-        ],
-        correct: "C",
-      },
-      {
-        id: "q3",
-        text: "What do we know about the person being spoken to?",
-        options: [
-          { letter: "A", text: "She has her own problems that mirror his." },
-          { letter: "B", text: "Almost nothing — she exists mainly as the answer to his need." },
-          { letter: "C", text: "She is described in specific, personal detail." },
-          { letter: "D", text: "She is the one who caused his pain." },
-        ],
-        correct: "B",
-      },
-    ],
-  },
-  {
-    label: "Lyric B",
-    sections: [
-      { label: "Part 1", text: "Where the earth shows its bones of wind-broken stone\nAnd the sea and the sky are one\nI'm caught out of time, my blood sings with wine\nAnd I'm running naked in the sun\nThere's God in the trees, I'm weak in the knees\nAnd the sky is a painful blue\nI'd like to look around, but Honey, all I see is you" },
-      { label: "Part 2", text: "And I just want to hold you closer than I've ever held anyone before\nYou say you've been twice a wife and you're through with life\nAh, but Honey, what the hell's it for?\nAfter twenty-three years you'd think I could find\nA way to let you know somehow\nThat I want to see your smiling face forty-five years from now" },
-      { label: "Part 3", text: "So alone in the lights on stage every night\nI've been reaching out to find a friend\nWho knows all the words, sings so she's heard\nAnd knows how all the stories end\nMaybe after the show she'll ask me to go\nHome with her for a drink or two\nNow her smile lights her eyes, but Honey, all I see is you" },
-    ],
-    questions: [
-      {
-        id: "q1",
-        text: "What do we learn about the woman in this lyric?",
-        options: [
-          { letter: "A", text: "She is idealized and described as perfect." },
-          { letter: "B", text: "She is absent — the speaker is only imagining her." },
-          { letter: "C", text: "She has her own history and her own stated feelings about her life." },
-          { letter: "D", text: "She is the reason the speaker is suffering." },
-        ],
-        correct: "C",
-      },
-      {
-        id: "q2",
-        text: "The lyric includes the line \"you say you've been twice a wife and you're through with life.\" How does the speaker respond to that?",
-        options: [
-          { letter: "A", text: "He ignores it and changes the subject." },
-          { letter: "B", text: "He takes it seriously as something real about her life." },
-          { letter: "C", text: "He agrees with her and gives up." },
-          { letter: "D", text: "He blames her for feeling that way." },
-        ],
-        correct: "B",
-      },
-      {
-        id: "q3",
-        text: "Does the woman in this lyric have her own stated position on her life?",
-        options: [
-          { letter: "A", text: "No — she is only described through the speaker's eyes and has no voice of her own." },
-          { letter: "B", text: "Yes — she has expressed something about how she feels about her own life." },
-          { letter: "C", text: "It's unclear — the speaker never acknowledges her as a separate person." },
-          { letter: "D", text: "No — she is silent and idealized throughout." },
-        ],
-        correct: "B",
-      },
-    ],
-  },
-  {
-    label: "Lyric C",
-    sections: [
-      { label: "Part 1", text: "3, 6, 9, damn she fine\nHopin' she can sock it to me one mo' time\nGet low, get low, get low, get low" },
-      { label: "Part 2", text: "Shorty crunk, so fresh, so clean\nCan she fuck? That question been harassin' me\nIn the mind, this bitch is fine\nI done came to the club 'bout fifty-'leven times" },
-      { label: "Part 3", text: "She gettin' crunk in the club, I mean, she work it\nAnd then I like to see them females twerkin'\nTakin' her clothes off, buck naked\n…Now bring yo' ass over here hoe\nAnd let me see you get low if you want this thug" },
-    ],
-    questions: [
-      {
-        id: "q1",
-        text: "What is the woman in this lyric primarily described as?",
-        options: [
-          { letter: "A", text: "Something to be looked at and used." },
-          { letter: "B", text: "A person the speaker has deep feelings for." },
-          { letter: "C", text: "Someone who has rejected the speaker." },
-          { letter: "D", text: "A figure of danger or power." },
-        ],
-        correct: "A",
-      },
-      {
-        id: "q2",
-        text: "Does the woman in this lyric have any say in what happens?",
-        options: [
-          { letter: "A", text: "Yes — she is making her own choices throughout." },
-          { letter: "B", text: "Somewhat — she acts, but only within what the speaker wants from her." },
-          { letter: "C", text: "No — her consent is not part of the song's logic." },
-          { letter: "D", text: "It's unclear — the lyric doesn't address her at all." },
-        ],
-        correct: "C",
-      },
-      {
-        id: "q3",
-        text: "What is the speaker's primary interest in this woman?",
-        options: [
-          { letter: "A", text: "Her personality and who she is as a person." },
-          { letter: "B", text: "Her body and what she will do with it." },
-          { letter: "C", text: "Her emotional availability." },
-          { letter: "D", text: "Her independence and confidence." },
-        ],
-        correct: "B",
-      },
-    ],
-  },
-];
-
-const QUAL_SONGS = [
-  {
-    title: "I Want to Know What Love Is",
-    artist: "Foreigner",
-    year: "1984",
-    genre: "Rock",
-    correctCorpus: "A",
-    hasParody: false,
-    lyrics: [
-      { label: "Verse 1", text: `I gotta take a little time\nA little time to think things over\nI better read between the lines\nIn case I need it when I'm older\nNow this mountain I must climb\nFeels like a world upon my shoulders\nThrough the clouds I see love shine\nIt keeps me warm as life grows colder` },
-      { label: "Pre-Chorus", text: `In my life there's been heartache and pain\nI don't know if I can face it again\nCan't stop now, I've traveled so far\nTo change this lonely life` },
-      { label: "Chorus", text: `I wanna know what love is\nI want you to show me\nI wanna feel what love is\nI know you can show me` },
-      { label: "Verse 2", text: `I'm gonna take a little time\nA little time to look around me\nI've got nowhere left to hide\nIt looks like love has finally found me` },
-      { label: "Chorus", text: `I wanna know what love is\nI want you to show me\nI wanna feel what love is\nI know you can show me\nI wanna know what love is\nI want you to show me\nAnd I wanna feel, I want to feel what love is\nAnd I know, I know you can show me` },
-    ],
-  },
-  {
-    title: "Get Low",
-    artist: "Lil Jon & The East Side Boyz ft. Ying Yang Twins",
-    year: "2003",
-    genre: "Hip-Hop",
-    correctCorpus: "C",
-    hasParody: true,
-    lyrics: [
-      { label: "Chorus", text: `3, 6, 9, damn she fine\nHopin' she can sock it to me one mo' time\nGet low, get low, get low, get low\n\nTo the window, to the wall\nTil the sweat drop down my balls\nTil all these bitches crawl\nTil all skeet skeet motherfucker, all skeet skeet goddamn` },
-      { label: "Verse 1", text: `Shorty crunk, so fresh, so clean\nCan she fuck? That question been harassin' me\nIn the mind, this bitch is fine\nI done came to the club 'bout fifty-'leven times\nNow can I play with yo' panty line?` },
-      { label: "Verse 2", text: `She gettin' crunk in the club, I mean, she work it\nAnd then I like to see them females twerkin'\nTakin' her clothes off, buck naked\nATL hoe, don't disrespect it\nNow bring yo' ass over here hoe\nAnd let me see you get low if you want this thug` },
-    ],
-  },
-  {
-    title: "45 Years",
-    artist: "Stan Rogers",
-    year: "1983",
-    genre: "Country / Folk",
-    correctCorpus: "D",
-    hasParody: false,
-    lyrics: [
-      { label: "Verse 1", text: `Where the earth shows its bones of wind-broken stone\nAnd the sea and the sky are one\nI'm caught out of time, my blood sings with wine\nAnd I'm running naked in the sun\nThere's God in the trees, I'm weak in the knees\nAnd the sky is a painful blue\nI'd like to look around, but Honey, all I see is you` },
-      { label: "Verse 2", text: `The summer city lights will soften the night\nTil you'd think that the air is clear\nAnd I'm sitting with friends, where forty-five cents\nWill buy another glass of beer\nHe's got something to say, but I'm so far away\nThat I don't know who I'm talking to\nCause you just walked in the door, and Honey, all I see is you` },
-      { label: "Chorus", text: `And I just want to hold you closer than I've ever held anyone before\nYou say you've been twice a wife and you're through with life\nAh, but Honey, what the hell's it for?\nAfter twenty-three years you'd think I could find\nA way to let you know somehow\nThat I want to see your smiling face forty-five years from now` },
-      { label: "Verse 3", text: `So alone in the lights on stage every night\nI've been reaching out to find a friend\nWho knows all the words, sings so she's heard\nAnd knows how all the stories end\nMaybe after the show she'll ask me to go\nHome with her for a drink or two\nNow her smile lights her eyes, but Honey, all I see is you` },
-      { label: "Chorus (reprise)", text: `And I just want to hold you closer than I've ever held anyone before\nYou say you've been twice a wife and you're through with life\nAh, but Honey, what the hell's it for?\nAfter twenty-three years you'd think I could find\nA way to let you know somehow\nThat I want to see your smiling face forty-five years from now` },
-    ],
-  },
-  {
-    title: "Dragula",
-    artist: "Rob Zombie",
-    year: "1998",
-    genre: "Rock",
-    correctCorpus: "NONE",
-    hasParody: false,
-    lyrics: [
-      { label: "Verse 1", text: `Dead I am the one, exterminatin' son\nSlippin' through the trees, stranglin' the breeze\nDead I am the sky, watchin' angels cry\nWhile they slowly turn, conquering the worm` },
-      { label: "Chorus", text: `Dig through the ditches and burn through the witches\nI slam in the back of my Dragula\nDig through the ditches and burn through the witches\nI slam in the back of my Dragula` },
-      { label: "Verse 2", text: `Dead I am the pool, spreading from the fool\nWeak and want you need, nowhere as you bleed\nDead I am the rat, feast upon the cat\nTender is the fur, dying as you purr` },
-      { label: "Verse 3", text: `Dead I am the life, dig into the skin\nKnuckle, crack the bone, twenty-one to win\nDead I am the dog, hound of hell, you cry\nDevil on your back, I can never die` },
-    ],
-  },
-];
-
-// ═══════════════════════════════════════════════════════
-// QUALIFIER + SESSION STATE
-// ═══════════════════════════════════════════════════════
-let inQualifier = false;
-let currentLyric = 0;
-let s1Answers = {};
-let missCount = 0;
-let qualSongIdx = 0;
-let qualCorpus = null;
-let qualScores = {};
-let qualParody = null;
-let qualFailCount = 0;
-let userState = { qualPassed: false, demoDone: false, sessionId: '', demographics: {} };
-
-async function loadUserState() {
-  try { const stored = localStorage.getItem('ptc_user_state'); if(stored) userState=JSON.parse(stored); } catch(e) {}
-}
-async function saveUserState() {
-  try { localStorage.setItem('ptc_user_state', JSON.stringify(userState)); } catch(e) {}
-}
-async function saveQualStat(outcome) {
-  try {
-    const res = await sbFetch('/rest/v1/qualifier_stats?id=eq.1&select=attempts,passed,fail1,fail2');
-    const rows = await res.json();
-    if(!rows.length) return;
-    const qs = rows[0];
-    qs.attempts = (qs.attempts||0)+1; qs[outcome] = (qs[outcome]||0)+1;
-    await sbFetch('/rest/v1/qualifier_stats?id=eq.1', {
-      method:'PATCH',
-      headers:{'Prefer':'return=minimal'},
-      body: JSON.stringify({attempts:qs.attempts,passed:qs.passed,fail1:qs.fail1,fail2:qs.fail2})
-    });
-    if(outcome==='passed') try{localStorage.setItem('ptc_qual_passed','1');}catch(e){}
-  } catch(e) { console.error('[DataLayer] saveQualStat failed:', e); }
-}
-async function checkReturningUser() {
-  await loadUserState();
-  if(!userState.qualPassed){startStage1();return;}
-  if(!userState.demoDone){showScreen('screen-demo');return;}
-  try {
-    const queueStr=localStorage.getItem('ptc_song_queue');
-    const idxStr=localStorage.getItem('ptc_song_idx');
-    if(queueStr&&idxStr){
-      const idx=parseInt(idxStr);
-      if(idx>0){
-        document.getElementById('resume-status').textContent='You have scored '+idx+' song'+(idx!==1?'s':'')+' in your current session.';
-        showScreen('screen-resume');return;
-      }
-    }
-  } catch(e) {}
-  document.getElementById('session-display').textContent=userState.sessionId;
-  showScreen('screen-session');
-}
-async function resumeSession() {
-  try {
-    const queueStr=localStorage.getItem('ptc_song_queue');
-    const idxStr=localStorage.getItem('ptc_song_idx');
-    const respStr=localStorage.getItem('ptc_session_responses');
-    songQueue=JSON.parse(queueStr); currentIdx=parseInt(idxStr);
-    sessionResponses=respStr?JSON.parse(respStr):[];
-    demographics=userState.demographics; sessionId=userState.sessionId;
-    inQualifier=false; loadSong(currentIdx); showScreen('screen-song');
-  } catch(e){startFreshSession();}
-}
-async function startFreshSession() {
-  try{localStorage.removeItem('ptc_song_queue');localStorage.removeItem('ptc_song_idx');localStorage.removeItem('ptc_session_responses');}catch(e){}
-  userState.sessionId=generateId(); await saveUserState();
-  document.getElementById('session-display').textContent=userState.sessionId;
-  showScreen('screen-session');
-}
-function qualifierPassed(){inQualifier=false;saveQualStat('passed');userState.qualPassed=true;saveUserState();showScreen('screen-demo');}
-
-// ═══════════════════════════════════════════════════════
-// QUALIFIER STAGE 1 LOGIC
-// ═══════════════════════════════════════════════════════
-
-function startStage1() {
-  currentLyric = 0;
-  missCount = 0;
-  loadLyric(0);
-  showScreen('screen-lyric');
-}
-
-function loadLyric(idx) {
-  s1Answers = {};
-  const lyric = LYRICS[idx];
-
-  document.getElementById('lyric-counter').textContent = `Lyric ${idx + 1} of ${LYRICS.length}`;
-  document.getElementById('lyric-label').textContent = lyric.label;
-  document.getElementById('s1-progress').style.width = ((idx / LYRICS.length) * 100) + '%';
-
-  const body = document.getElementById('lyric-body');
-  body.innerHTML = lyric.sections.map(s =>
-    `<div class="lyric-section-label">${s.label}</div>
-     <div class="lyric-text">${s.text.replace(/\n/g, '<br>')}</div>`
-  ).join('');
-
-  const container = document.getElementById('questions-container');
-  container.innerHTML = '';
-  lyric.questions.forEach((q, qi) => {
-    const block = document.createElement('div');
-    block.className = 'question-block';
-    block.id = 'qblock-' + q.id;
-    block.innerHTML = `
-      <div class="question-text">
-        <span class="question-num">Question ${qi + 1}</span>
-        ${q.text}
-      </div>
-      <div class="options-list">
-        ${q.options.map(o => `
-          <button class="option-btn" onclick="selectAnswer('${q.id}', '${o.letter}', this)"
-                  data-q="${q.id}" data-letter="${o.letter}">
-            <span class="option-letter">${o.letter}</span>
-            <span>${o.text}</span>
-          </button>
-        `).join('')}
-      </div>
-    `;
-    container.appendChild(block);
-    setTimeout(() => block.classList.add('visible'), qi * 120);
-  });
-
-  document.getElementById('s1-submit-btn').disabled = true;
-}
-
-function selectAnswer(qId, letter, btn) {
-  s1Answers[qId] = letter;
-  document.querySelectorAll(`[data-q="${qId}"]`).forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  checkAllS1Answered();
-}
-
-function checkAllS1Answered() {
-  const lyric = LYRICS[currentLyric];
-  const allAnswered = lyric.questions.every(q => s1Answers[q.id] !== undefined);
-  document.getElementById('s1-submit-btn').disabled = !allAnswered;
-}
-
-function submitLyric() {
-  const lyric = LYRICS[currentLyric];
-  lyric.questions.forEach(q => {
-    if (s1Answers[q.id] !== q.correct) missCount++;
-  });
-
-  if (missCount >= 3) { saveQualStat('fail1'); showScreen('screen-fail'); return; }
-
-  currentLyric++;
-  if (currentLyric >= LYRICS.length) {
-    document.getElementById('s1-progress').style.width = '100%';
-    showScreen('screen-transition');
-  } else {
-    loadLyric(currentLyric);
-  }
-}
-
-// ═══════════════════════════════════════════════════════
-// QUALIFIER STAGE 2 LOGIC
-// ═══════════════════════════════════════════════════════
-
-function startStage2(){showScreen('screen-s2-intro');}
-
-function startScoring(){
-  inQualifier=true; qualSongIdx=0; qualFailCount=0;
-  showScreen('screen-song');
-  setTimeout(function(){ loadQualSong(0); }, 50);
-}
-
-function loadQualSong(idx){
-  qualCorpus=null; qualScores={}; qualParody=null;
-  const s=QUAL_SONGS[idx];
-  document.getElementById('song-counter').textContent='Song '+(idx+1)+' of '+QUAL_SONGS.length;
-  document.getElementById('song-title').textContent='"'+s.title+'"';
-  document.getElementById('song-artist').textContent=s.artist;
-  document.getElementById('song-year').textContent=s.year;
-  document.getElementById('song-genre').textContent=s.genre;
-  document.getElementById('notes-input').value='';
-  const prog=document.getElementById('song-progress');
-  if(prog) prog.style.width=((idx/QUAL_SONGS.length)*100)+'%';
-  document.querySelectorAll('.corpus-btn').forEach(b=>b.classList.remove('selected'));
-  document.getElementById('rubric-section').classList.remove('visible');
-  document.getElementById('notes-section').classList.remove('visible');
-  document.getElementById('submit-section').classList.remove('visible');
-  document.getElementById('lens-container').innerHTML='';
-  const lb=document.getElementById('lyrics-body');
-  const li=document.getElementById('lyrics-icon');
-  lb.classList.remove('open'); li.classList.remove('open');
-  lb.innerHTML=s.lyrics.map(function(sec){return '<div class="lyrics-section-label">'+sec.label+'</div><div style="font-family:Playfair Display,serif;font-style:italic;">'+sec.text.split('\n').join('<br>')+'</div>';}).join('');
-}
-
-function selectCorpusQual(letter){
-  qualCorpus=letter; qualScores={}; qualParody=null;
-  document.querySelectorAll('.corpus-btn').forEach(b=>b.classList.remove('selected'));
-  document.getElementById('corpus-'+letter).classList.add('selected');
-  if(letter==='NONE'){
-    document.getElementById('rubric-section').classList.remove('visible');
-    document.getElementById('notes-section').classList.add('visible');
-    document.getElementById('submit-section').classList.add('visible');
-    document.getElementById('submit-btn').disabled=false;
-  } else {
-    buildRubricQual(letter);
-    document.getElementById('rubric-section').classList.add('visible');
-    document.getElementById('notes-section').classList.add('visible');
-    document.getElementById('submit-section').classList.add('visible');
-    document.getElementById('submit-btn').disabled=true;
-    setTimeout(()=>document.getElementById('rubric-section').scrollIntoView({behavior:'smooth',block:'start'}),100);
-  }
-}
-
-function buildRubricQual(corpus){
-  const r=RUBRICS[corpus]; if(!r) return;
-  document.getElementById('rubric-title').textContent=r.label+' — Score the Lenses';
-  const container=document.getElementById('lens-container');
-  container.innerHTML='';
-  r.lenses.forEach(function(lens){
-    const card=document.createElement('div');
-    card.className='lens-card fade-up';
-    const scoreRow=document.createElement('div');
-    scoreRow.className='score-row';
-    scoreRow.id='qsc-'+lens.id;
-    lens.scores.forEach(function(desc,i){
-      const btn=document.createElement('button');
-      btn.className='score-btn';
-      btn.innerHTML='<span class="score-num">'+i+'</span><div class="score-desc">'+desc+'</div>';
-      btn.onclick=function(){selectScoreQual(lens.id,i,btn);};
-      scoreRow.appendChild(btn);
-    });
-    const nameEl=document.createElement('div'); nameEl.className='lens-name'; nameEl.textContent=lens.name;
-    const wtEl=document.createElement('div'); wtEl.className='lens-weight'; wtEl.textContent='Weight '+lens.weight;
-    card.appendChild(nameEl); card.appendChild(wtEl); card.appendChild(scoreRow);
-    container.appendChild(card);
-  });
-  if(r.hasParody){
-    const par=document.createElement('div'); par.className='parody-section fade-up';
-    const lbl=document.createElement('div'); lbl.className='parody-label'; lbl.textContent='Parody Modifier';
-    const row=document.createElement('div'); row.className='parody-row';
-    ['0 — Sincere.','1 — Intent unclear.','2 — Knows but does it anyway.','3 — Full parody. Score halved.'].forEach(function(t,i){
-      const btn=document.createElement('button'); btn.className='parody-btn'; btn.textContent=t;
-      btn.onclick=function(){selectParodyQual(i,btn);}; row.appendChild(btn);
-    });
-    par.appendChild(lbl); par.appendChild(row); container.appendChild(par);
-  }
-}
-
-function selectScoreQual(lensId,value,btn){
-  qualScores[lensId]=value;
-  document.getElementById('qsc-'+lensId).querySelectorAll('.score-btn').forEach((b,i)=>b.classList.toggle('selected',i===value));
-  updateSubmitBtnQual();
-}
-function selectParodyQual(value,btn){
-  qualParody=value;
-  document.querySelectorAll('.parody-btn').forEach((b,i)=>b.classList.toggle('selected',i===value));
-  updateSubmitBtnQual();
-}
-function updateSubmitBtnQual(){
-  const btn=document.getElementById('submit-btn');
-  if(!qualCorpus){btn.disabled=true;return;}
-  if(qualCorpus==='NONE'){btn.disabled=false;return;}
-  const r=RUBRICS[qualCorpus]; if(!r){btn.disabled=true;return;}
-  const allScored=r.lenses.every(l=>qualScores[l.id]!==undefined);
-  const parodyOk=!r.hasParody||qualParody!==null;
-  btn.disabled=!(allScored&&parodyOk);
-}
-function submitQualSong(){
-  const song=QUAL_SONGS[qualSongIdx];
-  if(qualCorpus!==song.correctCorpus){
-    qualFailCount++;
-    if(qualFailCount>=2){saveQualStat('fail2');showScreen('screen-fail');return;}
-  }
-  qualSongIdx++;
-  const prog=document.getElementById('song-progress');
-  if(qualSongIdx>=QUAL_SONGS.length){
-    if(prog) prog.style.width='100%';
-    showScreen('screen-pass');
-  } else {
-    loadQualSong(qualSongIdx);
-  }
-}
-
-
-// ═══════════════════════════════════════════════════════
-// SONG DATABASE — fallback if Google Sheet unreachable
-// ═══════════════════════════════════════════════════════
-
 const SONG_DB = [
-  { id:'s001', title:'Mysterious Ways', artist:'U2', year:'1991', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s002', title:'God Gave Me You', artist:'Blake Shelton', year:'2011', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s003', title:"Savin' Me", artist:'Nickelback', year:'2005', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s004', title:'Is This Love', artist:'Whitesnake', year:'1987', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s005', title:'I Want to Know What Love Is', artist:'Foreigner', year:'1984', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s006', title:'Waiting for a Girl Like You', artist:'Foreigner', year:'1981', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s007', title:'Angel', artist:'Aerosmith', year:'1987', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s008', title:'Layla', artist:'Derek and the Dominos', year:'1970', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s009', title:'Earth Angel', artist:'The Penguins', year:'1954', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s010', title:'In Your Eyes', artist:'Peter Gabriel', year:'1986', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s011', title:'She', artist:'Elvis Costello', year:'1999', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s012', title:'Every Breath You Take', artist:'The Police', year:'1983', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s013', title:"She's Everything", artist:'Brad Paisley', year:'2006', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s014', title:'You Make It Easy', artist:'Jason Aldean', year:'2017', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s015', title:'I Live My Life for You', artist:'Firehouse', year:'1995', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s016', title:'Iris', artist:'Goo Goo Dolls', year:'1998', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s017', title:'Truly Madly Deeply', artist:'Savage Garden', year:'1997', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s018', title:'(Everything I Do) I Do It for You', artist:'Bryan Adams', year:'1991', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s019', title:'Angels', artist:'Robbie Williams', year:'1997', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s020', title:'Close to You', artist:'Carpenters', year:'1970', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s021', title:'Urgent', artist:'Foreigner', year:'1981', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s022', title:'Faithfully', artist:'Journey', year:'1983', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s023', title:'Open Arms', artist:'Journey', year:'1981', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s024', title:'Wicked Game', artist:'Chris Isaak', year:'1989', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s025', title:'How Deep Is Your Love', artist:'Bee Gees', year:'1977', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s026', title:'When a Man Loves a Woman', artist:'Percy Sledge', year:'1966', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s027', title:'All Out of Love', artist:'Air Supply', year:'1980', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s028', title:'Heaven', artist:'Bryan Adams', year:'1985', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s029', title:'Broken Wings', artist:'Mr. Mister', year:'1985', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s030', title:'Take Me to Church', artist:'Hozier', year:'2013', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s031', title:"You're the Inspiration", artist:'Chicago', year:'1984', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s032', title:'Rosanna', artist:'Toto', year:'1982', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s033', title:'What a Fool Believes', artist:'Doobie Brothers', year:'1979', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s034', title:'Angel of the Morning', artist:'Juice Newton', year:'1981', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s035', title:'Faith', artist:'George Michael', year:'1987', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s036', title:'Caught Up in You', artist:'.38 Special', year:'1982', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s037', title:'45 Years', artist:'Stan Rogers', year:'1983', genre:'Country / Folk', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s038', title:'Right Down the Line', artist:'Gerry Rafferty', year:'1978', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s039', title:'Thank God', artist:'Kane Brown', year:'2019', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s040', title:'When You Love a Woman', artist:'Journey', year:'1996', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s041', title:'Sister Christian', artist:'Night Ranger', year:'1984', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s042', title:'Higher Love', artist:'Steve Winwood', year:'1986', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s043', title:'Got Me Under Pressure', artist:'ZZ Top', year:'1983', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s044', title:'Legs', artist:'ZZ Top', year:'1983', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s045', title:'Hallelujah', artist:'Leonard Cohen', year:'1984', genre:'Folk / Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s046', title:'Just the Way', artist:'Parmalee', year:'2012', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
-  { id:'s047', title:'Heaven', artist:'Kane Brown', year:'2018', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet added.'}]},
+  { id:'s001', title:'Mysterious Ways', artist:'U2', year:'1991', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s002', title:'God Gave Me You', artist:'Blake Shelton', year:'2011', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s003', title:"Savin' Me", artist:'Nickelback', year:'2005', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s004', title:'Is This Love', artist:'Whitesnake', year:'1987', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s005', title:'I Want to Know What Love Is', artist:'Foreigner', year:'1984', genre:'Rock', lyrics:[
+    {label:'Verse 1', text:`I gotta take a little time\nA little time to think things over\nI better read between the lines\nIn case I need it when I'm older\nNow this mountain I must climb\nFeels like a world upon my shoulders\nThrough the clouds I see love shine\nIt keeps me warm as life grows colder`},
+    {label:'Pre-Chorus', text:`In my life there's been heartache and pain\nI don't know if I can face it again\nCan't stop now, I've traveled so far\nTo change this lonely life`},
+    {label:'Chorus', text:`I wanna know what love is\nI want you to show me\nI wanna feel what love is\nI know you can show me`},
+  ]},
+  { id:'s006', title:'Waiting for a Girl Like You', artist:'Foreigner', year:'1981', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s007', title:'Angel', artist:'Aerosmith', year:'1987', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s008', title:'Layla', artist:'Derek and the Dominos', year:'1970', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s009', title:'Earth Angel', artist:'The Penguins', year:'1954', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s010', title:'In Your Eyes', artist:'Peter Gabriel', year:'1986', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s011', title:'Every Breath You Take', artist:'The Police', year:'1983', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s012', title:"She's Everything", artist:'Brad Paisley', year:'2006', genre:'Country', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s013', title:'Iris', artist:'Goo Goo Dolls', year:'1998', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s014', title:'Truly Madly Deeply', artist:'Savage Garden', year:'1997', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s015', title:'(Everything I Do) I Do It for You', artist:'Bryan Adams', year:'1991', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s016', title:'Angels', artist:'Robbie Williams', year:'1997', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s017', title:'Wicked Game', artist:'Chris Isaak', year:'1989', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s018', title:'When a Man Loves a Woman', artist:'Percy Sledge', year:'1966', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s019', title:'Take Me to Church', artist:'Hozier', year:'2013', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s020', title:'45 Years', artist:'Stan Rogers', year:'1983', genre:'Country / Folk', lyrics:[
+    {label:'Verse 1', text:`Where the earth shows its bones of wind-broken stone\nAnd the sea and the sky are one\nI'm caught out of time, my blood sings with wine\nAnd I'm running naked in the sun\nThere's God in the trees, I'm weak in the knees\nAnd the sky is a painful blue\nI'd like to look around, but Honey, all I see is you`},
+    {label:'Chorus', text:`And I just want to hold you closer than I've ever held anyone before\nYou say you've been twice a wife and you're through with life\nAh, but Honey, what the hell's it for?\nAfter twenty-three years you'd think I could find\nA way to let you know somehow\nThat I want to see your smiling face forty-five years from now`},
+  ]},
+  { id:'s021', title:'Hallelujah', artist:'Leonard Cohen', year:'1984', genre:'Folk / Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s022', title:'Right Down the Line', artist:'Gerry Rafferty', year:'1978', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s023', title:'Legs', artist:'ZZ Top', year:'1983', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s024', title:'Get Low', artist:'Lil Jon & The East Side Boyz ft. Ying Yang Twins', year:'2003', genre:'Hip-Hop', lyrics:[
+    {label:'Chorus', text:`3, 6, 9, damn she fine\nHopin' she can sock it to me one mo' time\nGet low, get low, get low, get low`},
+    {label:'Verse', text:`Shorty crunk, so fresh, so clean\nCan she fuck? That question been harassin' me\nIn the mind, this bitch is fine\nI done came to the club 'bout fifty-'leven times`},
+  ]},
+  { id:'s025', title:'Sister Christian', artist:'Night Ranger', year:'1984', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s026', title:'Higher Love', artist:'Steve Winwood', year:'1986', genre:'Pop', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
+  { id:'s027', title:'Dragula', artist:'Rob Zombie', year:'1998', genre:'Rock', lyrics:[{label:'Lyrics',text:'Lyrics not yet loaded.'}]},
 ];
 
 // ═══════════════════════════════════════════════════════
-// RUBRICS
+// FOLLOW-UP QUESTIONS
 // ═══════════════════════════════════════════════════════
-const RUBRICS = {
-  A:{label:'Corpus A — She Saves',hasParody:true,lenses:[
-    {id:'wound',name:'How broken is he?',weight:'×1.0',scores:['He wants her, but he is not in pain.','He is hurting or lost, but holding together.','He is falling apart. He cannot function without her.','Without her he is nothing. Destroyed, imprisoned, or incomplete at his core.']},
-    {id:'transaction',name:'Who gives, who receives?',weight:'×1.5',scores:['Both of them give and receive equally.','She gives a little more, but she is present as a person.','She gives, he receives. Her needs are never raised.','She exists only to deliver something to him. She is not a person in this song. She is a function.']},
-    {id:'vocabulary',name:'Does the song use religious language?',weight:'×0.75',scores:['No religious language at all, literal or implied.','The structure is religious but no specific words are used.','Explicit religious words appear. Angel, heaven, grace, salvation.','She does not just save him. She is the divine. The song puts her in God\'s place.']},
-    {id:'specificity',name:'Is she a specific person or just a role?',weight:'×1.75',scores:['The details in this song could only belong to her.','Some details are specific to her but others could apply to anyone.','She is mostly interchangeable. The role comes first, the person second.','Any woman fills this role. She has no individual identity in the song.']},
-  ]},
-  B:{label:'Corpus B — She Leaves / She Is a Wound',hasParody:false,lenses:[
-    {id:'absence',name:'Is she a person or just a gap?',weight:'×1.5',scores:['She is present in the song as a person with her own reality.','She is mostly gone but the song acknowledges she has an inner life.','She exists only as a gap. She is defined entirely by what he lost.','She is not a person who left. She is the wound itself.']},
-    {id:'causality',name:'Who is blamed for the ending?',weight:'×1.25',scores:['Responsibility is shared or left unassigned.','The song leans toward blaming her but holds some complexity.','She is primarily blamed. His pain is her doing.','She is solely responsible. His collapse is presented as proof of her wrongdoing.']},
-    {id:'perspective',name:'Does she get a point of view?',weight:'×1.0',scores:['Her reasons, feelings, or experience are acknowledged.','Her perspective is implied but never developed.','Her perspective is absent but the song implies she existed as a person.','She has no perspective. She is only the cause of his condition.']},
-    {id:'specificity',name:'Is she a specific person or just any woman who left?',weight:'×1.25',scores:['The details in this song could only belong to her.','Some details are specific to her but others could apply to anyone.','She is mostly interchangeable. Any woman who left could fill this role.','She is a category, not a person.']},
-  ]},
-  C:{label:'Corpus C — She Is a Commodity',hasParody:true,lenses:[
-    {id:'subject',name:'Does she act or is she acted upon?',weight:'×1.75',scores:['She acts, speaks, or has a perspective within the song.','She is mostly observed but one moment of interiority or agency exists.','She is described entirely from the outside. No perspective is granted.','She is framed explicitly as a surface, a commodity, or a possession.']},
-    {id:'conditionality',name:'Is her value conditional on appearance or availability?',weight:'×1.5',scores:['Her value is unconditional. It does not depend on how she looks or what she offers.','Her value is mostly relational but appearance plays a secondary role.','Her value is primarily based on her appearance or availability.','Her value is entirely conditional. She exists to be looked at, consumed, or used.']},
-    {id:'consent',name:'Does she have a say?',weight:'×1.25',scores:['Her agency and consent are present or assumed.','Her agency is implied but not foregrounded.','Her agency is absent. Things happen to her or around her.','Her consent is irrelevant to the song. She is acted upon without acknowledgment.']},
-    {id:'possession',name:'Does the song use ownership language?',weight:'×0.5',scores:['No possessive or commodifying language.','Mild possessive language present but not structural.','Possessive language is recurring. She belongs to him or exists for him.','Explicit ownership language. She is bought, owned, displayed, or exchanged.']},
-  ]},
-  D:{label:'Corpus D — She Is Known and Whole',hasParody:false,lenses:[
-    {id:'interiority',name:'Does she have an inner life?',weight:'×1.75',scores:['Her feelings, thoughts, or desires are explicitly present in the song.','Her inner life is implied and acknowledged even if not foregrounded.','One moment of interiority exists. That is all.','She has no inner life. She is known only through his perception of her.']},
-    {id:'directionality',name:'Does she have her own direction?',weight:'×1.5',scores:['She is moving. She has her own agenda, direction, or urgent business.','She has some direction but it is mostly organized around him.','Her direction is implied but absent from the song\'s actual content.','She is waiting, standing still, or defined entirely by her relationship to him.']},
-    {id:'reciprocity',name:'Is the relationship mutual?',weight:'×1.0',scores:['The relationship is clearly mutual. Both parties give, receive, and need.','Mostly mutual with minor imbalance.','Imbalanced, but she has some acknowledged needs of her own.','Entirely one directional. She gives, he receives, her needs are absent.']},
-    {id:'flaw',name:'Is she allowed to be imperfect?',weight:'×0.75',scores:['She has acknowledged flaws, contradictions, or moments of vulnerability of her own.','One humanizing detail is present. Exhaustion, uncertainty, a moment that belongs only to her.','She is idealized but the song acknowledges she is a person.','She is perfect, angelic, or unconditionally giving. She is fully idealized.']},
-  ]},
-  E:{label:'Corpus E — She Is a Force',hasParody:true,lenses:[
-    {id:'origin',name:'Where does her power come from?',weight:'×1.75',scores:['Her energy is entirely self-generated. She needs no audience.','Mostly self-generated but one moment of performing toward someone exists.','Her energy is present but partly organized around male attention or approval.','Her power is entirely contingent on his watching, wanting, or responding.']},
-    {id:'male',name:'Does she need him at all?',weight:'×1.5',scores:['No male presence is required. The song\'s logic functions entirely without him.','Male presence is acknowledged but peripheral. He does not define or enable her.','Male presence shapes the song\'s context even if she acts independently within it.','Her power is entirely reactive. It is defined against, toward, or because of him.']},
-    {id:'self',name:'Does she define herself?',weight:'×1.25',scores:['She defines herself entirely on her own terms. No relational frame is needed.','Mostly self-defined but identity brushes against a relational frame at least once.','Self-definition is present but partly constructed in contrast to expectations placed on her.','Her identity is entirely relational. She is who she is only in reference to him.']},
-    {id:'freedom',name:'Is her freedom specific or just a slogan?',weight:'×0.5',scores:['Her freedom is particular and embodied. Specific choices, actions, and desires are named.','Some specific freedoms are named alongside general declarations.','Freedom is mostly generic. Broad declarations without grounded specifics.','Empowerment is a slogan only. There is no lived specificity in the lyric.']},
-  ]},
-  NONE:{label:'No Valid Corpus',hasParody:false,lenses:[]},
-};
-
-const WEIGHTS = {
-  A:{wound:1.0,transaction:1.5,vocabulary:0.75,specificity:1.75},
-  B:{absence:1.5,causality:1.25,perspective:1.0,specificity:1.25},
-  C:{subject:1.75,conditionality:1.5,consent:1.25,possession:0.5},
-  D:{interiority:1.75,directionality:1.5,reciprocity:1.0,flaw:0.75},
-  E:{origin:1.75,male:1.5,self:1.25,freedom:0.5},
+const FOLLOWUPS = {
+  A: {
+    text: 'Did she feel essential to him or important to him?',
+    options: [
+      { value: 'essential', label: 'Essential — he cannot function without her' },
+      { value: 'important', label: 'Important — she matters deeply to him' },
+      { value: 'both',      label: 'Both' },
+    ]
+  },
+  B: {
+    text: 'Is the loss in this song about her, or about what she meant to him?',
+    options: [
+      { value: 'about-her',  label: 'About her — the song grieves her as a person' },
+      { value: 'about-him',  label: 'About him — the song grieves what he lost' },
+      { value: 'both',       label: 'Both' },
+    ]
+  },
+  C: {
+    text: 'Is the objectification sexual?',
+    options: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no',  label: 'No' },
+    ]
+  },
+  D: {
+    text: 'Does the song feel like it actually knows her, or like it\'s decided to love her anyway?',
+    options: [
+      { value: 'knows-her',  label: 'It knows her — she comes through as a specific person' },
+      { value: 'decides',    label: 'It decides to love her — the acceptance feels generous rather than earned' },
+      { value: 'both',       label: 'Both' },
+    ]
+  },
+  E: {
+    text: 'Is her independence in this song specific to her, or a general statement about strong women?',
+    options: [
+      { value: 'specific', label: 'Specific to her — her choices and direction are particular to her alone' },
+      { value: 'general',  label: 'General — she stands for something rather than being someone' },
+    ]
+  },
+  NONE: null
 };
 
 // ═══════════════════════════════════════════════════════
@@ -1872,138 +829,79 @@ let demographics = {};
 let songQueue = [];
 let currentIdx = 0;
 let sessionResponses = [];
-let selectedCorpus = null;
-let scores = {};
-let parodyScore = null;
 let songStartTime = 0;
+
+// Per-song answer state
+let songAnswers = {
+  familiarity: null,
+  feeling: [],         // multi-select
+  intent: null,
+  corpus: null,
+  followup: null,
+};
 
 const DEMO_FIELDS = ['gender','age','race','country','education','music','politics'];
 
 // ═══════════════════════════════════════════════════════
-// UTILS
+// NAVIGATION
 // ═══════════════════════════════════════════════════════
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
+  window.scrollTo(0, 0);
 }
 
+function consentAndContinue() {
+  try {
+    const stored = localStorage.getItem('ptc_v2_user');
+    if (stored) {
+      const u = JSON.parse(stored);
+      if (u.demoDone) {
+        demographics = u.demographics;
+        sessionId = generateId();
+        document.getElementById('session-display').textContent = sessionId;
+        showScreen('screen-session');
+        return;
+      }
+    }
+  } catch(e) {}
+  showScreen('screen-demo');
+}
+
+// ═══════════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════════
 function generateId() {
-  const adj = ['amber','brass','cedar','dusk','ember','fern','gilt','haze','iron','jade','kelp','larch','mast','noir','opal'];
-  const noun = ['atlas','bridge','chord','delta','epoch','flame','grove','hinge','iris','journal'];
-  const num = Math.floor(1000+Math.random()*9000);
+  const adj  = ['amber','brass','cedar','dusk','ember','fern','gilt','haze','iron','jade','kelp','larch','mast','noir','opal','pine','quill','reed','slate','thorn'];
+  const noun = ['atlas','bridge','chord','delta','epoch','flame','grove','hinge','iris','journal','knot','ledge','marsh','north','orbit'];
+  const num  = Math.floor(1000 + Math.random() * 9000);
   return adj[Math.floor(Math.random()*adj.length)] + '-' + noun[Math.floor(Math.random()*noun.length)] + '-' + num;
 }
 
 function shuffle(arr) {
   const a = [...arr];
-  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
   return a;
 }
-
-function calcWeighted(corpus, sc, parody) {
-  if(corpus==='NONE') return null;
-  const w = WEIGHTS[corpus];
-  if(!w) return null;
-  let total = 0;
-  Object.entries(sc).forEach(([k,v])=>{ if(w[k]!==undefined) total += v * w[k]; });
-  if(parody===3) total = total/2;
-  return Math.round(total*100)/100;
-}
-
-// (data layer above)
-
-async function loadSongList() {
-  const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1WTzvqx_AyKa_AMwGQzgGQQO9pkjx2vzC7z_GaawuI4E/gviz/tq?tqx=out:csv&sheet=Song+List';
-  try {
-    const res = await fetch(SHEET_URL);
-    if(!res.ok) throw new Error('Sheet fetch failed');
-    const csv = await res.text();
-    const songs = parseSheetCSV(csv);
-    if(songs.length > 0) return songs;
-    console.warn('[DataLayer] Sheet returned no songs, falling back to SONG_DB');
-    return SONG_DB;
-  } catch(e) {
-    console.warn('[DataLayer] Could not reach Google Sheet, falling back to SONG_DB:', e.message);
-    return SONG_DB;
-  }
-}
-
-function parseSheetCSV(csv) {
-  // Expected columns: id, title, artist, year, genre, notes, status, lyrics
-  // Col index:         0   1      2       3     4      5      6       7
-  const rows = parseCSVToRows(csv.trim());
-  if(rows.length < 2) return [];
-  const songs = [];
-  for(let i = 1; i < rows.length; i++) {
-    const cols = rows[i];
-    if(!cols[0] || !cols[1]) continue;
-    const status = (cols[6]||'').trim().toLowerCase();
-    if(status === 'excluded' || status === 'hold') continue;
-
-    const lyricsRaw = (cols[7]||'').trim().replace(/\\n/g,'\n');
-    const lyrics = lyricsRaw
-      ? [{label:'Lyrics', text:lyricsRaw}]
-      : [{label:'Lyrics', text:'Lyrics not yet added.'}];
-
-    songs.push({
-      id: (cols[0]||'').trim(),
-      title: (cols[1]||'').trim(),
-      artist: (cols[2]||'').trim(),
-      year: (cols[3]||'').trim(),
-      genre: (cols[4]||'').trim(),
-      lyrics,
-    });
-  }
-  return songs;
-}
-
-function parseCSVToRows(csv) {
-  // Parses entire CSV respecting quoted fields that may contain commas or newlines
-  const rows = [];
-  let current = [];
-  let field = '';
-  let inQuotes = false;
-  for(let i = 0; i < csv.length; i++) {
-    const ch = csv[i];
-    if(ch === '"') {
-      if(inQuotes && csv[i+1] === '"') { field += '"'; i++; }
-      else inQuotes = !inQuotes;
-    } else if(ch === ',' && !inQuotes) {
-      current.push(field); field = '';
-    } else if((ch === '\n' || (ch === '\r' && csv[i+1] === '\n')) && !inQuotes) {
-      if(ch === '\r') i++;
-      current.push(field); field = '';
-      rows.push(current); current = [];
-    } else {
-      field += ch;
-    }
-  }
-  // Push final field/row
-  if(field || current.length) { current.push(field); rows.push(current); }
-  return rows;
-}
-
-// clearAllData, getLastExportTime, setLastExportTime defined in Supabase data layer above
 
 // ═══════════════════════════════════════════════════════
 // DEMOGRAPHICS
 // ═══════════════════════════════════════════════════════
 function selectDemo(field, value, btn) {
   demographics[field] = value;
-  const fg = document.getElementById('fg-'+field);
-  fg.querySelectorAll('.field-option').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('fg-'+field).querySelectorAll('.field-option').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
-  const allDone = DEMO_FIELDS.every(f=>demographics[f]);
-  document.getElementById('demo-submit-btn').disabled = !allDone;
+  document.getElementById('demo-submit-btn').disabled = !DEMO_FIELDS.every(f => demographics[f]);
 }
 
 async function submitDemo() {
-  userState.demoDone = true;
-  userState.demographics = {...demographics};
-  userState.sessionId = userState.sessionId || generateId();
-  sessionId = userState.sessionId;
-  await saveUserState();
+  try {
+    localStorage.setItem('ptc_v2_user', JSON.stringify({ demoDone: true, demographics }));
+  } catch(e) {}
+  sessionId = generateId();
   document.getElementById('session-display').textContent = sessionId;
   showScreen('screen-session');
 }
@@ -2013,60 +911,64 @@ async function submitDemo() {
 // ═══════════════════════════════════════════════════════
 async function beginScoring() {
   const btn = document.querySelector('#screen-session .btn-primary');
-  if(btn) { btn.disabled = true; btn.textContent = 'Loading songs…'; }
+  if (btn) { btn.disabled = true; btn.textContent = 'Loading songs…'; }
   const songs = await loadSongList();
-  if(btn) { btn.disabled = false; btn.textContent = 'Begin Scoring →'; }
+  if (btn) { btn.disabled = false; btn.textContent = 'Begin Scoring →'; }
   songQueue = shuffle(songs);
   currentIdx = 0;
   sessionResponses = [];
-  try {
-    localStorage.setItem('ptc_song_queue', JSON.stringify(songQueue));
-    localStorage.setItem('ptc_song_idx', '0');
-    localStorage.setItem('ptc_session_responses', JSON.stringify([]));
-  } catch(e) {}
-  loadSong(currentIdx);
+  loadSong(0);
   showScreen('screen-song');
 }
 
 async function continueScoring() {
-  if(currentIdx >= songQueue.length) {
-    const songs = await loadSongList();
-    songQueue = [...songQueue, ...shuffle(songs)];
+  if (currentIdx >= songQueue.length) {
+    const more = await loadSongList();
+    songQueue = [...songQueue, ...shuffle(more)];
   }
   loadSong(currentIdx);
   showScreen('screen-song');
 }
 
 function loadSong(idx) {
-  selectedCorpus = null; scores = {}; parodyScore = null;
+  songAnswers = { familiarity: null, feeling: [], intent: null, corpus: null, followup: null };
   songStartTime = Date.now();
 
   const s = songQueue[idx % songQueue.length];
-  const num = idx + 1;
-  document.getElementById('song-counter').textContent = `Song ${num}`;
+
+  document.getElementById('song-counter').textContent = `Song ${idx + 1}`;
   document.getElementById('song-title').textContent = `"${s.title}"`;
   document.getElementById('song-artist').textContent = s.artist;
   document.getElementById('song-year').textContent = s.year;
   document.getElementById('song-genre').textContent = s.genre;
   document.getElementById('notes-input').value = '';
-  document.getElementById('time-note').textContent = '';
 
-  const lyricsBody = document.getElementById('lyrics-body');
-  const lyricsIcon = document.getElementById('lyrics-icon');
-  lyricsBody.classList.remove('open');
-  lyricsIcon.classList.remove('open');
-  lyricsBody.innerHTML = s.lyrics.map(sec=>
-    `<div class="lyrics-section-label">${sec.label}</div><div style="font-family:'Playfair Display',serif;font-style:italic;">${sec.text.replace(/\n/g,'<br>')}</div>`
+  // Lyrics
+  const lb = document.getElementById('lyrics-body');
+  const li = document.getElementById('lyrics-icon');
+  lb.classList.remove('open');
+  li.classList.remove('open');
+  lb.innerHTML = s.lyrics.map(sec =>
+    `<div class="lyrics-section-label">${sec.label}</div>
+     <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:13px;line-height:1.9;">${sec.text.replace(/\n/g,'<br>')}</div>`
   ).join('');
 
-  document.querySelectorAll('.corpus-btn').forEach(b=>b.classList.remove('selected'));
-  document.getElementById('rubric-section').classList.remove('visible');
-  document.getElementById('notes-section').classList.remove('visible');
-  document.getElementById('submit-section').classList.remove('visible');
-  document.getElementById('lens-container').innerHTML = '';
+  // Reset all question selections
+  document.querySelectorAll('#q-familiarity .q-option, #q-feeling .q-option, #q-intent .q-option').forEach(b => {
+    b.classList.remove('selected','multi-selected');
+  });
+  document.querySelectorAll('.corpus-option').forEach(b => b.classList.remove('selected'));
 
+  // Hide follow-up
+  document.getElementById('followup-section').classList.remove('visible');
+  document.getElementById('followup-options').innerHTML = '';
+  document.getElementById('followup-text').textContent = '';
+
+  // Progress
   const pct = Math.min(100, (idx / 20) * 100);
   document.getElementById('song-progress').style.width = pct + '%';
+
+  updateSubmitBtn();
 }
 
 function toggleLyrics() {
@@ -2074,128 +976,107 @@ function toggleLyrics() {
   document.getElementById('lyrics-icon').classList.toggle('open');
 }
 
-function selectCorpus(letter) {
-  selectedCorpus = letter; scores = {}; parodyScore = null;
-  document.querySelectorAll('.corpus-btn').forEach(b=>b.classList.remove('selected'));
-  document.getElementById('corpus-'+letter).classList.add('selected');
-
-  if(letter==='NONE') {
-    document.getElementById('rubric-section').classList.remove('visible');
-    document.getElementById('notes-section').classList.add('visible');
-    document.getElementById('submit-section').classList.add('visible');
-    updateSubmitBtn();
-  } else {
-    buildRubric(letter);
-    document.getElementById('rubric-section').classList.add('visible');
-    document.getElementById('notes-section').classList.add('visible');
-    document.getElementById('submit-section').classList.add('visible');
-    updateSubmitBtn();
-    setTimeout(()=>{
-      document.getElementById('rubric-section').scrollIntoView({behavior:'smooth',block:'start'});
-    },150);
-  }
-}
-
-function buildRubric(corpus) {
-  const r = RUBRICS[corpus];
-  if(!r) return;
-  document.getElementById('rubric-title').textContent = r.label + ' — Score the Lenses';
-  const container = document.getElementById('lens-container');
-  container.innerHTML = '';
-
-  r.lenses.forEach(lens=>{
-    const card = document.createElement('div');
-    card.className = 'lens-card fade-up';
-    card.innerHTML = `
-      <div class="lens-name">${lens.name}</div>
-      <div class="lens-weight">Weight ${lens.weight}</div>
-      <div class="score-row" id="scores-${lens.id}">
-        ${lens.scores.map((desc,i)=>`
-          <button class="score-btn" onclick="selectScore('${lens.id}',${i},this)">
-            <span class="score-num">${i}</span>
-            <div class="score-desc">${desc}</div>
-          </button>
-        `).join('')}
-      </div>
-    `;
-    container.appendChild(card);
-  });
-
-  if(r.hasParody) {
-    const par = document.createElement('div');
-    par.className = 'parody-section fade-up';
-    par.innerHTML = `
-      <div class="parody-label">Parody Modifier</div>
-      <div class="parody-row">
-        <button class="parody-btn" onclick="selectParody(0,this)">0 — Sincere. No irony.</button>
-        <button class="parody-btn" onclick="selectParody(1,this)">1 — Intent unclear. Could be winking.</button>
-        <button class="parody-btn" onclick="selectParody(2,this)">2 — Knows what it's doing but does it anyway.</button>
-        <button class="parody-btn" onclick="selectParody(3,this)">3 — Full parody. Score halved.</button>
-      </div>
-    `;
-    container.appendChild(par);
-  }
-}
-
-function selectScore(lensId, value, btn) {
-  scores[lensId] = value;
-  document.getElementById('scores-'+lensId).querySelectorAll('.score-btn').forEach((b,i)=>{
-    b.classList.toggle('selected', i===value);
-  });
+// Single-select question handler
+function selectSingle(field, value, btn) {
+  songAnswers[field] = value;
+  const containerId = 'q-' + field;
+  document.getElementById(containerId).querySelectorAll('.q-option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
   updateSubmitBtn();
 }
 
-function selectParody(value, btn) {
-  parodyScore = value;
-  document.querySelectorAll('.parody-btn').forEach((b,i)=>b.classList.toggle('selected',i===value));
+// Multi-select handler
+function toggleMulti(field, value, btn) {
+  const arr = songAnswers[field];
+  const idx = arr.indexOf(value);
+  if (idx === -1) {
+    arr.push(value);
+    btn.classList.add('multi-selected');
+  } else {
+    arr.splice(idx, 1);
+    btn.classList.remove('multi-selected');
+  }
+  updateSubmitBtn();
+}
+
+// Corpus selection
+function selectCorpus(letter, btn) {
+  songAnswers.corpus = letter;
+  songAnswers.followup = null;
+
+  document.querySelectorAll('.corpus-option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+
+  const fu = FOLLOWUPS[letter];
+  const fuSection = document.getElementById('followup-section');
+  const fuText = document.getElementById('followup-text');
+  const fuOptions = document.getElementById('followup-options');
+
+  if (fu) {
+    fuText.textContent = fu.text;
+    fuOptions.innerHTML = fu.options.map(o =>
+      `<button class="q-option" onclick="selectFollowup('${o.value}',this)">
+        <span class="q-option-dot"></span>${o.label}
+      </button>`
+    ).join('');
+    fuSection.classList.add('visible');
+    setTimeout(() => fuSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+  } else {
+    fuSection.classList.remove('visible');
+  }
+
+  updateSubmitBtn();
+}
+
+function selectFollowup(value, btn) {
+  songAnswers.followup = value;
+  document.querySelectorAll('#followup-options .q-option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
   updateSubmitBtn();
 }
 
 function updateSubmitBtn() {
   const btn = document.getElementById('submit-btn');
-  if(!selectedCorpus){btn.disabled=true;return;}
-  if(selectedCorpus==='NONE'){btn.disabled=false;return;}
-  const r = RUBRICS[selectedCorpus];
-  if(!r){btn.disabled=true;return;}
-  const allScored = r.lenses.every(l=>scores[l.id]!==undefined);
-  const parodyOk = !r.hasParody || parodyScore!==null;
-  btn.disabled = !(allScored && parodyOk);
+  const a = songAnswers;
+  const corpusNeedsFollowup = a.corpus && a.corpus !== 'NONE' && FOLLOWUPS[a.corpus];
+  const followupOk = !corpusNeedsFollowup || a.followup !== null;
+  // Feeling is multi-select — require at least one selection
+  const feelingOk = a.feeling.length > 0;
+  const ready = a.familiarity && feelingOk && a.intent && a.corpus && followupOk;
+  btn.disabled = !ready;
 }
 
 async function submitSong() {
-  const elapsed = Math.round((Date.now() - songStartTime)/1000);
+  const elapsed = Math.round((Date.now() - songStartTime) / 1000);
   const song = songQueue[currentIdx % songQueue.length];
-  const weighted = calcWeighted(selectedCorpus, scores, parodyScore);
 
   const response = {
     sessionId,
-    timestamp: new Date().toISOString(),
+    timestamp:      new Date().toISOString(),
     elapsedSeconds: elapsed,
-    demographics: {...demographics},
-    songId: song.id,
-    songTitle: song.title,
-    artist: song.artist,
-    year: song.year,
-    genre: song.genre,
-    assignedCorpus: selectedCorpus,
-    scores: {...scores},
-    parodyScore,
-    weightedTotal: weighted,
-    notes: document.getElementById('notes-input').value,
+    demographics:   { ...demographics },
+    songId:         song.id,
+    songTitle:      song.title,
+    artist:         song.artist,
+    year:           song.year,
+    genre:          song.genre,
+    familiarity:    songAnswers.familiarity,
+    feeling:        [...songAnswers.feeling],
+    intent:         songAnswers.intent,
+    assignedCorpus: songAnswers.corpus,
+    followup:       songAnswers.followup,
+    notes:          document.getElementById('notes-input').value,
   };
 
   sessionResponses.push(response);
-  try { await saveResponse(response); } catch(e) { console.error("saveResponse failed:", e); }
+  try { await saveResponse(response); } catch(e) { console.error('saveResponse:', e); }
 
   currentIdx++;
-  try {
-    localStorage.setItem('ptc_song_idx', String(currentIdx));
-    localStorage.setItem('ptc_session_responses', JSON.stringify(sessionResponses));
-  } catch(e) {}
-  if(currentIdx === 20) {
+  if (currentIdx === 20) {
     showScreen('screen-gate');
   } else {
     loadSong(currentIdx);
+    window.scrollTo(0, 0);
   }
 }
 
@@ -2205,35 +1086,96 @@ function finishSession() {
 }
 
 // ═══════════════════════════════════════════════════════
+// SONG LIST LOADER
+// ═══════════════════════════════════════════════════════
+async function loadSongList() {
+  const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1WTzvqx_AyKa_AMwGQzgGQQO9pkjx2vzC7z_GaawuI4E/gviz/tq?tqx=out:csv&sheet=Song+List';
+  try {
+    const res = await fetch(SHEET_URL);
+    if (!res.ok) throw new Error('Sheet fetch failed');
+    const csv = await res.text();
+    const songs = parseSheetCSV(csv);
+    if (songs.length > 0) return songs;
+    return SONG_DB;
+  } catch(e) {
+    return SONG_DB;
+  }
+}
+
+function parseSheetCSV(csv) {
+  const rows = parseCSVToRows(csv.trim());
+  if (rows.length < 2) return [];
+  return rows.slice(1).filter(cols => cols[0] && cols[1]).map(cols => {
+    const status = (cols[6]||'').trim().toLowerCase();
+    if (status === 'excluded' || status === 'hold') return null;
+    const lyricsRaw = (cols[7]||'').trim().replace(/\\n/g,'\n');
+    return {
+      id:     (cols[0]||'').trim(),
+      title:  (cols[1]||'').trim(),
+      artist: (cols[2]||'').trim(),
+      year:   (cols[3]||'').trim(),
+      genre:  (cols[4]||'').trim(),
+      lyrics: lyricsRaw ? [{label:'Lyrics', text:lyricsRaw}] : [{label:'Lyrics', text:'Lyrics not yet loaded.'}],
+    };
+  }).filter(Boolean);
+}
+
+function parseCSVToRows(csv) {
+  const rows = []; let current = []; let field = ''; let inQuotes = false;
+  for (let i = 0; i < csv.length; i++) {
+    const ch = csv[i];
+    if (ch === '"') {
+      if (inQuotes && csv[i+1] === '"') { field += '"'; i++; }
+      else inQuotes = !inQuotes;
+    } else if (ch === ',' && !inQuotes) {
+      current.push(field); field = '';
+    } else if ((ch === '\n' || (ch === '\r' && csv[i+1] === '\n')) && !inQuotes) {
+      if (ch === '\r') i++;
+      current.push(field); field = '';
+      rows.push(current); current = [];
+    } else { field += ch; }
+  }
+  if (field || current.length) { current.push(field); rows.push(current); }
+  return rows;
+}
+
+// ═══════════════════════════════════════════════════════
 // RESULTS
 // ═══════════════════════════════════════════════════════
 function buildResults() {
   const n = sessionResponses.length;
   const corpusCounts = {};
-  sessionResponses.forEach(r=>{
-    corpusCounts[r.assignedCorpus] = (corpusCounts[r.assignedCorpus]||0)+1;
+  const intentCounts = {};
+  const feelingCounts = {};
+  sessionResponses.forEach(r => {
+    corpusCounts[r.assignedCorpus] = (corpusCounts[r.assignedCorpus]||0) + 1;
+    intentCounts[r.intent] = (intentCounts[r.intent]||0) + 1;
+    (r.feeling||[]).forEach(f => { feelingCounts[f] = (feelingCounts[f]||0) + 1; });
   });
   const topCorpus = Object.entries(corpusCounts).sort((a,b)=>b[1]-a[1])[0];
-  const avgTime = Math.round(sessionResponses.reduce((s,r)=>s+r.elapsedSeconds,0)/n);
+  const topIntent = Object.entries(intentCounts).sort((a,b)=>b[1]-a[1])[0];
 
-  const corpusNames = {A:'She Saves',B:'She Leaves / Wound',C:'Commodity',D:'Known & Whole',E:'Force',NONE:'No Corpus'};
+  const corpusNames = {A:'She Saves',B:"She's Gone",C:'She Is an Object',D:'She Is Accepted',E:'She Chooses',NONE:'None'};
 
   let html = `
     <div class="results-stat"><div class="results-stat-label">Songs Scored</div><div class="results-stat-value">${n}</div></div>
-    <div class="results-stat"><div class="results-stat-label">Most Assigned Corpus</div><div class="results-stat-value">${topCorpus?topCorpus[0]:'—'}</div><div class="results-stat-sub">${topCorpus?corpusNames[topCorpus[0]]:''}</div></div>
-    <div class="results-stat"><div class="results-stat-label">Avg Time per Song</div><div class="results-stat-value">${avgTime}s</div></div>
+    <div class="results-stat"><div class="results-stat-label">Most Common Corpus</div><div class="results-stat-value">${topCorpus?topCorpus[0]:'—'}</div><div class="results-stat-sub">${topCorpus?corpusNames[topCorpus[0]]:''}</div></div>
+    <div class="results-stat"><div class="results-stat-label">Most Common Intent Read</div><div class="results-stat-value">${topIntent?topIntent[0]:'-'}</div></div>
     <div class="session-save-box"><div class="session-save-label">Your Session ID</div><div class="session-save-id">${sessionId}</div></div>
-    <div class="admin-section-title" style="margin-top:20px;color:#5a4e40;border-color:#2a2420;">Your Corpus Distribution</div>
+    <div class="admin-section-title" style="margin-top:20px;color:#5a4e40;border-color:#2a2420;">Corpus Distribution</div>
   `;
 
-  Object.entries(corpusNames).forEach(([k,name])=>{
+  ['A','B','C','D','E','NONE'].forEach(k => {
     const count = corpusCounts[k]||0;
-    if(count>0) html += `<div class="results-song-row"><div class="results-song-title">${name} <span class="results-corpus-tag">${k}</span></div><div class="results-song-meta">${count} song${count!==1?'s':''}</div></div>`;
+    if (count > 0) html += `<div class="results-song-row"><div class="results-song-title">${corpusNames[k]} <span class="results-corpus-tag">${k}</span></div><div class="results-song-meta">${count} song${count!==1?'s':''}</div></div>`;
   });
 
   html += `<div class="admin-section-title" style="margin-top:24px;color:#5a4e40;border-color:#2a2420;">Songs You Scored</div>`;
-  sessionResponses.forEach(r=>{
-    html += `<div class="results-song-row"><div class="results-song-title">"${r.songTitle}" — ${r.artist}<span class="results-corpus-tag">${r.assignedCorpus}</span></div><div class="results-song-meta">${r.year} · ${r.genre}${r.weightedTotal!==null?' · Score: '+r.weightedTotal:''}</div></div>`;
+  sessionResponses.forEach(r => {
+    html += `<div class="results-song-row">
+      <div class="results-song-title">"${r.songTitle}" — ${r.artist}<span class="results-corpus-tag">${r.assignedCorpus}</span></div>
+      <div class="results-song-meta">${r.year} · ${r.genre} · Intent: ${r.intent||'—'} · Feeling: ${(r.feeling||[]).join(', ')||'—'}</div>
+    </div>`;
   });
 
   document.getElementById('results-body').innerHTML = html;
@@ -2244,12 +1186,12 @@ function buildResults() {
 // ═══════════════════════════════════════════════════════
 function checkAdminPw() {
   const pw = document.getElementById('admin-pw-input').value;
-  if(pw.trim().length > 0) {
+  if (pw.trim().length > 0) {
+    document.getElementById('admin-error').style.display = 'none';
     loadAdminPanel();
     showScreen('screen-admin');
-    document.getElementById('admin-error').style.display='none';
   } else {
-    document.getElementById('admin-error').style.display='block';
+    document.getElementById('admin-error').style.display = 'block';
   }
 }
 
@@ -2257,63 +1199,45 @@ let _adminSongs = [];
 let _adminResponses = [];
 
 async function loadAdminPanel() {
-  try {
-    const res = await sbFetch('/rest/v1/qualifier_stats?id=eq.1&select=attempts,passed,fail1,fail2');
-    const rows = await res.json();
-    const qs = rows[0] || {attempts:0,passed:0,fail1:0,fail2:0};
-    document.getElementById('admin-qual-attempts').textContent = qs.attempts||0;
-    document.getElementById('admin-qual-passed').textContent = qs.passed||0;
-    document.getElementById('admin-qual-fail1').textContent = qs.fail1||0;
-    document.getElementById('admin-qual-fail2').textContent = qs.fail2||0;
-  } catch(e) {
-    ['admin-qual-attempts','admin-qual-passed','admin-qual-fail1','admin-qual-fail2'].forEach(id=>{
-      document.getElementById(id).textContent='0';
-    });
-  }
   let all = [];
-  try { all = await loadAllResponses(); } catch(e) { console.error('loadAllResponses failed:', e); }
+  try { all = await loadAllResponses(); } catch(e) {}
   _adminResponses = all;
-  const sessions = new Set(all.map(r=>r.sessionId)).size;
-  const unique = new Set(all.map(r=>r.songId)).size;
-  const avg = sessions > 0 ? Math.round(all.length/sessions) : 0;
+
+  const sessions = new Set(all.map(r => r.session_id)).size;
+  const unique   = new Set(all.map(r => r.song_id)).size;
+  const avg      = sessions > 0 ? Math.round(all.length / sessions) : 0;
 
   document.getElementById('admin-sessions').textContent = sessions;
-  document.getElementById('admin-total').textContent = all.length;
-  document.getElementById('admin-unique').textContent = unique;
-  document.getElementById('admin-avg').textContent = avg;
+  document.getElementById('admin-total').textContent    = all.length;
+  document.getElementById('admin-unique').textContent   = unique;
+  document.getElementById('admin-avg').textContent      = avg;
 
   const corpusCounts = {};
-  all.forEach(r=>{ corpusCounts[r.assignedCorpus]=(corpusCounts[r.assignedCorpus]||0)+1; });
-  const corpusNames = {A:'She Saves',B:'She Leaves / Wound',C:'Commodity',D:'Known & Whole',E:'Force',NONE:'No Corpus'};
-  let distHtml = '';
-  ['A','B','C','D','E','NONE'].forEach(k=>{
-    distHtml += `<div class="admin-corpus-row"><span class="admin-corpus-name">${k} — ${corpusNames[k]}</span><span class="admin-corpus-count">${corpusCounts[k]||0}</span></div>`;
-  });
-  document.getElementById('admin-corpus-dist').innerHTML = distHtml;
+  all.forEach(r => { corpusCounts[r.assigned_corpus] = (corpusCounts[r.assigned_corpus]||0)+1; });
+  const corpusNames = {A:'She Saves',B:"She's Gone",C:'She Is an Object',D:'She Is Accepted',E:'She Chooses',NONE:'None'};
+  document.getElementById('admin-corpus-dist').innerHTML = ['A','B','C','D','E','NONE'].map(k =>
+    `<div class="admin-corpus-row"><span class="admin-corpus-name">${k} — ${corpusNames[k]}</span><span class="admin-corpus-count">${corpusCounts[k]||0}</span></div>`
+  ).join('');
 
   const recent = all.slice(-10).reverse();
-  let recentHtml = '';
-  recent.forEach(r=>{
-    recentHtml += `<div class="admin-recent-row"><div class="admin-recent-song">"${r.songTitle}" — ${r.artist} <span style="color:var(--gold)">[${r.assignedCorpus}]</span></div><div class="admin-recent-meta">${r.demographics.gender} · ${r.demographics.age} · ${r.timestamp.slice(0,10)}</div></div>`;
-  });
-  document.getElementById('admin-recent-list').innerHTML = recentHtml || '<div style="color:var(--muted);font-size:11px;padding:12px 0;">No submissions yet.</div>';
+  document.getElementById('admin-recent-list').innerHTML = recent.length
+    ? recent.map(r => `<div class="admin-recent-row"><div class="admin-recent-song">"${r.song_title}" — ${r.artist} <span style="color:var(--gold)">[${r.assigned_corpus}]</span></div><div class="admin-recent-meta">Intent: ${r.intent||'—'} · ${r.gender||'—'} · ${(r.timestamp||'').slice(0,10)}</div></div>`).join('')
+    : '<div style="color:var(--muted);font-size:11px;padding:12px 0;">No submissions yet.</div>';
 
-  const lastExport = await getLastExportTime();
-  const exportEl = document.getElementById('admin-last-export');
-  if(lastExport) {
-    const d = new Date(lastExport);
-    exportEl.textContent = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-  } else {
-    exportEl.textContent = 'Never';
-  }
+  try {
+    const lastExport = localStorage.getItem('ptc_v2_last_export');
+    if (lastExport) {
+      const d = new Date(lastExport);
+      document.getElementById('admin-last-export').textContent = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    }
+  } catch(e) {}
 
   _adminSongs = await loadSongList();
   document.getElementById('admin-song-count').textContent = _adminSongs.length;
 
-  const genres = [...new Set(_adminSongs.map(s=>s.genre))].sort();
-  const genreSelect = document.getElementById('admin-song-genre');
-  genreSelect.innerHTML = '<option value="">All genres</option>' +
-    genres.map(g=>`<option value="${g}">${g}</option>`).join('');
+  const genres = [...new Set(_adminSongs.map(s => s.genre))].sort();
+  document.getElementById('admin-song-genre').innerHTML = '<option value="">All genres</option>' +
+    genres.map(g => `<option value="${g}">${g}</option>`).join('');
 
   filterSongList();
 }
@@ -2321,106 +1245,91 @@ async function loadAdminPanel() {
 function filterSongList() {
   const query = (document.getElementById('admin-song-search').value||'').toLowerCase();
   const genre = document.getElementById('admin-song-genre').value;
-  const sort = document.getElementById('admin-song-sort').value;
+  const sort  = document.getElementById('admin-song-sort').value;
 
   const scoreMap = {};
-  _adminResponses.forEach(r=>{
-    if(!scoreMap[r.songId]) scoreMap[r.songId] = {count:0, corpora:{}};
-    scoreMap[r.songId].count++;
-    scoreMap[r.songId].corpora[r.assignedCorpus] = (scoreMap[r.songId].corpora[r.assignedCorpus]||0)+1;
+  _adminResponses.forEach(r => {
+    if (!scoreMap[r.song_id]) scoreMap[r.song_id] = { count:0, corpora:{} };
+    scoreMap[r.song_id].count++;
+    scoreMap[r.song_id].corpora[r.assigned_corpus] = (scoreMap[r.song_id].corpora[r.assigned_corpus]||0) + 1;
   });
 
-  let songs = _adminSongs.filter(s=>{
-    const matchQuery = !query || s.title.toLowerCase().includes(query) || s.artist.toLowerCase().includes(query);
-    const matchGenre = !genre || s.genre === genre;
-    return matchQuery && matchGenre;
+  let songs = _adminSongs.filter(s => {
+    const mq = !query || s.title.toLowerCase().includes(query) || s.artist.toLowerCase().includes(query);
+    const mg = !genre || s.genre === genre;
+    return mq && mg;
+  }).sort((a,b) => {
+    if (sort==='artist') return a.artist.localeCompare(b.artist);
+    if (sort==='year')   return (a.year||0) - (b.year||0);
+    if (sort==='scored') return (scoreMap[b.id]?.count||0) - (scoreMap[a.id]?.count||0);
+    return a.title.localeCompare(b.title);
   });
 
-  songs = songs.sort((a,b)=>{
-    if(sort==='title') return a.title.localeCompare(b.title);
-    if(sort==='artist') return a.artist.localeCompare(b.artist);
-    if(sort==='year') return (a.year||0) - (b.year||0);
-    if(sort==='scored') return (scoreMap[b.id]?.count||0) - (scoreMap[a.id]?.count||0);
-    return 0;
-  });
-
-  const corpusColors = {A:'#8B3A2A',B:'#4A5E4A',C:'#5C3D2E',D:'#2A3A5C',E:'#3A1A4A',NONE:'#5a4e40'};
-
-  let html = '';
-  songs.forEach(s=>{
-    const data = scoreMap[s.id];
-    const count = data?.count||0;
-    const corporaStr = data
-      ? Object.entries(data.corpora).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<span style="font-size:9px;padding:1px 6px;border:1px solid ${corpusColors[k]||'var(--line)'};color:${corpusColors[k]||'var(--muted)'};margin-left:4px;">${k}×${v}</span>`).join('')
-      : '';
-
-    html += `<div style="padding:10px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+  document.getElementById('admin-song-list').innerHTML = songs.map(s => {
+    const data  = scoreMap[s.id];
+    const count = data?.count || 0;
+    const tags  = data ? Object.entries(data.corpora).sort((a,b)=>b[1]-a[1]).map(([k,v]) =>
+      `<span style="font-size:9px;padding:1px 6px;border:1px solid var(--gold);color:var(--gold);margin-left:4px;">${k}×${v}</span>`
+    ).join('') : '';
+    return `<div style="padding:10px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
       <div style="flex:1;min-width:0;">
         <div style="font-size:12px;color:var(--ink);margin-bottom:2px;">"${s.title}" <span style="color:var(--muted);">— ${s.artist}</span></div>
-        <div style="font-size:10px;color:var(--muted);">${s.year} · ${s.genre}${corporaStr}</div>
+        <div style="font-size:10px;color:var(--muted);">${s.year} · ${s.genre}${tags}</div>
       </div>
       <div style="text-align:right;flex-shrink:0;">
         <div style="font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:${count>0?'var(--gold)':'var(--line)'};">${count}</div>
-        <div style="font-size:9px;color:var(--muted);letter-spacing:0.08em;">${count===1?'score':'scores'}</div>
+        <div style="font-size:9px;color:var(--muted);">${count===1?'score':'scores'}</div>
       </div>
     </div>`;
-  });
-
-  document.getElementById('admin-song-list').innerHTML = html ||
-    '<div style="color:var(--muted);font-size:11px;padding:12px 0;">No songs match.</div>';
+  }).join('') || '<div style="color:var(--muted);font-size:11px;padding:12px 0;">No songs match.</div>';
 }
 
 function buildCSV(rows) {
-  const scoreKeys = ['wound','transaction','vocabulary','specificity','absence','causality','perspective','origin','male','self','freedom','subject','conditionality','consent','possession','interiority','directionality','reciprocity','flaw'];
-  const headers = ['sessionId','timestamp','elapsedSeconds','gender','age','race','country','education','music','politics','songId','songTitle','artist','year','genre','assignedCorpus','weightedTotal','parodyScore','notes',...scoreKeys];
-  const csvRows = [headers];
-  rows.forEach(r=>{
-    csvRows.push([r.sessionId,r.timestamp,r.elapsedSeconds||'',r.demographics?.gender||'',r.demographics?.age||'',r.demographics?.race||'',r.demographics?.country||'',r.demographics?.education||'',r.demographics?.music||'',r.demographics?.politics||'',r.songId,`"${r.songTitle}"`,r.artist,r.year,r.genre,r.assignedCorpus,r.weightedTotal??'',r.parodyScore??'',`"${(r.notes||'').replace(/"/g,"'")}"`,...scoreKeys.map(k=>r.scores?.[k]??'')]);
-  });
-  return csvRows.map(r=>r.join(',')).join('\n');
+  const headers = ['session_id','timestamp','elapsed_seconds','gender','age','race','country','education','music','politics','song_id','song_title','artist','year','genre','familiarity','feeling','intent','assigned_corpus','followup','notes'];
+  return [headers, ...rows.map(r => [
+    r.session_id, r.timestamp, r.elapsed_seconds||'',
+    r.gender||'', r.age||'', r.race||'', r.country||'', r.education||'', r.music||'', r.politics||'',
+    r.song_id, `"${r.song_title}"`, r.artist, r.year, r.genre,
+    r.familiarity||'', `"${(r.feeling||'').replace(/"/g,"'")}"`,
+    r.intent||'', r.assigned_corpus||'', r.followup||'',
+    `"${(r.notes||'').replace(/"/g,"'")}"`
+  ])].map(r => r.join(',')).join('\n');
 }
 
 function downloadCSV(csv, filename) {
-  const blob = new Blob([csv],{type:'text/csv'});
+  const blob = new Blob([csv], {type:'text/csv'});
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download=filename; a.click();
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
   URL.revokeObjectURL(url);
 }
 
 async function adminExportNew() {
   const all = await loadAllResponses();
-  if(!all.length){alert('No data yet.');return;}
-  const lastExport = await getLastExportTime();
-  const newRows = lastExport
-    ? all.filter(r => r.timestamp > lastExport)
-    : all;
-  if(!newRows.length){
-    alert('No new rows since last export (' + new Date(lastExport).toLocaleDateString() + ').');
-    return;
-  }
+  if (!all.length) { alert('No data yet.'); return; }
+  const lastExport = localStorage.getItem('ptc_v2_last_export');
+  const newRows = lastExport ? all.filter(r => r.timestamp > lastExport) : all;
+  if (!newRows.length) { alert('No new rows since last export.'); return; }
   const now = new Date().toISOString();
-  downloadCSV(buildCSV(newRows), `pedestal_cage_NEW_${now.slice(0,10)}.csv`);
-  await setLastExportTime(now);
+  downloadCSV(buildCSV(newRows), `ptc_v2_NEW_${now.slice(0,10)}.csv`);
+  localStorage.setItem('ptc_v2_last_export', now);
   loadAdminPanel();
 }
 
 async function adminExportAll() {
   const all = await loadAllResponses();
-  if(!all.length){alert('No data yet.');return;}
-  if(!confirm('This exports the full dataset regardless of previous exports. Use this to rebuild your sheet from scratch. Continue?')) return;
+  if (!all.length) { alert('No data yet.'); return; }
+  if (!confirm('Export full dataset? Continue?')) return;
   const now = new Date().toISOString();
-  downloadCSV(buildCSV(all), `pedestal_cage_FULL_${now.slice(0,10)}.csv`);
-  await setLastExportTime(now);
+  downloadCSV(buildCSV(all), `ptc_v2_FULL_${now.slice(0,10)}.csv`);
+  localStorage.setItem('ptc_v2_last_export', now);
   loadAdminPanel();
 }
 
 async function adminClearData() {
-  if(!confirm('Delete all stored data? This cannot be undone.')) return;
-  try {
-    await clearAllData();
-    alert('Data cleared.');
-    loadAdminPanel();
-  } catch(e) { alert('Error clearing data.'); }
+  if (!confirm('Delete all stored data? This cannot be undone.')) return;
+  try { await clearAllData(); alert('Data cleared.'); loadAdminPanel(); }
+  catch(e) { alert('Error clearing data.'); }
 }
 </script>
 </body>
